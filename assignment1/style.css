@@ -1,0 +1,16 @@
+.horizontal-line{
+    border: none;
+    height: 1px;
+    background-color:  gray;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.menu{
+    margin-top: 20px;
+}
+
+.menu a {
+    padding: 5px;
+}
