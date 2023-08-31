@@ -55,12 +55,13 @@ h2{
 /* css for floating static background image */
 .parallax{
     background: url("resources/Cutlery.png") no-repeat fixed 50%;
-
 }
 /* css for the text inside the floating static background image */
 .parallax-inner{
-    padding-top: 10%;
+    padding-top: 30px;
     padding-bottom: 10%;
+    margin-left: 100px;
+    margin-top: 15;
 }
 
 .button {
@@ -74,6 +75,16 @@ h2{
     font-size: 16px;
     margin: 4px 2px;
 
+  }
+
+  .tag-line{
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /* align-items: center; */
+    /* display: flex; */
+    text-align: center;
+    color: darkblue;
   }
 
 .table-content{
