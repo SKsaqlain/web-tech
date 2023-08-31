@@ -54,14 +54,20 @@ h2{
 
 /* css for floating static background image */
 .parallax{
-    background: url("resources/Cutlery.png") no-repeat fixed 50%;
+    background: url("resources/Cutlery.png") no-repeat fixed;
+    margin-left: 100px;
+    width: 1000px;
+    height: 500px;
+    /* margin-bottom: 30px; */
 }
 /* css for the text inside the floating static background image */
 .parallax-inner{
     padding-top: 30px;
-    padding-bottom: 10%;
-    margin-left: 100px;
-    margin-top: 15;
+    /* padding-bottom: 10%; */
+    margin-left: 50px;
+    /* margin-top: 15; */
+    color: darkblue;
+    font-size: 25px;
 }
 
 .button {
@@ -77,27 +83,45 @@ h2{
 
   }
 
-  .tag-line{
-    margin-left: 100px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    /* align-items: center; */
-    /* display: flex; */
-    text-align: center;
-    color: darkblue;
+  .grid-container{
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 1000px;
+  }
+
+.tag-line{
+    
+/* margin-left: 100px;    
+margin-top: 30px;
+margin-bottom: 30px; */
+    
+/* align-items: center; */
+    
+/* display: flex; */
+    
+text-align: center;
+    
+color: darkblue;
+margin-bottom: 30px;
   }
 
 .table-content{
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
+    max-width: 100px;
 }
 
 .left-td{
     padding-right: 40px;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 }
 .right-td{
-    padding-bottom: 100px;
+    padding-bottom: 50;
+}
+
+img {
+    width: 480px;
 }
 .image-text {
     text-align: center;
