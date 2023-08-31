@@ -1,9 +1,39 @@
 * {
     margin : 0;
-    padding 0;
+    padding :0;
     border :0;
 }
 
+/* css for name of the website */
+.page-title{
+    padding: 0;
+    width: 100%;
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+    color: darkblue;
+}
+/* css for the horizontal line */
+.horizontal-line{
+    border: none;
+    height: 1px;
+    background-color:  gray;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+/* css for nav bar */
+.menu{
+    display: flex;
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+/* css for items withing menu */
+a{
+    padding: 10px;
+}
 /* h1{
     text-align: center;
     font-size: 575%;
@@ -22,15 +52,29 @@ h2{
     margin: 45% 0;
 } */
 
+/* css for floating static background image */
 .parallax{
     background: url("resources/Cutlery.png") no-repeat fixed 50%;
 
 }
-
+/* css for the text inside the floating static background image */
 .parallax-inner{
     padding-top: 10%;
     padding-bottom: 10%;
 }
+
+.button {
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+  }
 
 .table-content{
     display: flex;
