@@ -12,7 +12,8 @@
     margin-top: 30px;
     margin-bottom: 30px;
     font-size: 40px;
-    color: darkblue;
+    /* color: darkblue; */
+    color: rgb(6, 34, 121);
 }
 /* css for the horizontal line */
 .horizontal-line{
@@ -78,7 +79,8 @@ h2{
     /* padding-bottom: 10%; */
     margin-left: 69px;
     /* margin-top: 15; */
-    color: darkblue;
+    /* color: darkblue; */
+    color: rgb(2, 47, 169);
     font-size: 28px;
     font-family: serif;
 }
@@ -118,7 +120,8 @@ margin-bottom: 30px; */
     
 text-align: center;
     
-color: darkblue;
+/* color: darkblue; */
+color:rgb(0, 29, 139);
 margin-bottom: 30px;
   }
 
@@ -141,6 +144,7 @@ img {
 }
 .image-text {
     text-align: center;
-    color: darkblue;
+    /* color: darkblue; */
+    color:rgb(40, 48, 121);
     padding-top: 62px;
 }
