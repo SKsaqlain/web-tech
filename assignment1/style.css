@@ -66,13 +66,26 @@ h2{
 } */
 
 /* css for floating static background image */
-.parallax{
+/* .parallax{
     background: url("resources/Cutlery.png") no-repeat fixed;
     margin-left: 100px;
     width: 1000px;
     height: 500px;
     /* margin-bottom: 30px; */
-}
+/* } */
+
+.parallax {
+    background: url("resources/Cutlery.png") no-repeat fixed;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto;
+    margin-left: 100px;
+    width: 1000px;
+    height: 496px;
+    margin-bottom: 30px;
+    background-size: 1044px 918px;
+    background-position: 68px -20px;
+  } 
 /* css for the text inside the floating static background image */
 .parallax-inner{
     padding-top: 30px;
@@ -127,6 +140,12 @@ color:rgb(0, 29, 139);
 margin-bottom: 50px;
     
 margin-top: 50px;
+    
+font-weight: bolder;
+    
+font-size: 35px;
+    
+font-family: Didto,serif;
   }
 
 .table-content{
@@ -156,3 +175,20 @@ img {
     color:rgb(40, 48, 121);
     padding-top: 62px;
 }
+
+
+
+
+/* 
+.parallax {
+    background: url("resources/Cutlery.png") no-repeat fixed;
+      background-position-x: 0%;
+      background-position-y: 0%;
+      background-size: auto;
+    margin-left: 100px;
+    width: 1000px;
+    height: 496px;
+    margin-bottom: 30px;
+    background-size: 1044px 918px;
+    background-position: 67px -20px;
+  } */
