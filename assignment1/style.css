@@ -1,0 +1,204 @@
+* {
+    margin : 0;
+    padding :0;
+    border :0;
+}
+
+/* css for name of the website */
+.page-title{
+    padding: 0;
+    width: 100%;
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+    /* color: darkblue; */
+    color: rgb(9, 47, 184);
+}
+/* css for the horizontal line */
+.horizontal-line{
+    
+/* height: 2px; */
+    
+/* background-color:  gray; */
+    
+/* margin: 0; */
+    
+/* padding: 0; */
+    
+/* width: 89%; */
+    
+/* padding-right: 100px; */
+    
+border: 1px solid gray;
+    
+/* margin-right: 100px; */
+    
+width: 1190px;
+    
+/* white-space: nowrap; */
+}
+/* css for nav bar */
+.menu{
+    /* display: flex; */
+    margin-left: 90px;
+    margin-top: 30px;
+    margin-bottom: 31px;
+    white-space: nowrap;
+}
+/* css for items withing menu */
+a{
+    padding: 10px;
+}
+/* h1{
+    text-align: center;
+    font-size: 575%;
+    color: #4A4444;
+    text-transform: uppercase;
+    letter-spacing: 1%;
+    margin: 45% 0;
+}
+
+h2{
+    text-align: center;
+    font-size: 275%;
+    color: white gray;
+    text-transform: uppercase;
+    letter-spacing: 1%;
+    margin: 45% 0;
+} */
+
+/* css for floating static background image */
+.parallax{
+    background: url("resources/Cutlery.png") no-repeat fixed;
+    margin-left: 100px;
+    width: 1000px;
+    height: 671px;
+    /* margin-bottom: 30px; */
+    background-position: 69px 0px;
+    background-size: 1044px auto;
+    /* background-attachment: local; */
+}
+
+/* .parallax {
+    background: url("resources/Cutlery.png") no-repeat fixed;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto;
+    margin-left: 100px;
+    width: 1000px;
+    min-height: 550px;
+    margin-bottom: 30px;
+    background-size: 1044px 962px;
+    background-position: 68px 23px;
+    margin-top: 85px;
+  }  */
+/* css for the text inside the floating static background image */
+.parallax-inner{
+    padding-top: 116px;
+    /* padding-bottom: 10%; */
+    margin-left: 62px;
+    /* margin-top: 15; */
+    /* color: darkblue; */
+    color: rgb(2, 47, 169);
+    font-size: 29px;
+    font-family: serif;
+}
+.parallax-inner-text{
+    padding-bottom: 12px;
+}
+
+.button {
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+  }
+
+  .grid-container{
+    margin-left: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 1000px;
+    font-family: "GFS Didot";
+    color: rgb(9, 47, 184);
+    font-weight: bolder;
+  }
+
+.tag-line{
+    
+/* margin-left: 100px;    
+margin-top: 30px;
+margin-bottom: 30px; */
+    
+/* align-items: center; */
+    
+/* display: flex; */
+    
+text-align: center;
+    
+/* color: darkblue; */
+    
+color:rgb(0, 29, 139);
+    
+margin-bottom: 50px;
+    
+margin-top: 50px;
+    
+font-weight: Bold;
+    
+font-size: 34px;
+    
+/* font-family: "GFS Didot"; */
+  }
+
+.table-content{
+    /* display: flex; */
+    /* justify-content: center; */
+    max-width: 100px;
+}
+
+.left-td{
+    padding-right: 40px;
+    padding-bottom: 90px;
+}
+.right-td{
+    padding-bottom: 90px;
+}
+
+.bottom-td{
+    padding-bottom: 10px;
+}
+
+img {
+    width: 480px;
+}
+.image-text {
+    text-align: center;
+    /* color: darkblue; */
+    color:rgb(40, 48, 121);
+    padding-top: 62px;
+}
+
+
+
+
+/* 
+.parallax {
+    background: url("resources/Cutlery.png") no-repeat fixed;
+      background-position-x: 0%;
+      background-position-y: 0%;
+      background-size: auto;
+    margin-left: 100px;
+    width: 1000px;
+    height: 496px;
+    margin-bottom: 30px;
+    background-size: 1044px 918px;
+    background-position: 67px -20px;
+  } */
