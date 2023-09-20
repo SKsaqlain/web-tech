@@ -3,6 +3,7 @@
 <head>
     <title> HW2</title>
     <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
+    <script src="resources/js/validation.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 
         </div>
         <div class="search-container">
-            <form>
+            <form name="search-form" onsubmit="return validateForm()">
                 <table class="search-container-table">
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Keywords<span
