@@ -1,12 +1,14 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     <title> HW2</title>
     <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
     <script src="resources/js/validation.js"></script>
+    <script src="resources/js/cache.js"></script>
 </head>
 
-<body>
+<body onload="loadFromLocalStorage()">
     <div class="main-container">
         <div class="logo-container">
             <table>
@@ -20,7 +22,7 @@
 
         </div>
         <div class="search-container">
-            <form name="search-form" onsubmit="return validateForm()">
+            <form name="search-form" onsubmit="{storeToLocalStorage(); return validateForm()}">
                 <table class="search-container-table">
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Keywords<span
@@ -72,8 +74,8 @@
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td">
-                            <button class="search-container-form-btn">Clear</button>
-                            <button class="search-container-form-btn">Search</button>
+                            <button class="search-container-form-btn" onclick="clearFormAndCache()">Clear</button>
+                            <button class="search-container-form-btn" type="submit">Search</button>
                         </td>
                     </tr>
                 </table>
