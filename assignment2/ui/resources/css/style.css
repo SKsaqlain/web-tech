@@ -1,0 +1,32 @@
+.elog {
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #00a3e0;
+  background-color: #f7f7f7;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.search-container,
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.search-container-table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}

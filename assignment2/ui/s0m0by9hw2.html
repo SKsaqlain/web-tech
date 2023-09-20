@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <title> HW2</title>
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="logo-container">
+            <a href="https://www.ebay.com/" id="logo-link"><img src="resources/images/ebayLogo.png" alt="ebay-logo">
+                <span id="shopping"> Shopping</span></a>
+        </div>
+        <div class="search-container">
+            <form>
+                <table class="search-container-table">
+                    <tr>
+                        <td>keyword * <input type="text" id="keyword" name="keyword/" required /> </td>
+                    </tr>
+                    <tr>
+                        <td>Price Range
+                            From <input type="number" id="from-number" name="from-number" />
+                            To <input type="number" id="to-number" name="to-number" /></td>
+                    </tr>
+                    <tr>
+                        <td>Condition
+                            <input type="checkbox" id="condition-new" name="condition" value="new" />
+                            <lable for="condition-new">New</lable>
+                            <input type="checkbox" id="condition-used" name="condition" value="used" />
+                            <lable for="condition-used"> Used</lable>
+                            <input type="checkbox" id="condition-very-good" name="condition" value="very-good" />
+                            <lable for="condition-very-good"> Used</lable>
+                            <input type="checkbox" id="condition-good" name="condition" value="good" />
+                            <lable for="condition-good">Good</lable>
+                            <input type="checkbox" id="condition-acceptable" name="condition" value="acceptable" />
+                            <lable for="condition-acceptable">Acceptable</lable>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Seller: <Input type="checkbox" id="seller" name="seller" value="return-accepted" />
+                            <label for="seller">Return Accepted</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Shipping: <Input type="checkbox" id="shipping-free" name="shipping" value="free" />
+                            <label for="shipping-free">Free</label>
+                            <Input type="checkbox" id="shipping-expedited" name="shipping" value="expedited" />
+                            <label for="shipping-expedited">Expedited</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sort by:
+                            <select id="sort-by" name="sort-by">
+                                <option value="Best Match" selected>Best Match</option>
+                                <option value="Price: highest first">Price: highest first</option>
+                                <option value="Price + Shipping: highest first">Price + Shipping: highest first</option>
+                                <option value="Price + Shipping: lowest first">Price + Shipping: lowest first</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button>Clear</button>
+                            <button>Search</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
