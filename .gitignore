@@ -1,0 +1,27 @@
+
+#ignoring zip files#
+
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ignore ipython checkpoints
+**/*.ipynb_checkpoints/
+# ignoring compiled class files
+*.class
+
+# Ignore Directories
+venv/*
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+.idea
+._*

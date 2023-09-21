@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> HW2</title>
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
+    <script src="resources/js/validation.js"></script>
+    <script src="resources/js/cache.js"></script>
+</head>
+
+<body onload="loadFromLocalStorage()">
+    <div class="main-container">
+        <div class="logo-container">
+            <table>
+                <a href="https://www.ebay.com/" id="logo-link"></a>
+                <tr>
+                    <td><img src="resources/images/ebayLogo.png" alt="ebay-logo" id="eblay-logo-image"></td>
+                    <td><span class="shopping"> Shopping</span></td>
+                </tr></a>
+            </table>
+
+
+        </div>
+        <div class="search-container">
+            <form name="search-form" onsubmit="{storeToLocalStorage(); return validateForm()}">
+                <table class="search-container-table">
+                    <tr>
+                        <td class="search-contianer-table-td"><span class="form-field">Keywords<span
+                                    style="color: red;">*</span>:</span> <input type="text" id="keyword" name="keyword/"
+                                required /> </td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td"><span class="form-field">Price Range:</span>
+                            From <input type="number" id="from-number" name="from-number" />
+                            To <input type="number" id="to-number" name="to-number" /></td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td"><span class="form-field">Condition</span>
+                            <input type="checkbox" id="condition-new" name="condition" value="new" />
+                            <lable for="condition-new">New</lable>
+                            <input type="checkbox" id="condition-used" name="condition" value="used" />
+                            <lable for="condition-used"> Used</lable>
+                            <input type="checkbox" id="condition-very-good" name="condition" value="very-good" />
+                            <lable for="condition-very-good"> Used</lable>
+                            <input type="checkbox" id="condition-good" name="condition" value="good" />
+                            <lable for="condition-good">Good</lable>
+                            <input type="checkbox" id="condition-acceptable" name="condition" value="acceptable" />
+                            <lable for="condition-acceptable">Acceptable</lable>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td"> <span class="form-field">Seller:</span> <Input
+                                type="checkbox" id="seller" name="seller" value="return-accepted" />
+                            <label for="seller">Return Accepted</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td"><span class="form-field">Shipping:</span> <Input
+                                type="checkbox" id="shipping-free" name="shipping" value="free" />
+                            <label for="shipping-free">Free</label>
+                            <Input type="checkbox" id="shipping-expedited" name="shipping" value="expedited" />
+                            <label for="shipping-expedited">Expedited</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td"><span class="form-field">Sort by:</span>
+                            <select id="sort-by" name="sort-by">
+                                <option value="Best Match" selected>Best Match</option>
+                                <option value="Price: highest first">Price: highest first</option>
+                                <option value="Price + Shipping: highest first">Price + Shipping: highest first</option>
+                                <option value="Price + Shipping: lowest first">Price + Shipping: lowest first</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="search-contianer-table-td">
+                            <button class="search-container-form-btn" onclick="clearFormAndCache()">Clear</button>
+                            <button class="search-container-form-btn" type="submit">Search</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
