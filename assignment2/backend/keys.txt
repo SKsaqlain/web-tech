@@ -1,0 +1,8 @@
+App ID (Client ID)
+SaqlainS-sms-PRD-d92d3cfae-360cb3a9
+
+Dev ID
+d854fef9-7f96-4206-b010-4cbef05cdb93
+
+Cert ID (Client Secret)
+PRD-92d3cfae42a6-9cd3-4480-9d41-ea62
