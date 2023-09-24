@@ -2,9 +2,9 @@ import sys
 from flask import Flask, render_template
 from app.routes.FindAllItems import FIND_ALL_ITEMS
 from flask_cors import CORS, cross_origin
-from app.logging.logger import *
+from app.logadapter.logger import *
 import uuid
-# logging.basicConfig(level=logging.INFO)
+# logadapter.basicConfig(level=logadapter.INFO)
 
 app = Flask(__name__)
 app.register_blueprint(FIND_ALL_ITEMS)

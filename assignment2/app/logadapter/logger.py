@@ -13,7 +13,7 @@ def getTracking():
 
 class TrackingIdFilter(logging.Filter):
     def filter(self, record):
-        record.trackingId = getTracking() if flask.has_request_context() else uuid.UUID(int=0)
+        record.trackingId = getTracking() if flask.has_request_context() else str(uuid.UUID(int=0))
         return True
 
 

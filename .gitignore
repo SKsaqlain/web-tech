@@ -1,3 +1,6 @@
+#ignoring byte-compiled and optimized files#
+*/__pycache__/*
+
 
 #ignoring zip files#
 
