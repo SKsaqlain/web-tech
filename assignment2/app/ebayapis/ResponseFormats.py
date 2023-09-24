@@ -10,7 +10,7 @@ ITEM={
     "itemPrice": ""
 }
 
-FIND_ALL_ITEM_RESPONSE={
+FIND_ALL_ITEMS_RESPONSE={
     "totalResultsFound": 0,
     "items": [] #itemDict
 }

@@ -4,11 +4,14 @@ from app.routes.FindAllItems import FIND_ALL_ITEMS
 from flask_cors import CORS, cross_origin
 from app.logadapter.logger import *
 import uuid
+
+from app.routes.FindItem import FIND_ITEM
+
 # logadapter.basicConfig(level=logadapter.INFO)
 
 app = Flask(__name__)
 app.register_blueprint(FIND_ALL_ITEMS)
-
+app.register_blueprint(FIND_ITEM)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @cross_origin()

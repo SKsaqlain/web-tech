@@ -23,7 +23,6 @@ class EbayApis:
     def callFindAllItems(self, payload):
         try:
             LOGGER.info("Creating findAllItems request")
-            applicationToken = self.tokenCreator.getApplicationToken()
             headers = {
                 'Content-Type': 'application/xml'
             }
@@ -36,7 +35,7 @@ class EbayApis:
             response = requests.post(self.findAllItemsUrl, headers=headers, params=params, data=payload)
             if (response.status_code == 200):
                 LOGGER.info("findAllItems returned status code 200")
-                resp = self.parseFindAllResponse(response)
+                resp = self.parseFindAllItemsResponse(response)
                 return json.dumps(ResponseBody(200, "Success", resp).__dict__)
             else:
                 LOGGER.warn("findAllItems returned status code %s", response.status_code)
@@ -46,16 +45,90 @@ class EbayApis:
             LOGGER.error("Error calling findAllItems")
             return json.dumps(ResponseBody(500, "Error calling findAllItems", None).__dict__)
 
-    def parseFindAllResponse(self, response):
+    def callFindItem(self, itemId):
+        try:
+            LOGGER.info("Creating findItem request")
+            applicationToken = self.tokenCreator.getApplicationToken()
+            params = {
+                'callname': 'GetSingleItem',
+                'responseencoding': 'JSON',
+                'appid': self.clientId,
+                'siteid': '0',
+                'version': '967',
+                'ItemID': itemId,
+                'IncludeSelector': 'Description,Details,ItemSpecifics'
+            }
+            headers = {
+                "X-EBAY-API-IAF-TOKEN": applicationToken
+            }
+            response = requests.get(self.findItemUrl, params=params, headers=headers)
+            # return response.text
+            if (response.status_code == 200):
+                LOGGER.info("findItem returned status code 200")
+                resp = self.parseFindItemResponse(response)
+                return json.dumps(ResponseBody(200, "Success", resp).__dict__)
+            else:
+                LOGGER.warn("findItem returned status code %s", response.status_code)
+                return json.dumps(ResponseBody(response.status_code, "", None).__dict__)
+
+        except:
+            LOGGER.error("Error calling findItem")
+            return json.dumps(ResponseBody(500, "Error calling findItem", None).__dict__)
+
+    def parseFindItemResponse(self, response):
         try:
             jsonObj = json.loads(response.text)
+            item = jsonObj["Item"]
+            LOGGER.info("Item fetched: %s", item['ItemID'])
+            rspDict = dict()
+            if ('PictureURL' in item and item['PictureURL'] != None and len(item['PictureURL']) >= 1 and
+                    item['PictureURL'][0] != None):
+                rspDict['photo'] = item['PictureURL'][0]
+            if ('ViewItemURLForNaturalSearch' and item['ViewItemURLForNaturalSearch'] != None):
+                rspDict['productLink'] = item['ViewItemURLForNaturalSearch']
+            if ('Title' in item and item['Title'] != None):
+                rspDict['title'] = item['Title']
+            if ('SubTitle' in item and item['SubTitle'] != None):
+                rspDict['subTitle'] = item['SubTitle']
+            if ('Location' in item and item['Location'] != None):
+                rspDict['location'] = item['Location']
+            if ('Seller' in item and item['Seller'] != None and 'UserID' in item['Seller'] and item['Seller'][
+                'UserID'] != None):
+                rspDict['seller'] = item['Seller']['UserID']
+            if ('ReturnPolicy' in item and item['ReturnPolicy'] != None and 'ReturnsAccepted' in item[
+                'ReturnPolicy'] and item['ReturnPolicy']['ReturnsAccepted'] != None):
+                rspDict['returnPolicy'] = item['ReturnPolicy']['ReturnsAccepted']
+            if ('ItemSpecifics' in item and item['ItemSpecifics'] != None and 'NameValueList' in item[
+                'ItemSpecifics'] and item['ItemSpecifics']['NameValueList'] != None):
+                for nameValue in item['ItemSpecifics']['NameValueList']:
+                    if (nameValue['Name'] != None and len(nameValue['Name']) >= 1):
+                        rspDict[nameValue['Name']] = " ,".join(nameValue['Value'])
+
+            return rspDict
+
+        except:
+            LOGGER.error("Error parsing response")
+            raise Exception("Error parsing response")
+
+    def parseFindAllItemsResponse(self, response):
+        try:
+            jsonObj = json.loads(response.text)
+            if('findItemsAdvancedResponse' not in jsonObj):
+                LOGGER.warn("No findItemsAdvancedResponse")
+                return ""
             rsp = jsonObj["findItemsAdvancedResponse"][0]
+            if('paginationOutput' not in rsp or 'totalEntries' not in rsp['paginationOutput'][0]):
+                LOGGER.warn("No paginationOutput or totalEntries field")
+                return ""
             totalResultsFound = rsp["paginationOutput"][0]["totalEntries"][0]
             LOGGER.info("Total results found: %s", totalResultsFound)
+            if('searchResult' not in rsp or len(rsp['searchResult']) < 1 or 'item' not in rsp['searchResult'][0]):
+                LOGGER.warn("No searchResult or item field")
+                return ""
             items = rsp["searchResult"][0]["item"]
             LOGGER.info("Total items fetched: %s", len(items))
 
-            filteredFields = FIND_ALL_ITEM_RESPONSE.copy()
+            filteredFields = FIND_ALL_ITEMS_RESPONSE.copy()
             filteredFields['totalResultsFound'] = totalResultsFound
 
             for item in items:
@@ -105,12 +178,14 @@ class EbayApis:
 
     def isItemValid(self, item):
         if (item != None
-                and item['itemId'] != None
-                and item['title'] != None
-                and item['primaryCategory'] != None and item['primaryCategory'][0]['categoryName'] != None
-                and item['viewItemURL'] != None
-                and item['condition'] != None and item['condition'][0]['conditionDisplayName'] != None
-                and item['topRatedListing'] != None
-                and item['sellingStatus'] != None and item['sellingStatus'][0]['convertedCurrentPrice'] != None):
+                and ('itemId' in item and  len(item['itemId'])>=1 and item['itemId'] != None)
+                and ('title' in item and  item['title'] != None)
+                and ('primaryCategory' in item and item['primaryCategory'] != None and len(item['primaryCategory'])>=1 and 'categoryName' in item['primaryCategory'][0]  and item['primaryCategory'][0]['categoryName'] != None)
+                and ('viewItemURL' in item and item['viewItemURL'] != None)
+                and ('condition' in item and item['condition'] != None and len(item['condition'])>=1 and 'conditionDisplayName' in item['condition'][0] and item['condition'][0]['conditionDisplayName'] != None)
+                and ('topRatedListing' in item and item['topRatedListing'] != None)
+                and ('sellingStatus' and item['sellingStatus'] != None and len(item['sellingStatus'][0])>=1 and item['sellingStatus'][0]['convertedCurrentPrice'] != None)):
+            LOGGER.info("Item %s is valid", item['itemId'][0])
             return True
+        LOGGER.warn("Item %s is invalid ", item)
         return False

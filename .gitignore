@@ -1,5 +1,5 @@
 #ignoring byte-compiled and optimized files#
-*/__pycache__/*
+**/__pycache__/
 
 
 #ignoring zip files#

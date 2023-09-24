@@ -8,7 +8,8 @@ import uuid
 import xml.etree.ElementTree as ET
 
 from app.logadapter.logger import *
-from app.ebayapis.EbayApis import *;
+from app.ebayapis.EbayApis import *
+from app.customexception.CustomException import *
 
 FIND_ALL_ITEMS = Blueprint("findAllItems", __name__)
 
@@ -27,71 +28,78 @@ ebayApis= EbayApis()
 
 @FIND_ALL_ITEMS.route("/findAllItems", methods=["GET"])
 def findAllItems():
-    print(request.args)
-    trackingId = request.args.get("trackingId", str(uuid.uuid4()))
-    flask.g.trackingId = trackingId
-    keyword = request.args.get("Key words")
-    priceRangeFrom = request.args.get("Price Range From", None)
-    priceRangeTo = request.args.get("Price Range To", None)
-    condition = request.args.getlist("Condition", None)
-    seller = request.args.getlist("Seller", None)
-    shipping = request.args.getlist("Shipping", None)
-    sortBy = request.args.get("Sort by")
+    try:
+        trackingId = request.args.get("trackingId", str(uuid.uuid4()))
+        flask.g.trackingId = trackingId
+        keyword = request.args.get("Key words")
+        priceRangeFrom = request.args.get("Price Range From", None)
+        priceRangeTo = request.args.get("Price Range To", None)
+        condition = request.args.getlist("Condition", None)
+        seller = request.args.getlist("Seller", None)
+        shipping = request.args.getlist("Shipping", None)
+        sortBy = request.args.get("Sort by")
 
-    LOGGER.info("Tracking Id: %s", str(trackingId))
-    LOGGER.info("Keyword: %s", keyword)
-    LOGGER.info("Price Range From: %s", priceRangeFrom)
-    LOGGER.info("Price Range To: %s", priceRangeTo)
-    LOGGER.info("Condition: %s", condition)
-    LOGGER.info("Seller: %s", seller)
-    LOGGER.info("Shipping: %s", shipping)
-    LOGGER.info("Sort By: %s", sortBy)
+        LOGGER.info("Tracking Id: %s", str(trackingId))
+        LOGGER.info("Keyword: %s", keyword)
+        LOGGER.info("Price Range From: %s", priceRangeFrom)
+        LOGGER.info("Price Range To: %s", priceRangeTo)
+        LOGGER.info("Condition: %s", condition)
+        LOGGER.info("Seller: %s", seller)
+        LOGGER.info("Shipping: %s", shipping)
+        LOGGER.info("Sort By: %s", sortBy)
 
-    payload=createXMLRequestPayload(trackingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy)
-    LOGGER.info("Payload: %s", payload)
-    return ebayApis.callFindAllItems(payload)
+        payload=createXMLRequestPayload(trackingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy)
+        LOGGER.info("Payload: %s", payload)
+        return ebayApis.callFindAllItems(payload)
+    except:
+        LOGGER.error("Error calling findAllItems")
+        return json.dumps(ResponseBody(500, "Error calling findAllItems", None).__dict__)
     # return ("", 200)
 
 
 def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy):
-    LOGGER.info("Creating XML Request Payload")
-    root = ET.Element("findItemsAdvancedRequest")
-    root.set("xmlns", "http://www.ebay.com/marketplace/search/v1/services")
+    try:
+        LOGGER.info("Creating XML Request Payload")
+        root = ET.Element("findItemsAdvancedRequest")
+        root.set("xmlns", "http://www.ebay.com/marketplace/search/v1/services")
 
-    ET.SubElement(root, "keywords").text=keyword
+        ET.SubElement(root, "keywords").text=keyword
 
 
-    if (priceRangeFrom is not None):
-        minPriceTag = createFilterTag(root, "MinPrice", priceRangeFrom)
-        ET.SubElement(minPriceTag, "paramName").text = "CURRENCY"
-        ET.SubElement(minPriceTag, "paramValue").text = "USD"
-    if (priceRangeTo is not None):
-        maxPriceTag = createFilterTag(root, "MaxPrice", priceRangeTo)
-        ET.SubElement(maxPriceTag, "paramName").text = "CURRENCY"
-        ET.SubElement(maxPriceTag, "paramValue").text = "USD"
-    if (condition is not None and len(condition) >= 1):
-        conditionTag = createFilterTag(root, "Condition", enum[condition[0]])
-        if (len(condition) > 1):
-            for i in range(1, len(condition)):
-                ET.SubElement(conditionTag, "value").text = enum[condition[i]]
-    if (seller is not None):
-        createFilterTag(root, "ReturnsAcceptedOnly", "true")
+        if (priceRangeFrom is not None):
+            minPriceTag = createFilterTag(root, "MinPrice", priceRangeFrom)
+            ET.SubElement(minPriceTag, "paramName").text = "CURRENCY"
+            ET.SubElement(minPriceTag, "paramValue").text = "USD"
+        if (priceRangeTo is not None):
+            maxPriceTag = createFilterTag(root, "MaxPrice", priceRangeTo)
+            ET.SubElement(maxPriceTag, "paramName").text = "CURRENCY"
+            ET.SubElement(maxPriceTag, "paramValue").text = "USD"
+        if (condition is not None and len(condition) >= 1):
+            conditionTag = createFilterTag(root, "Condition", enum[condition[0]])
+            if (len(condition) > 1):
+                for i in range(1, len(condition)):
+                    ET.SubElement(conditionTag, "value").text = enum[condition[i]]
+        if (seller is not None):
+            createFilterTag(root, "ReturnsAcceptedOnly", "true")
 
-    # if (shipping is not None and len(shipping) >= 1 and "Free" in shipping):
-    #     createFilterTag(root, "FreeShippingOnly", "true")
+        # if (shipping is not None and len(shipping) >= 1 and "Free" in shipping):
+        #     createFilterTag(root, "FreeShippingOnly", "true")
 
-    if (shipping is not None and len(shipping) >= 1 and "Expedited" in shipping):
-        createFilterTag(root, "ExpeditedShippingType", "Expedited")
+        if (shipping is not None and len(shipping) >= 1 and "Expedited" in shipping):
+            createFilterTag(root, "ExpeditedShippingType", "Expedited")
 
-    createFilterTag(root, "sortOrder", enum[sortBy])
+        createFilterTag(root, "sortOrder", enum[sortBy])
 
-    # sortOrder = ET.SubElement(root, "sortOrder")
-    # sortOrder.text = "BestMatch"
-    #
-    paginationInput = ET.SubElement(root, "paginationInput")
-    entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage").text="20"
-    # print(root)
-    return ET.tostring(root, encoding='utf8', method='xml')
+        # sortOrder = ET.SubElement(root, "sortOrder")
+        # sortOrder.text = "BestMatch"
+        #
+        paginationInput = ET.SubElement(root, "paginationInput")
+        entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage").text="20"
+        # print(root)
+        return ET.tostring(root, encoding='utf8', method='xml')
+    except:
+        LOGGER.error("Error creating XML Request Payload")
+        raise XMLRequestCreationException("Error creating XML Request Payload")
 
 
 def createFilterTag(root, name, value):
