@@ -14,11 +14,11 @@ enum = {"Best Match": "BestMatch",
         "Price: highest first": "CurrentPriceHighest",
         "Price + Shipping: highest first": "PricePlusShippingHighest",
         "Price + Shipping: lowest first": "PricePlusShippingLowest",
-        "New": 1000,
-        "Used": 3000,
-        "Very Good": 4000,
-        "Good": 5000,
-        "Acceptable": 6000
+        "New": "1000",
+        "Used": "3000",
+        "Very Good": "4000",
+        "Good": "5000",
+        "Acceptable": "6000"
         }
 
 
@@ -27,13 +27,13 @@ def findAllItems():
     print(request.args)
     trackingId = request.args.get("trackingId", str(uuid.uuid4()))
     flask.g.trackingId = trackingId
-    keyword = request.args.get("keyword")
-    priceRangeFrom = request.args.get("from-number", None)
-    priceRangeTo = request.args.get("to-number", None)
-    condition = request.args.getlist("condition", None)
-    seller = request.args.getlist("seller", None)
-    shipping = request.args.getlist("shipping", None)
-    sortBy = request.args.get("sort-by")
+    keyword = request.args.get("Key words")
+    priceRangeFrom = request.args.get("Price Range From", None)
+    priceRangeTo = request.args.get("Price Range To", None)
+    condition = request.args.getlist("Condition", None)
+    seller = request.args.getlist("Seller", None)
+    shipping = request.args.getlist("Shipping", None)
+    sortBy = request.args.get("Sort by")
 
     LOGGER.info("Tracking Id: %s", str(trackingId))
     LOGGER.info("Keyword: %s", keyword)
@@ -54,8 +54,8 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
     root = ET.Element("findItemsAdvancedRequest")
     root.set("xmlns", "http://www.ebay.com/marketplace/search/v1/services")
 
-    keywords = ET.SubElement(root, "keywords")
-    keywords.text = keyword
+    ET.SubElement(root, "keywords").text=keyword
+
 
     if (priceRangeFrom is not None):
         minPriceTag = createFilterTag(root, "MinPrice", priceRangeFrom)
@@ -84,10 +84,10 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
     # sortOrder = ET.SubElement(root, "sortOrder")
     # sortOrder.text = "BestMatch"
     #
-    # paginationInput = ET.SubElement(root, "paginationInput")
-    # entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage")
-    # entriesPerPage.text = "20"
+    paginationInput = ET.SubElement(root, "paginationInput")
+    entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage").text="20"
     print(root)
+    xmlRequestBody=ET.tostring(root, encoding='utf8', method='xml')
 
 
 def createFilterTag(root, name, value):
