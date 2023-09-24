@@ -4,9 +4,11 @@ sys.path.append("../app")
 
 from flask import Blueprint
 from flask import request
-from app.logadapter.logger import *
 import uuid
 import xml.etree.ElementTree as ET
+
+from app.logadapter.logger import *
+from app.ebayapis.EbayApis import *;
 
 FIND_ALL_ITEMS = Blueprint("findAllItems", __name__)
 
@@ -21,6 +23,7 @@ enum = {"Best Match": "BestMatch",
         "Acceptable": "6000"
         }
 
+ebayApis= EbayApis()
 
 @FIND_ALL_ITEMS.route("/findAllItems", methods=["GET"])
 def findAllItems():
@@ -44,9 +47,10 @@ def findAllItems():
     LOGGER.info("Shipping: %s", shipping)
     LOGGER.info("Sort By: %s", sortBy)
 
-    createXMLRequestPayload(trackingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy)
-
-    return ("", 200)
+    payload=createXMLRequestPayload(trackingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy)
+    LOGGER.info("Payload: %s", payload)
+    return ebayApis.callFindAllItems(payload)
+    # return ("", 200)
 
 
 def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy):
@@ -86,8 +90,8 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
     #
     paginationInput = ET.SubElement(root, "paginationInput")
     entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage").text="20"
-    print(root)
-    xmlRequestBody=ET.tostring(root, encoding='utf8', method='xml')
+    # print(root)
+    return ET.tostring(root, encoding='utf8', method='xml')
 
 
 def createFilterTag(root, name, value):
