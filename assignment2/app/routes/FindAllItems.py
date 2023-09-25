@@ -65,7 +65,7 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
         root = ET.Element("findItemsAdvancedRequest")
         root.set("xmlns", "http://www.ebay.com/marketplace/search/v1/services")
 
-        ET.SubElement(root, "keywords").text=keyword
+        ET.SubElement(root, "keywords").text="{}".format(keyword)
 
 
         if (priceRangeFrom is not None):
