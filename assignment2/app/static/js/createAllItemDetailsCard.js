@@ -1,13 +1,10 @@
 let N_DISPLAY_CARDS = 10;
 
-var ITEM_CARDS_HOLDER = null;
-
 function createCards(rsp) {
   console.log("Creating Cards ");
   parent = document.getElementById("card-container");
-  resultCard = createResultCards(parent, rsp.data);
+  createResultCards(parent, rsp.data);
   createItemCards(parent, rsp.data["items"]);
-  ITEM_CARDS_HOLDER=document.getElementById("card-container");
 }
 
 function createResultCards(parent, data) {
@@ -25,7 +22,7 @@ function createResultCards(parent, data) {
 }
 
 function createItemCards(parent, data) {
-  console.log("Creating Item Cards with data:" + data);
+  console.log("Creating Items Cards ");
   let n = Math.min(N_DISPLAY_CARDS, data.length);
   for (let i = 0; i < n; i++) {
     createTable(parent, data[i]);
@@ -42,7 +39,6 @@ function createTable(parent, data) {
   var row1 = table.insertRow(0);
   var cell1_1 = row1.insertCell(0);
   cell1_1.setAttribute("rowspan", "4"); // Set rowspan for the first cell
-  cell1_1.textContent = "First Column (Spans 4 Rows)";
 
   //adding image
   var img = createImageSection(data);
