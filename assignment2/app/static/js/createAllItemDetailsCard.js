@@ -1,10 +1,14 @@
 let N_DISPLAY_CARDS = 10;
-
+let TABLE_CARDS_HOLDER = [];
 function createCards(rsp) {
   console.log("Creating Cards ");
   parent = document.getElementById("card-container");
   createResultCards(parent, rsp.data);
   createItemCards(parent, rsp.data["items"]);
+  if (TABLE_CARDS_HOLDER.length > 3) {
+    console.log("More than 3 items, Creating Show More Button");
+    createShowMoreBtn(parent);
+  }
 }
 
 function createResultCards(parent, data) {
@@ -25,9 +29,108 @@ function createItemCards(parent, data) {
   console.log("Creating Items Cards ");
   let n = Math.min(N_DISPLAY_CARDS, data.length);
   for (let i = 0; i < n; i++) {
-    createTable(parent, data[i]);
+    let table = createTable(parent, data[i]);
+    if (i >= 3) {
+      table.style.display = "none";
+    }
+    TABLE_CARDS_HOLDER.push(table);
   }
 }
+
+function createShowMoreBtn(parent) {
+  console.log("Creating Show More Button");
+  let showMoreBtn = document.createElement("button");
+  showMoreBtn.setAttribute("class", "show-more-btn");
+  showMoreBtn.setAttribute("id", "show-more-btn");
+  showMoreBtn.innerHTML = "Show More";
+  showMoreBtn.addEventListener("click", showMore);
+  parent.appendChild(showMoreBtn);
+}
+
+function showMore() {
+  if (TABLE_CARDS_HOLDER.length <= 3) {
+    return;
+  }
+  console.log("Show More Button Clicked, adding remaining cards");
+  for(let i = 3; i < TABLE_CARDS_HOLDER.length; i++) {
+    TABLE_CARDS_HOLDER[i].style.display = "table";
+  }
+  let showMoreBtn = document.getElementById("show-more-btn");
+  showMoreBtn.style.display = "none";
+  let showLessBtn = document.createElement("button");
+  showLessBtn.setAttribute("class", "show-less-btn");
+  showLessBtn.setAttribute("id", "show-less-btn");
+  showLessBtn.innerHTML = "Show Less";
+  showLessBtn.addEventListener("click", showLess);
+  var parent = document.getElementById("card-container");
+  parent.appendChild(showLessBtn);
+  console.log("Scrolling to bottom");
+  // document.documentElement.scrollTop = document.documentElement.scrollHeight;
+  scrollToBottom();
+
+}
+
+function scrollToBottom() {
+  var currentPosition = window.scrollY; // Get the current scroll position
+  var targetPosition = document.documentElement.scrollHeight - window.innerHeight; // Calculate the target scroll position (bottom of the page)
+  var increment = 10; // Set the scroll increment (adjust as needed)
+  
+  // Define the scroll function
+  function scroll() {
+      if (currentPosition < targetPosition) {
+          currentPosition += increment;
+          if (currentPosition > targetPosition) {
+              currentPosition = targetPosition;
+          }
+          window.scrollTo(0, currentPosition); // Scroll to the updated position
+          window.requestAnimationFrame(scroll); // Request the next frame
+      }
+  }
+  
+  // Start the scroll animation
+  scroll();
+}
+
+function showLess(){
+  if(TABLE_CARDS_HOLDER.length <= 3) {
+    console.log("No need to show less");
+    return;
+  }
+  console.log("Show Less Button Clicked, removing remaining cards");
+  for(let i = 3; i < TABLE_CARDS_HOLDER.length; i++) {
+    TABLE_CARDS_HOLDER[i].style.display = "none";
+  }
+  let showMoreBtn = document.getElementById("show-more-btn");
+  showMoreBtn.style.display = "block";
+  let showLessBtn = document.getElementById("show-less-btn");
+  showLessBtn.style.display = "none";
+  console.log("Scrolling to top");
+  // document.documentElement.scrollTop = 0; 
+  scrollToTop();  
+}
+
+
+function scrollToTop() {
+  var currentPosition = window.scrollY; // Get the current scroll position
+  var targetPosition = 0; // Scroll to the top of the page
+  var increment = 10; // Set the scroll increment (adjust as needed)
+  
+  // Define the scroll function
+  function scroll() {
+      if (currentPosition > targetPosition) {
+          currentPosition -= increment;
+          if (currentPosition < targetPosition) {
+              currentPosition = targetPosition;
+          }
+          window.scrollTo(0, currentPosition); // Scroll to the updated position
+          window.requestAnimationFrame(scroll); // Request the next frame
+      }
+  }
+  
+  // Start the scroll animation
+  scroll();
+}
+
 
 function createTable(parent, data) {
   var table = document.createElement("table");
@@ -75,6 +178,7 @@ function createTable(parent, data) {
   // Add content to the second cell in each row
   //   cell2.textContent = "Second Column " + (i + 1);
   parent.appendChild(table);
+  return table;
 }
 
 function createImageSection(data) {

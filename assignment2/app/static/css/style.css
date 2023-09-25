@@ -52,7 +52,7 @@ a {
   padding: 10px;
 }
 
-.search-container-form-btn {
+.search-container-form-btn{
   border: none;
   height: 22px;
   border-radius: 3px;
@@ -61,3 +61,15 @@ a {
   background-color: limegreen;
   color: white;
 }
+
+.one-item-go-back-btn {
+    border: none;
+    height: 22px;
+    border-radius: 3px;
+}
+
+.one-item-go-back-btn:hover {
+  background-color: limegreen;
+  color: white;
+}
+
