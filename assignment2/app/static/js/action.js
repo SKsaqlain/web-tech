@@ -6,22 +6,24 @@ function fetchResults() {
   storeToLocalStorage();
   validateForm();
 
-  alert("Fetching Results");
+  
   console.log("Fetching All Results");
+  let trackingId=uniqueID().toString();
   let data = document.forms["search-form"];
   const xhr = new XMLHttpRequest();
   const fd = new FormData(data);
 
   xhr.addEventListener("load", (event) => {
-    alert("Data Sent and response laoded");
+    console.log("Response Received for findAllItems request: trackingId :"+trackingId);
+    createCards(JSON.parse(xhr.responseText));
   });
   xhr.addEventListener("error", (event) => {
-    alert("Something went wrong");
+    console.error("Something went wrong while making findAllItems request: trackingId"+trackingId+", error: "+xhr.responseText);
   });
 
   xhr.open(
     "GET",
-    "http://0.0.0.0:5050/findAllItems?" + new URLSearchParams(fd).toString()+"&"+"trackingId="+uniqueID().toString(),
+    "http://0.0.0.0:5050/findAllItems?" + new URLSearchParams(fd).toString()+"&"+"trackingId="+trackingId,
     true
   );
   xhr.send();

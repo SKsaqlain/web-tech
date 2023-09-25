@@ -50,7 +50,9 @@ def findAllItems():
 
         payload=createXMLRequestPayload(trackingId, keyword, priceRangeFrom, priceRangeTo, condition, seller, shipping, sortBy)
         LOGGER.info("Payload: %s", payload)
-        return ebayApis.callFindAllItems(payload)
+        response=ebayApis.callFindAllItems(payload)
+        LOGGER.info("Response: %s", response)
+        return response
     except:
         LOGGER.error("Error calling findAllItems")
         return json.dumps(ResponseBody(500, "Error calling findAllItems", None).__dict__)

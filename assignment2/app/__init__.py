@@ -10,6 +10,7 @@ from app.routes.FindItem import FIND_ITEM
 # logadapter.basicConfig(level=logadapter.INFO)
 
 app = Flask(__name__)
+app.static_folder = 'static'
 app.register_blueprint(FIND_ALL_ITEMS)
 app.register_blueprint(FIND_ITEM)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})

@@ -21,7 +21,9 @@ def findItem():
         itemId = request.args.get("itemId")
         LOGGER.info("Tracking Id: %s", str(trackingId))
         LOGGER.info("Item Id: %s", itemId)
-        return ebayApis.callFindItem(itemId)
+        response=ebayApis.callFindItem(itemId)
+        LOGGER.info("Response: %s", response)
+        return response
     except:
         LOGGER.error("Error calling findItem Api")
         return json.dumps(ResponseBody(500, "Error calling findItem", None).__dict__)

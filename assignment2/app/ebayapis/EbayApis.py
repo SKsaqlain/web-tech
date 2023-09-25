@@ -92,8 +92,8 @@ class EbayApis:
                 rspDict['subTitle'] = item['SubTitle']
             if ('Location' in item and item['Location'] != None):
                 rspDict['location'] = item['Location']
-            if ('Seller' in item and item['Seller'] != None and 'UserID' in item['Seller'] and item['Seller'][
-                'UserID'] != None):
+            if ('Seller' in item and item['Seller'] is not None and 'UserID' in item['Seller'] and item['Seller'][
+                'UserID'] is not None):
                 rspDict['seller'] = item['Seller']['UserID']
             if ('ReturnPolicy' in item and item['ReturnPolicy'] != None and 'ReturnsAccepted' in item[
                 'ReturnPolicy'] and item['ReturnPolicy']['ReturnsAccepted'] != None):
@@ -113,16 +113,16 @@ class EbayApis:
     def parseFindAllItemsResponse(self, response):
         try:
             jsonObj = json.loads(response.text)
-            if('findItemsAdvancedResponse' not in jsonObj):
+            if ('findItemsAdvancedResponse' not in jsonObj):
                 LOGGER.warn("No findItemsAdvancedResponse")
                 return ""
             rsp = jsonObj["findItemsAdvancedResponse"][0]
-            if('paginationOutput' not in rsp or 'totalEntries' not in rsp['paginationOutput'][0]):
+            if ('paginationOutput' not in rsp or 'totalEntries' not in rsp['paginationOutput'][0]):
                 LOGGER.warn("No paginationOutput or totalEntries field")
                 return ""
             totalResultsFound = rsp["paginationOutput"][0]["totalEntries"][0]
             LOGGER.info("Total results found: %s", totalResultsFound)
-            if('searchResult' not in rsp or len(rsp['searchResult']) < 1 or 'item' not in rsp['searchResult'][0]):
+            if ('searchResult' not in rsp or len(rsp['searchResult']) < 1 or 'item' not in rsp['searchResult'][0]):
                 LOGGER.warn("No searchResult or item field")
                 return ""
             items = rsp["searchResult"][0]["item"]
@@ -132,59 +132,71 @@ class EbayApis:
             filteredFields['totalResultsFound'] = totalResultsFound
 
             for item in items:
-                if (self.isItemValid(item) == False):
-                    LOGGER.info("Invalid item found with id %s", item['itemId'][0])
+                try:
+                    if (self.isItemValid(item) == False):
+                        LOGGER.info("Invalid item found with id %s", item['itemId'][0])
+                        continue
+                    itemDict = ITEM.copy()
+                    itemDict['itemId'] = item['itemId'][0]
+                    itemDict['itemImageUrl'] = self.getImageURL(item)
+                    itemDict['itemTitle'] = item['title'][0]
+                    itemDict['itemCategoryTag'] = item['primaryCategory'][0]['categoryName'][0]
+                    itemDict['productLink'] = item['viewItemURL'][0]
+                    itemDict['condition'] = item['condition'][0]['conditionDisplayName'][0]
+                    itemDict['isTopRated'] = item['topRatedListing'][0]
+                    itemDict['itemPrice'] = self.getItemPrice(item)
+                    filteredFields['items'].append(itemDict)
+                except:
+                    LOGGER.warn("Error parsing item %s", item['itemId'][0])
                     continue
-                itemDict = ITEM.copy()
-                itemDict['itemId'] = item['itemId'][0]
-                itemDict['itemImageUrl'] = self.getImageURL(item)
-                itemDict['itemTitle'] = item['title'][0]
-                itemDict['itemCategoryTag'] = item['primaryCategory'][0]['categoryName'][0]
-                itemDict['productLink'] = item['viewItemURL'][0]
-                itemDict['condition'] = item['condition'][0]['conditionDisplayName'][0]
-                itemDict['isTopRated'] = item['topRatedListing'][0]
-                itemDict['itemPrice'] = item['sellingStatus'][0]['currentPrice'][0]['__value__']
-                filteredFields['items'].append(itemDict)
             return filteredFields
         except:
             LOGGER.error("Error parsing response")
             raise Exception("Error parsing response")
 
     def getItemPrice(self, item):
-        price = ""
-        shipping = ""
-        if (item['sellingStatus'] != None and item['sellingStatus'][0]['currentPrice'] != None and
+        shipping = 0.0
+        price = 0.0
+        LOGGER.info("Getting price for item %s", item['itemId'][0])
+        if (item['sellingStatus'] != None and 'currentPrice' in item['sellingStatus'][0] and item['sellingStatus'][0][
+            'currentPrice'] != None and
                 item['sellingStatus'][0]['currentPrice'][0]['__value__'] != None):
             price = item['sellingStatus'][0]['currentPrice'][0]['__value__']
         else:
             LOGGER.warn("Price not found")
             raise Exception("Price not found")
-        if (item['shippingInfo'] != None and item['shippingInfo'][0]['shippingServiceCost'] != None and
+        if (item['shippingInfo'] != None and 'shippingServiceCost' in item['shippingInfo'][0] and
+                item['shippingInfo'][0]['shippingServiceCost'] != None and
                 item['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != None):
             shipping = item['shippingInfo'][0]['shippingServiceCost'][0]['__value__']
         else:
             LOGGER.warn("Shipping not found")
             raise Exception("Shipping not found")
         if (float(shipping) >= 0.01):
-            return "%s (+ %s for shipping)".format(price, shipping)
-        return price
+            return "${} (+ {} for shipping)".format(price, shipping)
+        return "${}".format(price)
 
     def getImageURL(self, item):
         if (item['galleryURL'] != None and len(item['galleryURL']) >= 1 and item['galleryURL'][0] != None):
             return item['galleryURL'][0]
         LOGGER.warn("Image URL not found returning default URL for item %s", item['itemId'][0])
         # todo: replace with default image url
-        return "default url"
+        return ""
 
     def isItemValid(self, item):
         if (item != None
-                and ('itemId' in item and  len(item['itemId'])>=1 and item['itemId'] != None)
-                and ('title' in item and  item['title'] != None)
-                and ('primaryCategory' in item and item['primaryCategory'] != None and len(item['primaryCategory'])>=1 and 'categoryName' in item['primaryCategory'][0]  and item['primaryCategory'][0]['categoryName'] != None)
+                and ('itemId' in item and len(item['itemId']) >= 1 and item['itemId'] != None)
+                and ('title' in item and item['title'] != None)
+                and ('primaryCategory' in item and item['primaryCategory'] != None and len(
+                    item['primaryCategory']) >= 1 and 'categoryName' in item['primaryCategory'][0] and
+                     item['primaryCategory'][0]['categoryName'] != None)
                 and ('viewItemURL' in item and item['viewItemURL'] != None)
-                and ('condition' in item and item['condition'] != None and len(item['condition'])>=1 and 'conditionDisplayName' in item['condition'][0] and item['condition'][0]['conditionDisplayName'] != None)
+                and ('condition' in item and item['condition'] != None and len(
+                    item['condition']) >= 1 and 'conditionDisplayName' in item['condition'][0] and item['condition'][0][
+                         'conditionDisplayName'] != None)
                 and ('topRatedListing' in item and item['topRatedListing'] != None)
-                and ('sellingStatus' and item['sellingStatus'] != None and len(item['sellingStatus'][0])>=1 and item['sellingStatus'][0]['convertedCurrentPrice'] != None)):
+                and ('sellingStatus' and item['sellingStatus'] != None and len(item['sellingStatus'][0]) >= 1 and
+                     item['sellingStatus'][0]['convertedCurrentPrice'] != None)):
             LOGGER.info("Item %s is valid", item['itemId'][0])
             return True
         LOGGER.warn("Item %s is invalid ", item)
