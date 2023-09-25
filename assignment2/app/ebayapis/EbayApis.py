@@ -20,31 +20,6 @@ class EbayApis:
         self.clientSecret = "PRD-92d3cfae42a6-9cd3-4480-9d41-ea62"
         self.tokenCreator = OAuthToken(self.clientId, self.clientSecret)
 
-    def callFinadAllItemsGet(self, payload):
-        try:
-            LOGGER.info("Creating findAllItems request")
-            headers = {
-                'Content-Type': 'application/xml'
-            }
-            params = {
-                'OPERATION-NAME': 'findItemsAdvanced',
-                'SERVICE-VERSION': '1.0.0',
-                'SECURITY-APPNAME': self.clientId,
-                'RESPONSE-DATA-FORMAT': 'JSON',
-            }
-            response = requests.get(self.findAllItemsUrl, headers=headers, params=params, data=payload)
-            if (response.status_code == 200):
-                LOGGER.info("findAllItems returned status code 200")
-                resp = self.parseFindAllItemsResponse(response)
-                return json.dumps(ResponseBody(200, "Success", resp).__dict__)
-            else:
-                LOGGER.warn("findAllItems returned status code %s", response.status_code)
-                return json.dumps(ResponseBody(response.status_code, "", None).__dict__)
-
-        except:
-            LOGGER.error("Error calling findAllItems")
-            return json.dumps(ResponseBody(500, "Error calling findAllItems", None).__dict__)
-
     def callFindAllItems(self, payload):
         try:
             LOGGER.info("Creating findAllItems request")
