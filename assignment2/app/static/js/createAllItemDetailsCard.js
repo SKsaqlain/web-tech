@@ -1,9 +1,13 @@
 let N_DISPLAY_CARDS = 10;
+
+var ITEM_CARDS_HOLDER = null;
+
 function createCards(rsp) {
   console.log("Creating Cards ");
   parent = document.getElementById("card-container");
   resultCard = createResultCards(parent, rsp.data);
   createItemCards(parent, rsp.data["items"]);
+  ITEM_CARDS_HOLDER=document.getElementById("card-container");
 }
 
 function createResultCards(parent, data) {
@@ -31,8 +35,10 @@ function createItemCards(parent, data) {
 function createTable(parent, data) {
   var table = document.createElement("table");
   table.setAttribute("class", "item-card-table");
-  table.setAttribute("id", "item-card-table-" + data["itemId"]);
+  table.setAttribute("id", data["itemId"]);
   table.setAttribute("border", "1");
+  table.addEventListener("click", searchAndLoadItemDetails);
+
   var row1 = table.insertRow(0);
   var cell1_1 = row1.insertCell(0);
   cell1_1.setAttribute("rowspan", "4"); // Set rowspan for the first cell
@@ -52,7 +58,7 @@ function createTable(parent, data) {
   var cell2_2 = row2.insertCell(0);
   cell2_2.textContent = "Category: " + data["itemCategoryTag"];
   cell2_2.setAttribute("class", "item-category");
-  var redirectLogo=createRedirectLogo(data);
+  var redirectLogo = createRedirectLogo(data);
   cell2_2.appendChild(redirectLogo);
 
   //add Condition and top rated logo
@@ -60,18 +66,18 @@ function createTable(parent, data) {
   var cell3_2 = row3.insertCell(0);
   cell3_2.textContent = "Condition: " + data["condition"];
   cell3_2.setAttribute("class", "item-condition");
-  if(data["isTopRated"]==='true'){
-    var topRatedLogo=createTopRatedLogo(data);
+  if (data["isTopRated"] === "true") {
+    var topRatedLogo = createTopRatedLogo(data);
     cell3_2.appendChild(topRatedLogo);
   }
   //add price
   var row4 = table.insertRow(3);
   var cell4_2 = row4.insertCell(0);
-  cell4_2.textContent = "Price: "+data["itemPrice"];
+  cell4_2.textContent = "Price: " + data["itemPrice"];
   cell4_2.setAttribute("class", "item-price");
 
   // Add content to the second cell in each row
-//   cell2.textContent = "Second Column " + (i + 1);
+  //   cell2.textContent = "Second Column " + (i + 1);
   parent.appendChild(table);
 }
 
@@ -87,15 +93,23 @@ function createImageSection(data) {
 }
 
 function createRedirectLogo(data) {
-    var redirectLogo = document.createElement("img");
-    redirectLogo.setAttribute("src", "/static/images/redirect.png");
-    redirectLogo.setAttribute("class", "item-redirect-logo");
-    return redirectLogo;
-    }
+  var redirectLogo = document.createElement("img");
+  redirectLogo.setAttribute("src", "/static/images/redirect.png");
+  redirectLogo.setAttribute("class", "item-redirect-logo");
+  return redirectLogo;
+}
 
-function createTopRatedLogo(data){
-    var topRatedLogo = document.createElement("img");
-    topRatedLogo.setAttribute("src", "/static/images/topRatedImage.png");
-    topRatedLogo.setAttribute("class", "item-top-rated-logo");
-    return topRatedLogo;
+function createTopRatedLogo(data) {
+  var topRatedLogo = document.createElement("img");
+  topRatedLogo.setAttribute("src", "/static/images/topRatedImage.png");
+  topRatedLogo.setAttribute("class", "item-top-rated-logo");
+  return topRatedLogo;
+}
+
+function searchAndLoadItemDetails() {
+  console.log("searchAndLoadItemDetails called");
+  console.log(this);
+  let itemId = this.id;
+  console.log(itemId);
+  fetchItemDetails(itemId);
 }
