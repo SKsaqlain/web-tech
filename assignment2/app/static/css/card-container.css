@@ -1,0 +1,17 @@
+.card-container {
+}
+
+.total-results-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+
+.item-card-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
