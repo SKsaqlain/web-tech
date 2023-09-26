@@ -13,6 +13,8 @@ ITEM_CARDS_HOLDER = [];
   }
   let titleCardWithGoBackBtn=createTitleCardWithGoBackBtn(rsp.data);
   parent.appendChild(titleCardWithGoBackBtn);
+  let goBackBtn=createGoBackBtn();
+  parent.appendChild(goBackBtn);
   let itemCard = createItemCardTable(rsp.data);
   parent.appendChild(itemCard);
 }
@@ -26,12 +28,23 @@ function createTitleCardWithGoBackBtn(data) {
     itemDetails.setAttribute("class","one-item-title-text");
     title.appendChild(itemDetails);
 
-    let goBackBtn=document.createElement("button");
+    // let goBackBtn=document.createElement("button");
+    // goBackBtn.setAttribute("class","one-item-go-back-btn");
+    // goBackBtn.innerHTML="Back to search results";
+    // goBackBtn.addEventListener("click",goBackToSearchResults);
+    // title.appendChild(goBackBtn);
+    return title;
+}
+
+function createGoBackBtn(){
+  let goBackBtnDiv=document.createElement("div");
+  goBackBtnDiv.setAttribute("class","one-item-go-back-btn-div");
+  let goBackBtn=document.createElement("button");
     goBackBtn.setAttribute("class","one-item-go-back-btn");
     goBackBtn.innerHTML="Back to search results";
     goBackBtn.addEventListener("click",goBackToSearchResults);
-    title.appendChild(goBackBtn);
-    return title;
+    goBackBtnDiv.appendChild(goBackBtn);
+    return goBackBtnDiv;
 }
 
 // Todo: implement this 
