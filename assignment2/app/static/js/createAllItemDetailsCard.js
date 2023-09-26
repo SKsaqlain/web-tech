@@ -1,7 +1,21 @@
 let N_DISPLAY_CARDS = 10;
 //variable to store all cards and their state
 let TABLE_CARDS_HOLDER = [];
+
+
+function deleteCards(){
+  let parent = document.getElementById("card-container");
+  // remove childrens
+  console.log("Removing all old search from card-container");
+  parent.innerHTML="";
+}
 function createCards(rsp) {
+  if(rsp.data=="" || rsp.data==NaN){
+    console.log("No results found for this search");
+    let parent = document.getElementById("card-container");
+    createNoResultsFoundCard(parent);  
+    return;
+  }
   console.log("Creating Cards ");
   let parent = document.getElementById("card-container");
   // remove childrens
@@ -14,6 +28,12 @@ function createCards(rsp) {
     console.log("More than 3 items, Creating Show More Button");
     createShowMoreBtn(parent);
   }
+}
+function createNoResultsFoundCard(parent){
+  let noResultsFoundCard=document.createElement("h1");
+  noResultsFoundCard.setAttribute("class","no-results-found-card");
+  noResultsFoundCard.innerHTML="No Results Found";
+  parent.appendChild(noResultsFoundCard);
 }
 
 function createResultCards(parent, data) {

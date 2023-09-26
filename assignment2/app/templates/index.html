@@ -15,13 +15,13 @@
     <div class="main-container">
         <div class="logo-container">
             <table>
-                <a href="https://www.ebay.com/" id="logo-link"></a>
-                <tr>
-                    <td><img src="{{ url_for('static', filename = '/images/ebayLogo.png')}}" alt="ebay-logo"
-                            id="eblay-logo-image"></td>
-                    <td><span class="shopping"> Shopping</span></td>
-                </tr>
-                </a>
+                
+                    <tr>
+                        <td><a href="https://www.ebay.com/" id="logo-link" target="_blank"><img src="{{ url_for('static', filename = '/images/ebayLogo.png')}}" alt="ebay-logo"
+                                id="eblay-logo-image"></a></td>
+                        <td><span class="shopping"> Shopping</span></td>
+                    </tr>
+                
             </table>
 
 
@@ -32,7 +32,7 @@
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Keywords<span
                                     style="color: red;">*</span>:</span> <input type="text" id="keyword"
-                                name="Key words" required /></td>
+                                name="Key words" required autocomplete="on"/></td>
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Price Range:</span>
@@ -79,7 +79,7 @@
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td">
-                            <button class="search-container-form-btn" onclick="clearFormAndCache()">Clear</button>
+                            <button class="search-container-form-btn" onclick="clearFormAndCache();deleteCards()">Clear</button>
                             <button class="search-container-form-btn" type="button"
                                 onclick="fetchAllItemDetails()">Search</button>
                         </td>

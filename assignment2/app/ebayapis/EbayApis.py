@@ -178,7 +178,7 @@ class EbayApis:
             LOGGER.warn("Shipping not found")
             raise Exception("Shipping not found")
         if (float(shipping) >= 0.01):
-            return "${} (+ {} for shipping)".format(price, shipping)
+            return "${} (+ ${} for shipping)".format(price, shipping)
         return "${}".format(price)
 
     def getImageURL(self, item):

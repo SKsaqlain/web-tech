@@ -90,11 +90,10 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
         if (shipping is not None and len(shipping) >= 1 and "Expedited" in shipping):
             createFilterTag(root, "ExpeditedShippingType", "Expedited")
 
-        createFilterTag(root, "sortOrder", enum[sortBy])
+        #adding sort order
+        ET.SubElement(root, "sortOrder").text= enum[sortBy]
 
-        # sortOrder = ET.SubElement(root, "sortOrder")
-        # sortOrder.text = "BestMatch"
-        #
+
         paginationInput = ET.SubElement(root, "paginationInput")
         entriesPerPage = ET.SubElement(paginationInput, "entriesPerPage").text="20"
         # print(root)

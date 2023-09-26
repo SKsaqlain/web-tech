@@ -87,7 +87,7 @@ function createAndInsertLinkElement(table, data) {
   linkField.innerHTML = "eBay Link";
   var linkValue = link.insertCell(1);
   linkValue.innerHTML =
-    "<a href=" + data["productLink"] + ">eBay Product Link</a>";
+    "<a href=" + data["productLink"] + " target='_blank'>eBay Product Link</a>";
   linkValue.setAttribute("class", "one-item-table-link");
 }
 
