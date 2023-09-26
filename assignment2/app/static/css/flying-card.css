@@ -1,0 +1,41 @@
+.flying-card-contianer {
+  background-color: rgb(230, 228, 230);
+  display: flex;
+  align-items: center;
+  /* To position div at the center of the page */
+  position:absolute;
+  left:50%;
+  height: 180px;
+  width: 800px;
+  margin-left:-400px;
+  
+  border-radius: 8px;
+  border: 1px solid gray;
+}
+.flying-image-container {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  height: 200px;
+}
+.flying-image {
+  width: 150px;
+  height: 100px;
+  margin-left: 20%;
+  border: 3px solid rgb(155,155,155)
+}
+
+.flying-table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left:10px;
+}
+
+.flying-table-container-td {
+  border: none;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}

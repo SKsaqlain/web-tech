@@ -4,8 +4,16 @@
 <head>
     <title> HW2</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = '/css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename = '/css/all-items-card-container.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename = '/css/one-item-card-container.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = '/css/all-items-card-container.css')}}"
+        type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = '/css/one-item-card-container.css')}}"
+        type="text/css" />
+
+        <link rel="stylesheet" href="{{ url_for('static', filename = '/css/flying-card.css')}}"
+        type="text/css" />
+
+
+
     <script src="{{ url_for('static', filename = '/js/validation.js')}}"></script>
     <script src="{{ url_for('static', filename = '/js/cache.js')}}"></script>
     <script src="{{ url_for('static', filename ='/js/action.js')}}"></script>
@@ -17,13 +25,14 @@
     <div class="main-container">
         <div class="logo-container">
             <table>
-                
-                    <tr>
-                        <td><a href="https://www.ebay.com/" id="logo-link" target="_blank"><img src="{{ url_for('static', filename = '/images/ebayLogo.png')}}" alt="ebay-logo"
+
+                <tr>
+                    <td><a href="https://www.ebay.com/" id="logo-link" target="_blank"><img
+                                src="{{ url_for('static', filename = '/images/ebayLogo.png')}}" alt="ebay-logo"
                                 id="eblay-logo-image"></a></td>
-                        <td><span class="shopping"> Shopping</span></td>
-                    </tr>
-                
+                    <td><span class="shopping"> Shopping</span></td>
+                </tr>
+
             </table>
 
 
@@ -34,7 +43,7 @@
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Keywords<span
                                     style="color: red;">*</span>:</span> <input type="text" id="keyword"
-                                name="Key words" required autocomplete="on"/></td>
+                                name="Key words" required autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Price Range:</span>
@@ -81,13 +90,35 @@
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td">
-                            <button class="search-container-form-btn" onclick="clearFormAndCache();deleteCards()">Clear</button>
+                            <button class="search-container-form-btn"
+                                onclick="clearFormAndCache();deleteCards()">Clear</button>
                             <button class="search-container-form-btn" type="button"
                                 onclick="fetchAllItemDetails()">Search</button>
                         </td>
                     </tr>
                 </table>
             </form>
+        </div>
+        <div class="flying-card-contianer">
+            <div class="flying-image-container">
+                <img src="https://i.ebayimg.com/00/s/MTYwMFgxNDA3/z/YYcAAOSw-sVkoBWa/$_57.JPG?set_id=880000500F" class="flying-image"/>
+            </div>
+            <div class="flying-table-container">
+                <table>
+                    <tr>
+                        <td class="flying-table-container-td">Price:</td>
+                    </tr>
+                    <tr>
+                        <td class="flying-table-container-td">Price:</td>
+                    </tr>
+                    <tr>
+                        <td class="flying-table-container-td">Price:</td>
+                    </tr>
+                    <tr>
+                        <td class="flying-table-container-td">Price:</td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="card-container" id="card-container"></div>
     </div>
