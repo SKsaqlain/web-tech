@@ -15,3 +15,14 @@
     justify-content: center;
     align-items: center;
   }
+
+  .item-redirect-logo{
+    width: 15px;
+    height: 15px;
+
+  }
+
+  .item-top-rated-logo{
+    width: 16px;
+    height: 25px;
+  }

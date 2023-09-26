@@ -171,7 +171,7 @@ function createTable(parent, data) {
   let img = createImageSection(data);
   cell1_1.appendChild(img);
 
-  // add item tiele
+  // add item title
   let cell1_2 = row1.insertCell(1);
   cell1_2.textContent = data["itemTitle"];
   cell1_2.setAttribute("class", "item-title");

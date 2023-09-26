@@ -77,6 +77,7 @@ function createAndInsertImageElement(table, data) {
   img.setAttribute("src", data["photo"]);
   img.setAttribute("alt", "Item Photo");
   img.setAttribute("class", "one-item-table-image");
+  photoValue.setAttribute("class", "one-item-table-value");
   photoValue.appendChild(img);
 }
 
@@ -85,6 +86,7 @@ function createAndInsertLinkElement(table, data) {
   var link = table.insertRow();
   var linkField = link.insertCell(0);
   linkField.innerHTML = "eBay Link";
+  linkField.setAttribute("class", "one-item-table-field");
   var linkValue = link.insertCell(1);
   linkValue.innerHTML =
     "<a href=" + data["productLink"] + " target='_blank'>eBay Product Link</a>";
