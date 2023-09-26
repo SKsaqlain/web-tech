@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
     <script src="resources/js/validation.js"></script>
     <script src="resources/js/cache.js"></script>
+    <script src="resources/js/action.js"></script>
 </head>
 
 <body onload="loadFromLocalStorage()">
@@ -75,7 +76,7 @@
                     <tr>
                         <td class="search-contianer-table-td">
                             <button class="search-container-form-btn" onclick="clearFormAndCache()">Clear</button>
-                            <button class="search-container-form-btn" type="submit">Search</button>
+                            <button class="search-container-form-btn" type="button" onclick="fetchResults()">Search</button>
                         </td>
                     </tr>
                 </table>

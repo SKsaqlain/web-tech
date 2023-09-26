@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<findItemsAdvancedRequest xmlns="http://www.ebay.com/marketplace/search/v1/services">
+  <!-- Call-specific Input Fields -->
+  
+  <!-- ... more domainFilter nodes allowed here ... -->
+  <itemFilter> ItemFilter
+    <name> ItemFilterType </name>
+    <paramName> token </psmaramName>
+    <paramValue> string </paramValue>
+    <value> string </value>
+</itemFilter>
+
+    <itemFilter>
+      <name> MinPrice </name>
+      <paramName> Currency </paramName>
+      <paramValue> USD </paramValue>
+      <value> 1000.0 </value>
+    </itemFilter>
+
+    <itemFilter>
+      <name> MaxPrice </name>
+      <paramName> Currency </paramName>
+      <paramValue> USD </paramValue>
+      <value> 1500.0 </value>
+    </itemFilter>
+
+    <itemFilter>
+      <name> ReturnsAcceptedOnly </name>
+      <value> true </value>
+    </itemFilter>
+
+    <!-- <name> ExpeditedShippingType </name>
+    <value> Expidited </value> -->
+
+    <itemFilter>
+      <name> Condition </name>
+      <value> 1000 </value>
+    </itemFilter>
+    <!-- ... more value values allowed here ... -->
+  <!-- ... more itemFilter nodes allowed here ... -->
+  <keywords> apple </keywords>
+  
+  <sortOrder> BestMatch </sortOrder>
+</findItemsAdvancedRequest>

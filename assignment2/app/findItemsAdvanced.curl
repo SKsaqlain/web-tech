@@ -1,0 +1,42 @@
+curl --location 'https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=SaqlainS-sms-PRD-d92d3cfae-360cb3a9&RESPONSE-DATA-FORMAT=JSON' \
+--header 'Content-Type: application/xml' \
+--data '<?xml version="1.0" encoding="utf-8"?>
+<findItemsAdvancedRequest xmlns="http://www.ebay.com/marketplace/search/v1/services">
+  <!-- Call-specific Input Fields -->
+  
+  <!-- ... more domainFilter nodes allowed here ... -->
+
+    <itemFilter>
+      <name> MinPrice </name>
+      <paramName> Currency </paramName>
+      <paramValue> USD </paramValue>
+      <value> 1000.0 </value>
+    </itemFilter>
+
+    <itemFilter>
+      <name> MaxPrice </name>
+      <paramName> Currency </paramName>
+      <paramValue> USD </paramValue>
+      <value> 1500.0 </value>
+    </itemFilter>
+
+    <itemFilter>
+      <name> ReturnsAcceptedOnly </name>
+      <value> true </value>
+    </itemFilter>
+
+    <!-- <name> ExpeditedShippingType </name>
+    <value> Expidited </value> -->
+
+    <itemFilter>
+      <name> Condition </name>
+      <value> 1000 </value>
+    </itemFilter>
+    <!-- ... more value values allowed here ... -->
+  <!-- ... more itemFilter nodes allowed here ... -->
+  <keywords> "apple" </keywords>
+  <sortOrder> BestMatch </sortOrder>
+   <paginationInput>
+    <entriesPerPage>10</entriesPerPage>
+  </paginationInput>
+</findItemsAdvancedRequest>'
