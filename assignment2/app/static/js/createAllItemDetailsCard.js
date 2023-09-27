@@ -157,52 +157,110 @@ function scrollToTop() {
 }
 
 function createTable(parent, data) {
-  let table = document.createElement("table");
-  table.setAttribute("class", "item-card-table");
-  table.setAttribute("id", data["itemId"]);
-  table.setAttribute("border", "1");
-  table.addEventListener("click", searchAndLoadItemDetails);
+  // let table = document.createElement("table");
+  // table.setAttribute("class", "item-card-table");
+  // table.setAttribute("id", data["itemId"]);
+  // table.setAttribute("border", "1");
+  // table.addEventListener("click", searchAndLoadItemDetails);
 
-  let row1 = table.insertRow(0);
-  let cell1_1 = row1.insertCell(0);
-  cell1_1.setAttribute("rowspan", "4"); // Set rowspan for the first cell
+  //parent div
+  let flyingCardContainer = document.createElement("div");
+  flyingCardContainer.setAttribute("class", "flying-card-container");
+  flyingCardContainer.setAttribute("id", data["itemId"]);
+  flyingCardContainer.addEventListener("click", searchAndLoadItemDetails);
 
-  //adding image
-  let img = createImageSection(data);
-  cell1_1.appendChild(img);
+  //image div starts
+  let flyingImageContainer = document.createElement("div");
+  flyingImageContainer.setAttribute("class", "flying-image-container");
 
-  // add item title
-  let cell1_2 = row1.insertCell(1);
-  cell1_2.textContent = data["itemTitle"];
-  cell1_2.setAttribute("class", "item-title");
-
-  // add Category and redirect logo
-  let row2 = table.insertRow(1);
-  let cell2_2 = row2.insertCell(0);
-  cell2_2.textContent = "Category: " + data["itemCategoryTag"];
-  cell2_2.setAttribute("class", "item-category");
-  let redirectLogo = createRedirectLogo(data);
-  cell2_2.appendChild(redirectLogo);
-
-  //add Condition and top rated logo
-  let row3 = table.insertRow(2);
-  let cell3_2 = row3.insertCell(0);
-  cell3_2.textContent = "Condition: " + data["condition"];
-  cell3_2.setAttribute("class", "item-condition");
-  if (data["isTopRated"] === "true") {
-    let topRatedLogo = createTopRatedLogo(data);
-    cell3_2.appendChild(topRatedLogo);
+  if (data["itemImageUrl"] == "") {
+    data["itemImageUrl"] = "https://thumbs1.ebaystatic.com/ pict/04040_0.jpg";
   }
-  //add price
-  let row4 = table.insertRow(3);
-  let cell4_2 = row4.insertCell(0);
-  cell4_2.textContent = "Price: " + data["itemPrice"];
-  cell4_2.setAttribute("class", "item-price");
+  let img = document.createElement("img");
+  img.setAttribute("src", data["itemImageUrl"]);
+  img.setAttribute("class", "flying-image");
+  flyingImageContainer.appendChild(img);
+  flyingCardContainer.appendChild(flyingImageContainer);
+  //image div ends
 
-  // Add content to the second cell in each row
-  //   cell2.textContent = "Second Column " + (i + 1);
-  parent.appendChild(table);
-  return table;
+  //table div starts
+  let flyingTableContainer = document.createElement("div");
+  flyingTableContainer.setAttribute("class", "flying-table-container");
+  // let flyingTable = document.createElement("table");
+
+  let titleCode = `<tr>
+  <td class="flying-table-container-td" ><div class="title">${data["itemTitle"]}</div></td>
+</tr>`;
+  let categoryCode = `<tr>
+<td class="flying-table-container-td">Category: <i>${data["itemCategoryTag"]}</i>
+<img src="/static/images/redirect.png" class="item-redirect-logo"/>
+</td>
+</tr>`;
+
+  let condition = `Condition: ${data["condition"]}`;
+  let topRated = "";
+  if (data["isTopRated"] === "true") {
+    topRated = `<img src="/static/images/topRatedImage.png" class="item-top-rated-logo"/>`;
+  }
+  let conditionCode = `<tr>
+<td class="flying-table-container-td">${condition + topRated}</td>
+</tr>`;
+
+  let priceCode = `<tr>
+<td class="flying-table-container-td"><b>Price: ${data["itemPrice"]}</b></td>
+</tr>`;
+let flyingTableCode=`<table>${titleCode + categoryCode + conditionCode + priceCode}</table>`
+  // flyingTable.innerHTML = titleCode + categoryCode + conditionCode + priceCode;
+
+  // flyingTableContainer.appendChild(flyingTable);
+  flyingTableContainer.innerHTML=flyingTableCode;
+  flyingCardContainer.appendChild(flyingTableContainer);
+
+  parent.appendChild(flyingCardContainer);
+
+  return flyingCardContainer;
+  //table div ends
+
+  // let row1 = table.insertRow(0);
+  // let cell1_1 = row1.insertCell(0);
+  // cell1_1.setAttribute("rowspan", "4"); // Set rowspan for the first cell
+
+  // //adding image
+  // let img = createImageSection(data);
+  // cell1_1.appendChild(img);
+
+  // // add item title
+  // let cell1_2 = row1.insertCell(1);
+  // cell1_2.textContent = data["itemTitle"];
+  // cell1_2.setAttribute("class", "item-title");
+
+  // // add Category and redirect logo
+  // let row2 = table.insertRow(1);
+  // let cell2_2 = row2.insertCell(0);
+  // cell2_2.textContent = "Category: " + data["itemCategoryTag"];
+  // cell2_2.setAttribute("class", "item-category");
+  // let redirectLogo = createRedirectLogo(data);
+  // cell2_2.appendChild(redirectLogo);
+
+  // //add Condition and top rated logo
+  // let row3 = table.insertRow(2);
+  // let cell3_2 = row3.insertCell(0);
+  // cell3_2.textContent = "Condition: " + data["condition"];
+  // cell3_2.setAttribute("class", "item-condition");
+  // if (data["isTopRated"] === "true") {
+  //   let topRatedLogo = createTopRatedLogo(data);
+  //   cell3_2.appendChild(topRatedLogo);
+  // }
+  // //add price
+  // let row4 = table.insertRow(3);
+  // let cell4_2 = row4.insertCell(0);
+  // cell4_2.textContent = "Price: " + data["itemPrice"];
+  // cell4_2.setAttribute("class", "item-price");
+
+  // // Add content to the second cell in each row
+  // //   cell2.textContent = "Second Column " + (i + 1);
+  // parent.appendChild(table);
+  // return table;
 }
 
 function createImageSection(data) {
