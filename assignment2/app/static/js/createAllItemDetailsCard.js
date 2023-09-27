@@ -206,7 +206,7 @@ function createTable(parent, data) {
 </tr>`;
   let categoryCode = `<tr>
 <td class="flying-table-container-td">Category: <i>${data["itemCategoryTag"]}</i>
-<img src="/static/images/redirect.png" class="item-redirect-logo"/>
+<a src="${data["productLink"]}" target="_blank" class="item-redirect-link"><img src="/static/images/redirect.png" class="item-redirect-logo"/></a>
 </td>
 </tr>`;
 
