@@ -197,7 +197,7 @@ function createTable(parent, data) {
 </td>
 </tr>`;
 
-  let condition = `Condition: ${data["condition"]}`;
+  let condition = `<span class="item-condition">Condition: ${data["condition"]}</span>`;
   let topRated = "";
   if (data["isTopRated"] === "true") {
     topRated = `<img src="/static/images/topRatedImage.png" class="item-top-rated-logo"/>`;

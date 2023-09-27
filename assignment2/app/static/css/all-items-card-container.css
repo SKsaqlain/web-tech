@@ -34,7 +34,7 @@
 }
 
 .flying-image{
-  width: 150px;
+  width: 120px;
   height: 100px;
   margin-left: 20%;
   border: 3px solid rgb(155, 155, 155);
@@ -68,9 +68,21 @@
   height: 15px;
 }
 
+
+.item-condition{
+  display:inline-flex;
+  align-items:center;
+}
+
+/* .item-condition img{
+  vertical-align: middle;
+  margin-right: 5px;;
+} */
 .item-top-rated-logo {
-  width: 16px;
-  height: 25px;
+  width: 24px;
+  height: 34px;
+  vertical-align: middle;
+  margin-left:10px; 
 }
 
 .total-results-card {
