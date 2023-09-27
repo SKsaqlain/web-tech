@@ -28,7 +28,7 @@
 
 .flying-card-container:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
+  
 }
 
 .flying-image-container {
@@ -38,11 +38,16 @@
   height: 200px;
 }
 
-.flying-image{
+.flying-image {
   width: 120px;
   height: 100px;
   margin-left: 20%;
-  border: 3px solid rgb(155, 155, 155);
+  border: 2px solid lightgray;
+  transition: 0.5s;
+}
+
+.flying-image:hover {
+  transform: scale(1.8);
 }
 
 .flying-table-container {
@@ -73,17 +78,16 @@
   height: 15px;
 }
 
-
-.item-condition{
-  display:inline-flex;
-  align-items:center;
+.item-condition {
+  display: inline-flex;
+  align-items: center;
 }
 
 .item-top-rated-logo {
   width: 24px;
   height: 34px;
   vertical-align: middle;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .total-results-card {
@@ -94,12 +98,11 @@
   font-size: xx-large;
 }
 
-
-.show-more-btn ,
-.show-less-btn{
+.show-more-btn,
+.show-less-btn {
   position: relative;
   left: 50%;
-  margin-top: 5px;;
+  margin-top: 5px;
   /* padding-top: 5px; */
   height: 180px;
   width: 120px;
@@ -109,15 +112,15 @@
   border-radius: 4px;
 }
 
-.show-more-btn:hover,.show-less-btn:hover {
+.show-more-btn:hover,
+.show-less-btn:hover {
   background-color: limegreen;
   color: white;
 }
 
-
-.horizontal-grey-line{
-    border: none;
-    border-top: 1px solid lightgray;
-    position: relative;
-    width: 800px;
+.horizontal-grey-line {
+  border: none;
+  border-top: 1px solid lightgray;
+  position: relative;
+  width: 800px;
 }
