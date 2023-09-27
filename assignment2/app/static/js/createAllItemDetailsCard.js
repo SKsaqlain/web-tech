@@ -2,25 +2,24 @@ let N_DISPLAY_CARDS = 10;
 //variable to store all cards and their state
 let TABLE_CARDS_HOLDER = [];
 
-
-function deleteCards(){
+function deleteCards() {
   let parent = document.getElementById("card-container");
   // remove childrens
   console.log("Removing all old search from card-container");
-  parent.innerHTML="";
+  parent.innerHTML = "";
 }
 function createCards(rsp) {
-  if(rsp.data=="" || rsp.data==NaN){
+  if (rsp.data == "" || rsp.data == NaN) {
     console.log("No results found for this search");
     let parent = document.getElementById("card-container");
-    createNoResultsFoundCard(parent);  
+    createNoResultsFoundCard(parent);
     return;
   }
   console.log("Creating Cards ");
   let parent = document.getElementById("card-container");
   // remove childrens
   console.log("Removing all old search from card-container");
-  parent.innerHTML="";
+  parent.innerHTML = "";
 
   createResultCards(parent, rsp.data);
   createHorizontalGreyLine(parent);
@@ -28,17 +27,18 @@ function createCards(rsp) {
   if (TABLE_CARDS_HOLDER.length > 3) {
     console.log("More than 3 items, Creating Show More Button");
     createShowMoreBtn(parent);
+    createShowLessBtn(parent);
   }
 }
-function createNoResultsFoundCard(parent){
-  let noResultsFoundCard=document.createElement("h1");
-  noResultsFoundCard.setAttribute("class","no-results-found-card");
-  noResultsFoundCard.innerHTML="No Results Found";
+function createNoResultsFoundCard(parent) {
+  let noResultsFoundCard = document.createElement("h1");
+  noResultsFoundCard.setAttribute("class", "no-results-found-card");
+  noResultsFoundCard.innerHTML = "No Results Found";
   parent.appendChild(noResultsFoundCard);
 }
-function createHorizontalGreyLine(parent){
-  let hrLine=document.createElement("hr")
-  hrLine.setAttribute("class","horizontal-grey-line");
+function createHorizontalGreyLine(parent) {
+  let hrLine = document.createElement("hr");
+  hrLine.setAttribute("class", "horizontal-grey-line");
   parent.appendChild(hrLine);
   return hrLine;
 }
@@ -59,7 +59,7 @@ function createResultCards(parent, data) {
 function createItemCards(parent, data) {
   console.log("Creating Items Cards ");
   let n = Math.min(N_DISPLAY_CARDS, data.length);
-  TABLE_CARDS_HOLDER=[];
+  TABLE_CARDS_HOLDER = [];
   for (let i = 0; i < n; i++) {
     let table = createTable(parent, data[i]);
     if (i >= 3) {
@@ -79,6 +79,15 @@ function createShowMoreBtn(parent) {
   parent.appendChild(showMoreBtn);
 }
 
+function createShowLessBtn(parent) {
+  let showLessBtn = document.createElement("button");
+  showLessBtn.setAttribute("class", "show-less-btn");
+  showLessBtn.setAttribute("id", "show-less-btn");
+  showLessBtn.innerHTML = "Show Less";
+  showLessBtn.addEventListener("click", showLess);
+  showLessBtn.style.display = "none";
+  parent.appendChild(showLessBtn);
+}
 
 function showMore() {
   if (TABLE_CARDS_HOLDER.length <= 3) {
@@ -90,16 +99,13 @@ function showMore() {
   }
   let showMoreBtn = document.getElementById("show-more-btn");
   showMoreBtn.style.display = "none";
-  let showLessBtn = document.createElement("button");
-  showLessBtn.setAttribute("class", "show-less-btn");
-  showLessBtn.setAttribute("id", "show-less-btn");
-  showLessBtn.innerHTML = "Show Less";
-  showLessBtn.addEventListener("click", showLess);
-  let parent = document.getElementById("card-container");
-  parent.appendChild(showLessBtn);
+
   console.log("Scrolling to bottom");
   // document.documentElement.scrollTop = document.documentElement.scrollHeight;
+  let showLessBtn = document.getElementById("show-less-btn");
+  showLessBtn.style.display = "block";
   scrollToBottom();
+  
 }
 
 function scrollToBottom() {
@@ -216,18 +222,19 @@ function createTable(parent, data) {
   let priceCode = `<tr>
 <td class="flying-table-container-td"><b>Price: ${data["itemPrice"]}</b></td>
 </tr>`;
-let flyingTableCode=`<table>${titleCode + categoryCode + conditionCode + priceCode}</table>`
+  let flyingTableCode = `<table>${
+    titleCode + categoryCode + conditionCode + priceCode
+  }</table>`;
   // flyingTable.innerHTML = titleCode + categoryCode + conditionCode + priceCode;
 
   // flyingTableContainer.appendChild(flyingTable);
-  flyingTableContainer.innerHTML=flyingTableCode;
+  flyingTableContainer.innerHTML = flyingTableCode;
   flyingCardContainer.appendChild(flyingTableContainer);
 
   parent.appendChild(flyingCardContainer);
 
   return flyingCardContainer;
   //table div ends
-
 }
 
 function createImageSection(data) {
