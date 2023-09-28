@@ -13,6 +13,8 @@ ITEM_CARDS_HOLDER = [];
   }
   let titleCardWithGoBackBtn=createTitleCardWithGoBackBtn(rsp.data);
   parent.appendChild(titleCardWithGoBackBtn);
+  let goBackBtn=createGoBackBtn();
+  parent.appendChild(goBackBtn);
   let itemCard = createItemCardTable(rsp.data);
   parent.appendChild(itemCard);
 }
@@ -26,12 +28,23 @@ function createTitleCardWithGoBackBtn(data) {
     itemDetails.setAttribute("class","one-item-title-text");
     title.appendChild(itemDetails);
 
-    let goBackBtn=document.createElement("button");
+    // let goBackBtn=document.createElement("button");
+    // goBackBtn.setAttribute("class","one-item-go-back-btn");
+    // goBackBtn.innerHTML="Back to search results";
+    // goBackBtn.addEventListener("click",goBackToSearchResults);
+    // title.appendChild(goBackBtn);
+    return title;
+}
+
+function createGoBackBtn(){
+  let goBackBtnDiv=document.createElement("div");
+  goBackBtnDiv.setAttribute("class","one-item-go-back-btn-div");
+  let goBackBtn=document.createElement("button");
     goBackBtn.setAttribute("class","one-item-go-back-btn");
     goBackBtn.innerHTML="Back to search results";
     goBackBtn.addEventListener("click",goBackToSearchResults);
-    title.appendChild(goBackBtn);
-    return title;
+    goBackBtnDiv.appendChild(goBackBtn);
+    return goBackBtnDiv;
 }
 
 // Todo: implement this 
@@ -68,35 +81,38 @@ function createItemCardTable(data) {
 }
 
 function createAndInsertImageElement(table, data) {
-  var photo = table.insertRow();
-  var photoField = photo.insertCell(0);
+  let photo = table.insertRow();
+  let photoField = photo.insertCell(0);
   photoField.innerHTML = "Photo";
   photoField.setAttribute("class", "one-item-table-field");
-  var photoValue = photo.insertCell(1);
-    var img = document.createElement("img");
+  let photoValue = photo.insertCell(1);
+    let img = document.createElement("img");
   img.setAttribute("src", data["photo"]);
   img.setAttribute("alt", "Item Photo");
   img.setAttribute("class", "one-item-table-image");
+  photoValue.setAttribute("class", "one-item-table-value");
   photoValue.appendChild(img);
 }
 
 
 function createAndInsertLinkElement(table, data) {
-  var link = table.insertRow();
-  var linkField = link.insertCell(0);
+  let link = table.insertRow();
+  let linkField = link.insertCell(0);
   linkField.innerHTML = "eBay Link";
-  var linkValue = link.insertCell(1);
+  linkField.setAttribute("class", "one-item-table-field");
+  let linkValue = link.insertCell(1);
   linkValue.innerHTML =
     "<a href=" + data["productLink"] + " target='_blank'>eBay Product Link</a>";
   linkValue.setAttribute("class", "one-item-table-link");
 }
 
 function createAndInsertNormalElement(table, key, data) {
-  var row = table.insertRow();
-  var field = row.insertCell(0);
+  let row = table.insertRow();
+  let field = row.insertCell(0);
   field.innerHTML = key;
   field.setAttribute("class", "one-item-table-field");
-  var value = row.insertCell(1);
-  value.innerHTML = data[key];
+  let value = row.insertCell(1);
+  value.innerHTML =`<div class="one-item-table-value-div">${data[key]}</div>`;
+  
   value.setAttribute("class", "one-item-table-value");
 }

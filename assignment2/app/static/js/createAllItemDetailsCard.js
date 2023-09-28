@@ -2,50 +2,58 @@ let N_DISPLAY_CARDS = 10;
 //variable to store all cards and their state
 let TABLE_CARDS_HOLDER = [];
 
-
-function deleteCards(){
+function deleteCards() {
   let parent = document.getElementById("card-container");
   // remove childrens
   console.log("Removing all old search from card-container");
-  parent.innerHTML="";
+  parent.innerHTML = "";
 }
 function createCards(rsp) {
-  if(rsp.data=="" || rsp.data==NaN){
+  if (rsp.data == "" || rsp.data == NaN) {
     console.log("No results found for this search");
     let parent = document.getElementById("card-container");
-    createNoResultsFoundCard(parent);  
+    createNoResultsFoundCard(parent);
     return;
   }
   console.log("Creating Cards ");
   let parent = document.getElementById("card-container");
   // remove childrens
   console.log("Removing all old search from card-container");
-  parent.innerHTML="";
+  parent.innerHTML = "";
 
   createResultCards(parent, rsp.data);
+  createHorizontalGreyLine(parent);
   createItemCards(parent, rsp.data["items"]);
   if (TABLE_CARDS_HOLDER.length > 3) {
     console.log("More than 3 items, Creating Show More Button");
     createShowMoreBtn(parent);
+    createShowLessBtn(parent);
   }
 }
-function createNoResultsFoundCard(parent){
-  let noResultsFoundCard=document.createElement("h1");
-  noResultsFoundCard.setAttribute("class","no-results-found-card");
-  noResultsFoundCard.innerHTML="No Results Found";
+function createNoResultsFoundCard(parent) {
+  
+  console.log("Removing all old search from card-container");
+  parent.innerHTML = "";
+  let noResultsFoundCard = document.createElement("h1");
+  noResultsFoundCard.setAttribute("class", "no-results-found-card");
+  noResultsFoundCard.innerHTML = "No Results Found";
   parent.appendChild(noResultsFoundCard);
 }
-
+function createHorizontalGreyLine(parent) {
+  let hrLine = document.createElement("hr");
+  hrLine.setAttribute("class", "horizontal-grey-line");
+  parent.appendChild(hrLine);
+  return hrLine;
+}
 function createResultCards(parent, data) {
   console.log("Creating Result Cards with data:" + data["totalResultsFound"]);
   let reqForm = document.forms["search-form"];
   let totalResultsFound = data["totalResultsFound"];
   resultsCard = document.createElement("div");
   resultsCard.setAttribute("class", "total-results-card");
+  // resultsCard.innerHTML =`<p>${parseInt(totalResultsFound)} Results found for <i>${reqForm["Key words"].value}</i><p>`;
   resultsCard.innerHTML =
-    parseInt(totalResultsFound) +
-    " Results found for " +
-    reqForm["Key words"].value;
+    `${parseInt(totalResultsFound)} Results found for&nbsp<i>${reqForm["Key words"].value}</i>`;
   parent.appendChild(resultsCard);
   return resultsCard;
 }
@@ -53,7 +61,7 @@ function createResultCards(parent, data) {
 function createItemCards(parent, data) {
   console.log("Creating Items Cards ");
   let n = Math.min(N_DISPLAY_CARDS, data.length);
-  TABLE_CARDS_HOLDER=[];
+  TABLE_CARDS_HOLDER = [];
   for (let i = 0; i < n; i++) {
     let table = createTable(parent, data[i]);
     if (i >= 3) {
@@ -73,26 +81,33 @@ function createShowMoreBtn(parent) {
   parent.appendChild(showMoreBtn);
 }
 
+function createShowLessBtn(parent) {
+  let showLessBtn = document.createElement("button");
+  showLessBtn.setAttribute("class", "show-less-btn");
+  showLessBtn.setAttribute("id", "show-less-btn");
+  showLessBtn.innerHTML = "Show Less";
+  showLessBtn.addEventListener("click", showLess);
+  showLessBtn.style.display = "none";
+  parent.appendChild(showLessBtn);
+}
+
 function showMore() {
   if (TABLE_CARDS_HOLDER.length <= 3) {
     return;
   }
   console.log("Show More Button Clicked, adding remaining cards");
   for (let i = 3; i < TABLE_CARDS_HOLDER.length; i++) {
-    TABLE_CARDS_HOLDER[i].style.display = "table";
+    TABLE_CARDS_HOLDER[i].style.display = "";
   }
   let showMoreBtn = document.getElementById("show-more-btn");
   showMoreBtn.style.display = "none";
-  let showLessBtn = document.createElement("button");
-  showLessBtn.setAttribute("class", "show-less-btn");
-  showLessBtn.setAttribute("id", "show-less-btn");
-  showLessBtn.innerHTML = "Show Less";
-  showLessBtn.addEventListener("click", showLess);
-  let parent = document.getElementById("card-container");
-  parent.appendChild(showLessBtn);
+
   console.log("Scrolling to bottom");
   // document.documentElement.scrollTop = document.documentElement.scrollHeight;
+  let showLessBtn = document.getElementById("show-less-btn");
+  showLessBtn.style.display = "block";
   scrollToBottom();
+  
 }
 
 function scrollToBottom() {
@@ -157,52 +172,71 @@ function scrollToTop() {
 }
 
 function createTable(parent, data) {
-  let table = document.createElement("table");
-  table.setAttribute("class", "item-card-table");
-  table.setAttribute("id", data["itemId"]);
-  table.setAttribute("border", "1");
-  table.addEventListener("click", searchAndLoadItemDetails);
+  // let table = document.createElement("table");
+  // table.setAttribute("class", "item-card-table");
+  // table.setAttribute("id", data["itemId"]);
+  // table.setAttribute("border", "1");
+  // table.addEventListener("click", searchAndLoadItemDetails);
 
-  let row1 = table.insertRow(0);
-  let cell1_1 = row1.insertCell(0);
-  cell1_1.setAttribute("rowspan", "4"); // Set rowspan for the first cell
+  //parent div
+  let flyingCardContainer = document.createElement("div");
+  flyingCardContainer.setAttribute("class", "flying-card-container");
+  flyingCardContainer.setAttribute("id", data["itemId"]);
+  flyingCardContainer.addEventListener("click", searchAndLoadItemDetails);
 
-  //adding image
-  let img = createImageSection(data);
-  cell1_1.appendChild(img);
+  //image div starts
+  let flyingImageContainer = document.createElement("div");
+  flyingImageContainer.setAttribute("class", "flying-image-container");
 
-  // add item tiele
-  let cell1_2 = row1.insertCell(1);
-  cell1_2.textContent = data["itemTitle"];
-  cell1_2.setAttribute("class", "item-title");
-
-  // add Category and redirect logo
-  let row2 = table.insertRow(1);
-  let cell2_2 = row2.insertCell(0);
-  cell2_2.textContent = "Category: " + data["itemCategoryTag"];
-  cell2_2.setAttribute("class", "item-category");
-  let redirectLogo = createRedirectLogo(data);
-  cell2_2.appendChild(redirectLogo);
-
-  //add Condition and top rated logo
-  let row3 = table.insertRow(2);
-  let cell3_2 = row3.insertCell(0);
-  cell3_2.textContent = "Condition: " + data["condition"];
-  cell3_2.setAttribute("class", "item-condition");
-  if (data["isTopRated"] === "true") {
-    let topRatedLogo = createTopRatedLogo(data);
-    cell3_2.appendChild(topRatedLogo);
+  if (data["itemImageUrl"] == "") {
+    data["itemImageUrl"] = "https://thumbs1.ebaystatic.com/ pict/04040_0.jpg";
   }
-  //add price
-  let row4 = table.insertRow(3);
-  let cell4_2 = row4.insertCell(0);
-  cell4_2.textContent = "Price: " + data["itemPrice"];
-  cell4_2.setAttribute("class", "item-price");
+  let img = document.createElement("img");
+  img.setAttribute("src", data["itemImageUrl"]);
+  img.setAttribute("class", "flying-image");
+  flyingImageContainer.appendChild(img);
+  flyingCardContainer.appendChild(flyingImageContainer);
+  //image div ends
 
-  // Add content to the second cell in each row
-  //   cell2.textContent = "Second Column " + (i + 1);
-  parent.appendChild(table);
-  return table;
+  //table div starts
+  let flyingTableContainer = document.createElement("div");
+  flyingTableContainer.setAttribute("class", "flying-table-container");
+  // let flyingTable = document.createElement("table");
+
+  let titleCode = `<tr>
+  <td class="flying-table-container-td" ><div class="title">${data["itemTitle"]}</div></td>
+</tr>`;
+  let categoryCode = `<tr>
+<td class="flying-table-container-td">Category: <i>${data["itemCategoryTag"]}</i>
+<a src="${data["productLink"]}" target="_blank" class="item-redirect-link"><img src="/static/images/redirect.png" class="item-redirect-logo"/></a>
+</td>
+</tr>`;
+
+  let condition = `<span class="item-">Condition: ${data["condition"]}</span>`;
+  let topRated = "";
+  if (data["isTopRated"] === "true") {
+    topRated = `<img src="/static/images/topRatedImage.png" class="item-top-rated-logo"/>`;
+  }
+  let conditionCode = `<tr>
+<td class="flying-table-container-td">${condition + topRated}</td>
+</tr>`;
+
+  let priceCode = `<tr>
+<td class="flying-table-container-td"><b>Price: ${data["itemPrice"]}</b></td>
+</tr>`;
+  let flyingTableCode = `<table>${
+    titleCode + categoryCode + conditionCode + priceCode
+  }</table>`;
+  // flyingTable.innerHTML = titleCode + categoryCode + conditionCode + priceCode;
+
+  // flyingTableContainer.appendChild(flyingTable);
+  flyingTableContainer.innerHTML = flyingTableCode;
+  flyingCardContainer.appendChild(flyingTableContainer);
+
+  parent.appendChild(flyingCardContainer);
+
+  return flyingCardContainer;
+  //table div ends
 }
 
 function createImageSection(data) {
