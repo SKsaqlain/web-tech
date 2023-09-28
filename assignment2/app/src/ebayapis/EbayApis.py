@@ -1,14 +1,13 @@
 import sys
 
-sys.path.append("../app")
+sys.path.append("../src")
 
 import requests
-from app.logadapter.logger import *
-from app.ebayapis.ebay_oauth_token import OAuthToken
-from app.ebayapis.ResponseFormats import *;
+from src.logadapter.logger import *
+from src.ebayapis.ebay_oauth_token import OAuthToken
+from src.ebayapis.ResponseFormats import *;
 
 import json
-from flask import jsonify
 
 
 class EbayApis:
