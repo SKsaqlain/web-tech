@@ -13,23 +13,36 @@
 }
 
 .one-item-table {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 
   border: gray;
   border-collapse: collapse;
+
+
+  position: relative;
+  left: 50%;;
+  width: 800px;
+  margin-left:-400px;
+
 }
 
 .one-item-table-field {
   font-weight: bold;
   padding-left: 10px;
   border: 2.5px solid rgb(215, 215, 215);
+  
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
 }
 
 .one-item-table-image {
-  width: 200px;
-  height: 120px;
+  width: 300px;
+  height: 300px;
 }
 
 .one-item-table-link {
@@ -43,4 +56,11 @@
   border: 2.5px solid rgb(215, 215, 215);
 }
 
+
+.one-item-table-value-div{
+  white-space: nowrap;
+  width: 590px;
+  overflow: hidden;
+  text-overflow: clip;
+}
 
