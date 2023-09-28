@@ -8,7 +8,7 @@
   font-weight: bold;
   font-size: xx-large;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 .flying-card-container {
   background-color: #f5f5f5;
@@ -90,13 +90,13 @@
   margin-left: 10px;
 }
 
-.total-results-card {
+/* .total-results-card {
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: xx-large;
-}
+} */
 
 .show-more-btn,
 .show-less-btn {
@@ -123,4 +123,11 @@
   border-top: 1px solid lightgray;
   position: relative;
   width: 800px;
+}
+
+
+.no-results-found-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

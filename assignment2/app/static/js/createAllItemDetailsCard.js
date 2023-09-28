@@ -31,6 +31,9 @@ function createCards(rsp) {
   }
 }
 function createNoResultsFoundCard(parent) {
+  
+  console.log("Removing all old search from card-container");
+  parent.innerHTML = "";
   let noResultsFoundCard = document.createElement("h1");
   noResultsFoundCard.setAttribute("class", "no-results-found-card");
   noResultsFoundCard.innerHTML = "No Results Found";
@@ -48,10 +51,9 @@ function createResultCards(parent, data) {
   let totalResultsFound = data["totalResultsFound"];
   resultsCard = document.createElement("div");
   resultsCard.setAttribute("class", "total-results-card");
+  // resultsCard.innerHTML =`<p>${parseInt(totalResultsFound)} Results found for <i>${reqForm["Key words"].value}</i><p>`;
   resultsCard.innerHTML =
-    parseInt(totalResultsFound) +
-    " Results found for " +
-    reqForm["Key words"].value;
+    `${parseInt(totalResultsFound)} Results found for&nbsp<i>${reqForm["Key words"].value}</i>`;
   parent.appendChild(resultsCard);
   return resultsCard;
 }
