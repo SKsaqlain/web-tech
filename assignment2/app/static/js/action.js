@@ -1,3 +1,8 @@
+
+
+const BACKEND_URL="https://sms--dep-01.uw.r.appspot.com";
+// BACKEND_URL="http://localhost:8080";
+
 function uniqueID() {
   return Math.floor(Math.random() * Date.now());
 }
@@ -34,7 +39,7 @@ function fetchAllItemDetails() {
 
   xhr.open(
     "GET",
-    "http://0.0.0.0:5050/findAllItems?" +
+    BACKEND_URL+"/findAllItems?" +
       new URLSearchParams(fd).toString() +
       "&" +
       "trackingId=" +
@@ -65,7 +70,7 @@ function fetchItemDetails(itemId) {
   });
   xhr.open(
     "GET",
-    "http://0.0.0.0:5050/findItem?itemId=" +
+    BACKEND_URL+"/findItem?itemId=" +
       itemId +
       "&" +
       "trackingId=" +

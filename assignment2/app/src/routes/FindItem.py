@@ -1,14 +1,11 @@
 import sys
 
-sys.path.append("../app")
+sys.path.append("../src")
 
 from flask import Blueprint
 from flask import request
-import uuid
-import xml.etree.ElementTree as ET
 
-from app.logadapter.logger import *
-from app.ebayapis.EbayApis import *;
+from src.ebayapis.EbayApis import *;
 
 FIND_ITEM = Blueprint("findItem", __name__)
 
