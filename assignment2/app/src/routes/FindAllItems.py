@@ -66,11 +66,11 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
         ET.SubElement(root, "keywords").text="{}".format(keyword)
 
 
-        if (priceRangeFrom is not None):
+        if (priceRangeFrom is not None and len(priceRangeFrom)>=1):
             minPriceTag = createFilterTag(root, "MinPrice", priceRangeFrom)
             ET.SubElement(minPriceTag, "paramName").text = "CURRENCY"
             ET.SubElement(minPriceTag, "paramValue").text = "USD"
-        if (priceRangeTo is not None):
+        if (priceRangeTo is not None and len(priceRangeTo)>=1):
             maxPriceTag = createFilterTag(root, "MaxPrice", priceRangeTo)
             ET.SubElement(maxPriceTag, "paramName").text = "CURRENCY"
             ET.SubElement(maxPriceTag, "paramValue").text = "USD"
@@ -79,7 +79,7 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
             if (len(condition) > 1):
                 for i in range(1, len(condition)):
                     ET.SubElement(conditionTag, "value").text = enum[condition[i]]
-        if (seller is not None):
+        if (seller is not None and len(seller) >= 1):
             createFilterTag(root, "ReturnsAcceptedOnly", "true")
 
         # if (shipping is not None and len(shipping) >= 1 and "Free" in shipping):
