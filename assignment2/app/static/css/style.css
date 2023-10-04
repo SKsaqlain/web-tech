@@ -37,6 +37,7 @@ a {
   border: 2px solid black;
   border-collapse: collapse;
   text-align: center;
+  width: 500px;
 }
 .form-field {
   font-weight: bold;
@@ -51,7 +52,7 @@ a {
   padding: 10px;
 }
 
-.search-container-form-btn{
+.search-container-form-btn {
   border: none;
   height: 22px;
   border-radius: 3px;
@@ -62,13 +63,12 @@ a {
 }
 
 .one-item-go-back-btn {
-    border: none;
-    height: 22px;
-    border-radius: 3px;
+  border: none;
+  height: 22px;
+  border-radius: 3px;
 }
 
 .one-item-go-back-btn:hover {
   background-color: limegreen;
   color: white;
 }
-

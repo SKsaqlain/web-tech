@@ -1,6 +1,4 @@
-
-
-const BACKEND_URL="https://sms--dep-01.uw.r.appspot.com";
+const BACKEND_URL = "https://sms--dep-01.uw.r.appspot.com";
 // const BACKEND_URL="http://localhost:8080";
 
 function uniqueID() {
@@ -8,8 +6,7 @@ function uniqueID() {
 }
 
 function fetchAllItemDetails() {
-  storeToLocalStorage();
-  validateForm();
+  if (validateForm() == false) return false;
 
   let trackingId = uniqueID().toString();
   let data = document.forms["search-form"];
@@ -39,7 +36,8 @@ function fetchAllItemDetails() {
 
   xhr.open(
     "GET",
-    BACKEND_URL+"/findAllItems?" +
+    BACKEND_URL +
+      "/findAllItems?" +
       new URLSearchParams(fd).toString() +
       "&" +
       "trackingId=" +
@@ -70,7 +68,8 @@ function fetchItemDetails(itemId) {
   });
   xhr.open(
     "GET",
-    BACKEND_URL+"/findItem?itemId=" +
+    BACKEND_URL +
+      "/findItem?itemId=" +
       itemId +
       "&" +
       "trackingId=" +
