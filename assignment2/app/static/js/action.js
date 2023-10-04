@@ -1,7 +1,7 @@
 
 
-const BACKEND_URL="https://sms--dep-01.uw.r.appspot.com";
-// BACKEND_URL="http://localhost:8080";
+// const BACKEND_URL="https://sms--dep-01.uw.r.appspot.com";
+const BACKEND_URL="http://localhost:8080";
 
 function uniqueID() {
   return Math.floor(Math.random() * Date.now());

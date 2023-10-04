@@ -31,7 +31,6 @@ function createCards(rsp) {
   }
 }
 function createNoResultsFoundCard(parent) {
-  
   console.log("Removing all old search from card-container");
   parent.innerHTML = "";
   let noResultsFoundCard = document.createElement("h1");
@@ -52,8 +51,9 @@ function createResultCards(parent, data) {
   resultsCard = document.createElement("div");
   resultsCard.setAttribute("class", "total-results-card");
   // resultsCard.innerHTML =`<p>${parseInt(totalResultsFound)} Results found for <i>${reqForm["Key words"].value}</i><p>`;
-  resultsCard.innerHTML =
-    `${parseInt(totalResultsFound)} Results found for&nbsp<i>${reqForm["Key words"].value}</i>`;
+  resultsCard.innerHTML = `${parseInt(
+    totalResultsFound
+  )} Results found for&nbsp<i>${reqForm["Key words"].value}</i>`;
   parent.appendChild(resultsCard);
   return resultsCard;
 }
@@ -107,7 +107,6 @@ function showMore() {
   let showLessBtn = document.getElementById("show-less-btn");
   showLessBtn.style.display = "block";
   scrollToBottom();
-  
 }
 
 function scrollToBottom() {
@@ -187,8 +186,7 @@ function createTable(parent, data) {
   //image div starts
   let flyingImageContainer = document.createElement("div");
   flyingImageContainer.setAttribute("class", "flying-image-container");
-  
-  
+
   if (data["itemImageUrl"] == "") {
     data["itemImageUrl"] = "https://csci571.com/hw/hw6/images/ebay_default.jpg";
   }
@@ -204,27 +202,38 @@ function createTable(parent, data) {
   flyingTableContainer.setAttribute("class", "flying-table-container");
   // let flyingTable = document.createElement("table");
 
-  let titleCode = `<tr>
+  let titleCode = "";
+  if (data["itemTitle"] != "") {
+    titleCode = `<tr>
   <td class="flying-table-container-td" ><div class="title">${data["itemTitle"]}</div></td>
 </tr>`;
-  let categoryCode = `<tr>
+  }
+  let categoryCode = "";
+  if (data["itemCategoryTag"] != "") {
+    categoryCode = `<tr>
 <td class="flying-table-container-td">Category: <i>${data["itemCategoryTag"]}</i>
 <a src="${data["productLink"]}" target="_blank" class="item-redirect-link"><img src="/static/images/redirect.png" class="item-redirect-logo"/></a>
 </td>
 </tr>`;
-
-  let condition = `<span class="item-">Condition: ${data["condition"]}</span>`;
-  let topRated = "";
-  if (data["isTopRated"] === "true") {
-    topRated = `<img src="/static/images/topRatedImage.png" class="item-top-rated-logo"/>`;
   }
-  let conditionCode = `<tr>
+
+  let conditionCode = "";
+  if (data["condition"] != "") {
+    let condition = `<span class="item-">Condition: ${data["condition"]}</span>`;
+    let topRated = "";
+    if (data["isTopRated"] === "true") {
+      topRated = `<img src="/static/images/topRatedImage.png" class="item-top-rated-logo"/>`;
+    }
+    conditionCode = `<tr>
 <td class="flying-table-container-td">${condition + topRated}</td>
 </tr>`;
-
-  let priceCode = `<tr>
+  }
+  let priceCode = "";
+  if (data["itemPrice"] != "") {
+    priceCode = `<tr>
 <td class="flying-table-container-td"><b>Price: ${data["itemPrice"]}</b></td>
 </tr>`;
+  }
   let flyingTableCode = `<table>${
     titleCode + categoryCode + conditionCode + priceCode
   }</table>`;

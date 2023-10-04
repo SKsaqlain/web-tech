@@ -116,15 +116,9 @@ class EbayApis:
                 LOGGER.warn("No findItemsAdvancedResponse")
                 return ""
             rsp = jsonObj["findItemsAdvancedResponse"][0]
-            if ('paginationOutput' not in rsp or 'totalEntries' not in rsp['paginationOutput'][0]):
-                LOGGER.warn("No paginationOutput or totalEntries field")
-                return ""
-            totalResultsFound = rsp["paginationOutput"][0]["totalEntries"][0]
+            totalResultsFound = self.getResultsCount(rsp)
             LOGGER.info("Total results found: %s", totalResultsFound)
-            if ('searchResult' not in rsp or len(rsp['searchResult']) < 1 or 'item' not in rsp['searchResult'][0]):
-                LOGGER.warn("No searchResult or item field")
-                return ""
-            items = rsp["searchResult"][0]["item"]
+            items = self.getAllItems(rsp)
             LOGGER.info("Total items fetched: %s", len(items))
 
             filteredFields = {
@@ -133,20 +127,22 @@ class EbayApis:
             }
 
             filteredFields['totalResultsFound'] = totalResultsFound
-
+            if(len(items) < 1):
+                LOGGER.info("No items found")
+                return ""
             for item in items:
                 try:
-                    if (self.isItemValid(item) == False):
-                        LOGGER.info("Invalid item found with id %s", item['itemId'][0])
-                        continue
+                    # if (self.isItemValid(item) == False):
+                    #     LOGGER.info("Invalid item found with id %s", item['itemId'][0])
+                    #     continue
                     itemDict = dict()
-                    itemDict['itemId'] = item['itemId'][0]
+                    itemDict['itemId'] = self.getItemId(item)
                     itemDict['itemImageUrl'] = self.getImageURL(item)
-                    itemDict['itemTitle'] = item['title'][0]
-                    itemDict['itemCategoryTag'] = item['primaryCategory'][0]['categoryName'][0]
-                    itemDict['productLink'] = item['viewItemURL'][0]
-                    itemDict['condition'] = item['condition'][0]['conditionDisplayName'][0]
-                    itemDict['isTopRated'] = item['topRatedListing'][0]
+                    itemDict['itemTitle'] = self.getTitle(item)
+                    itemDict['itemCategoryTag'] = self.getItemCategory(item)
+                    itemDict['productLink'] = self.getItemURL(item)
+                    itemDict['condition'] = self.getItemCondition(item)
+                    itemDict['isTopRated'] = self.getIsItemTopRated(item)
                     itemDict['itemPrice'] = self.getItemPrice(item)
                     filteredFields['items'].append(itemDict)
                 except:
@@ -158,6 +154,36 @@ class EbayApis:
             LOGGER.error("Error parsing response")
             raise Exception("Error parsing response")
 
+    def getResultsCount(self, rsp):
+        if ('paginationOutput' not in rsp or 'totalEntries' not in rsp['paginationOutput'][0]):
+            LOGGER.warn("No paginationOutput or totalEntries field")
+            return 0
+        return rsp["paginationOutput"][0]["totalEntries"][0]
+    def getAllItems(self,rsp):
+        if ('searchResult' not in rsp or len(rsp['searchResult']) < 1 or 'item' not in rsp['searchResult'][0]):
+            LOGGER.warn("No searchResult or item field")
+            return []
+        return rsp["searchResult"][0]["item"]
+    def getItemId(self, item):
+        if('itemId' in item and len(item['itemId']) >= 1 and item['itemId'] != None):
+            return item['itemId'][0]
+        LOGGER.warn("Item id not found for item %s", item)
+        return ""
+
+    def getTitle(self, item):
+        if('title' in item and item['title'] != None):
+            return item['title'][0]
+        LOGGER.warn("Title not found for item %s", item)
+        return ""
+
+    def getItemCategory(self, item):
+        if('primaryCategory' in item and item['primaryCategory'] != None and len(
+                    item['primaryCategory']) >= 1 and 'categoryName' in item['primaryCategory'][0] and
+                     item['primaryCategory'][0]['categoryName'] != None):
+           return item['primaryCategory'][0]['categoryName'][0]
+        LOGGER.warn("Category not found for item %s", item['itemId'][0])
+        return ""
+
     def getItemPrice(self, item):
         shipping = 0.0
         price = 0.0
@@ -168,14 +194,14 @@ class EbayApis:
             price = item['sellingStatus'][0]['currentPrice'][0]['__value__']
         else:
             LOGGER.warn("Price not found")
-            raise Exception("Price not found")
+            return ""
         if (item['shippingInfo'] != None and 'shippingServiceCost' in item['shippingInfo'][0] and
                 item['shippingInfo'][0]['shippingServiceCost'] != None and
                 item['shippingInfo'][0]['shippingServiceCost'][0]['__value__'] != None):
             shipping = item['shippingInfo'][0]['shippingServiceCost'][0]['__value__']
         else:
             LOGGER.warn("Shipping not found")
-            raise Exception("Shipping not found")
+            pass
         if (float(shipping) >= 0.01):
             return "${} (+ ${} for shipping)".format(price, shipping)
         return "${}".format(price)
@@ -184,24 +210,26 @@ class EbayApis:
         if (item['galleryURL'] != None and len(item['galleryURL']) >= 1 and item['galleryURL'][0] != None):
             return item['galleryURL'][0]
         LOGGER.warn("Image URL not found returning default URL for item %s", item['itemId'][0])
-        # todo: replace with default image url
         return ""
 
-    def isItemValid(self, item):
-        if (item != None
-                and ('itemId' in item and len(item['itemId']) >= 1 and item['itemId'] != None)
-                and ('title' in item and item['title'] != None)
-                and ('primaryCategory' in item and item['primaryCategory'] != None and len(
-                    item['primaryCategory']) >= 1 and 'categoryName' in item['primaryCategory'][0] and
-                     item['primaryCategory'][0]['categoryName'] != None)
-                and ('viewItemURL' in item and item['viewItemURL'] != None)
-                and ('condition' in item and item['condition'] != None and len(
+    def getItemURL(self, item):
+        if('viewItemURL' in item and item['viewItemURL'] != None):
+            return item['viewItemURL'][0]
+        LOGGER.warn("Item URL not found for item %s", item['itemId'][0])
+        return ""
+
+    def getItemCondition(self, item):
+        if('condition' in item and item['condition'] != None and len(
                     item['condition']) >= 1 and 'conditionDisplayName' in item['condition'][0] and item['condition'][0][
-                         'conditionDisplayName'] != None)
-                and ('topRatedListing' in item and item['topRatedListing'] != None)
-                and ('sellingStatus' and item['sellingStatus'] != None and len(item['sellingStatus'][0]) >= 1 and
-                     item['sellingStatus'][0]['convertedCurrentPrice'] != None)):
-            LOGGER.info("Item %s is valid", item['itemId'][0])
-            return True
-        LOGGER.warn("Item %s is invalid ", item)
+                         'conditionDisplayName'] != None):
+            return item['condition'][0]['conditionDisplayName'][0]
+        LOGGER.warn("Condition not found for item %s", item['itemId'][0])
+        return ""
+
+    def getIsItemTopRated(self, item):
+        if('topRatedListing' in item and item['topRatedListing'] != None):
+            return item['topRatedListing'][0]
+        LOGGER.warn("Top rated listing not found for item %s", item['itemId'][0])
         return False
+
+
