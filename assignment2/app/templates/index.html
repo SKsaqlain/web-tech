@@ -4,8 +4,10 @@
 <head>
     <title> HW2</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/all-items-card-container.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/one-item-card-container.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/all-items-card-container.css')}}"
+        type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/one-item-card-container.css')}}"
+        type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/flying-card.css')}}" type="text/css" />
 
 
@@ -16,17 +18,18 @@
     <script src="{{ url_for('static', filename ='js/createItemDetailCard.js')}}"></script>
 </head>
 
-<body onload="loadFromLocalStorage()">
+<body>
     <div class="main-container">
         <div class="logo-container">
             <table>
-                
-                    <tr>
-                        <td><a href="https://www.ebay.com/" id="logo-link" target="_blank"><img src="{{ url_for('static', filename = 'images/ebayLogo.png')}}" alt="ebay-logo"
+
+                <tr>
+                    <td><a href="https://www.ebay.com/" id="logo-link" target="_blank"><img
+                                src="{{ url_for('static', filename = 'images/ebayLogo.png')}}" alt="ebay-logo"
                                 id="eblay-logo-image"></a></td>
-                        <td><span class="shopping"> Shopping</span></td>
-                    </tr>
-                
+                    <td><span class="shopping"> Shopping</span></td>
+                </tr>
+
             </table>
 
 
@@ -37,12 +40,14 @@
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Keywords<span
                                     style="color: red;">*</span>:</span> <input type="text" id="keyword"
-                                name="Key words" required autocomplete="on"/></td>
+                                name="Key words" required autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td class="search-contianer-table-td"><span class="form-field">Price Range:</span>
-                            From <input type="number" id="from-number" name="Price Range From" />
-                            To <input type="number" id="to-number" name="Price Range To" /></td>
+                        <td class="search-contianer-table-td"><span class="form-field">Price Range: </span>
+                            &nbsp; From <input type="number" id="from-number" style="width: 4em;"
+                                name="Price Range From" />
+                            &nbsp; to <input type="number" id="to-number" style="width: 4em;" name="Price Range To" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td"><span class="form-field">Condition</span>
@@ -84,9 +89,10 @@
                     </tr>
                     <tr>
                         <td class="search-contianer-table-td">
-                            <button class="search-container-form-btn" onclick="clearFormAndCache();deleteCards()">Clear</button>
+                            <button class="search-container-form-btn"
+                                onclick="clearForm();deleteCards();return false">Clear</button>
                             <button class="search-container-form-btn" type="button"
-                                onclick="fetchAllItemDetails()">Search</button>
+                                onclick="fetchAllItemDetails();">Search</button>
                         </td>
                     </tr>
                 </table>
