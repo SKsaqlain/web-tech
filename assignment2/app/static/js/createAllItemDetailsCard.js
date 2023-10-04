@@ -187,9 +187,10 @@ function createTable(parent, data) {
   //image div starts
   let flyingImageContainer = document.createElement("div");
   flyingImageContainer.setAttribute("class", "flying-image-container");
-
+  
+  
   if (data["itemImageUrl"] == "") {
-    data["itemImageUrl"] = "https://thumbs1.ebaystatic.com/ pict/04040_0.jpg";
+    data["itemImageUrl"] = "https://csci571.com/hw/hw6/images/ebay_default.jpg";
   }
   let img = document.createElement("img");
   img.setAttribute("src", data["itemImageUrl"]);
