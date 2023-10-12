@@ -85,8 +85,10 @@ def createXMLRequestPayload(trakingId, keyword, priceRangeFrom, priceRangeTo, co
         # if (shipping is not None and len(shipping) >= 1 and "Free" in shipping):
         #     createFilterTag(root, "FreeShippingOnly", "true")
 
-        if (shipping is not None and len(shipping) >= 1 and "Expedited" in shipping):
-            createFilterTag(root, "ExpeditedShippingType", "Expedited")
+        if (shipping is not None and len(shipping) >= 1 and "Free" in shipping):
+            createFilterTag(root, "FreeShippingOnly", "true")
+        if (shipping is not None and len(shipping) >= 1 and "Free" not in shipping):
+            createFilterTag(root, "FreeShippingOnly", "false")
 
         #adding sort order
         ET.SubElement(root, "sortOrder").text= enum[sortBy]
