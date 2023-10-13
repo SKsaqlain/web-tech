@@ -9,6 +9,9 @@ const ebayController = {
     },
     findItemById(req, res) {
         ebay.findItemById(req, res);
+    },
+    getSimilarItems(req, res) {
+        ebay.getSimilarItems(req, res);
     }
 }
 
