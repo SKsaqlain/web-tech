@@ -5,7 +5,6 @@ const USERNAME='sksaqlain25';
 const zipcode = {
     find: (req, res) => {
         const URL = `http://api.geonames.org/postalCodeSearchJSON?postalcode_startsWith=${req.params['zipcode']}&maxRows=5&username=${USERNAME}&country=US`;
-
         axios
             .get(URL, {
                 headers: {
