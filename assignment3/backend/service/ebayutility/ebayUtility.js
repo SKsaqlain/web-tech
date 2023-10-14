@@ -132,27 +132,8 @@ function parseFindAllItemResponse(response, trackingId) {
         }
         itemData.zip = items[i].postalCode[0] || null;
 
-        itemData.shippingDetails=getShippingDetails(items[i], itemData.shipping,trackingId);
-        // itemData.shippingDetails = {
-        //     'shippingCost': itemData.shipping,
-        //     'shippingLocation': items[i].shippingInfo[0].shipToLocations[0] || null,
-        //     'handlingTime': items[i].shippingInfo[0].handlingTime[0] || null,
-        //     'expeditedShipping': items[i].shippingInfo[0].expeditedShipping[0] || null,
-        //     'oneDatShipping': items[i].shippingInfo[0].oneDayShippingAvailable[0] || null,
-        //     'returnsAccepted': items[i].returnsAccepted[0] || null,
-        // }
-        // logger.info("Parsed shipping details", {trackingId})
-        itemData.sellerDetails=getSellerDetails(items[i],trackingId);
-
-        // itemData.sellerDetails = {
-        //     'feedBackScore': ('sellerInfo' in items[i]) ? items[i].sellerInfo[0].feedbackScore[0] || null : null,
-        //     'popularity': ('sellerInfo' in items[i]) ? items[i].sellerInfo[0].positiveFeedbackPercent[0] || null : null,
-        //     'feedbackRatingStar': ('sellerInfo' in items[i]) ? items[i].sellerInfo[0].feedbackRatingStar[0] || null : null,
-        //     'topRated': ('sellerInfo' in items[i]) ? items[i].sellerInfo[0].topRatedSeller[0] || null : null,
-        //     'storeName': ('storeInfo' in items[i]) ? items[i].storeInfo[0].storeName[0] || null : null,
-        //     'buyProductAt': ('storeInfo' in items[i]) ? items[i].storeInfo[0].storeURL[0] || null : null,
-        // }
-        // logger.info("Parsed seller details", {trackingId})
+        itemData.shippingDetails = getShippingDetails(items[i], itemData.shipping, trackingId);
+        itemData.sellerDetails = getSellerDetails(items[i], trackingId);
 
         parsedItems.push(itemData);
 
@@ -162,9 +143,9 @@ function parseFindAllItemResponse(response, trackingId) {
     return parsedItems;
 }
 
-function getShippingDetails(item, shippingCost,trackingId) {
+function getShippingDetails(item, shippingCost, trackingId) {
     logger.info("Parsing shipping details", {trackingId})
-    const shippingDetail={
+    const shippingDetail = {
         shippingCost: null,
         shippingLocation: null,
         handlingTime: null,
@@ -174,24 +155,24 @@ function getShippingDetails(item, shippingCost,trackingId) {
 
     };
 
-        shippingDetail.shippingCost= shippingCost;
-        if(item.shippingInfo && item.shippingInfo[0].shipToLocations){
-            shippingDetail.shippingLocation= item.shippingInfo[0].shipToLocations[0];
-        }
-        if(item.shippingInfo && item.shippingInfo[0].handlingTime){
-            shippingDetail.handlingTime= item.shippingInfo[0].handlingTime[0];
-        }
-        if(item.shippingInfo && item.shippingInfo[0].expeditedShipping){
-            shippingDetail.expeditedShipping= item.shippingInfo[0].expeditedShipping[0];
-        }
-        if(item.shippingInfo && item.shippingInfo[0].oneDayShippingAvailable){
-            shippingDetail.oneDayShipping= item.shippingInfo[0].oneDayShippingAvailable[0];
-        }
-        if(item.returnsAccepted){
-            shippingDetail.returnsAccepted= item.returnsAccepted[0];
-        }
-        logger.info("Parsed shipping details", {trackingId})
-        return shippingDetail;
+    shippingDetail.shippingCost = shippingCost;
+    if (item.shippingInfo && item.shippingInfo[0].shipToLocations) {
+        shippingDetail.shippingLocation = item.shippingInfo[0].shipToLocations[0];
+    }
+    if (item.shippingInfo && item.shippingInfo[0].handlingTime) {
+        shippingDetail.handlingTime = item.shippingInfo[0].handlingTime[0];
+    }
+    if (item.shippingInfo && item.shippingInfo[0].expeditedShipping) {
+        shippingDetail.expeditedShipping = item.shippingInfo[0].expeditedShipping[0];
+    }
+    if (item.shippingInfo && item.shippingInfo[0].oneDayShippingAvailable) {
+        shippingDetail.oneDayShipping = item.shippingInfo[0].oneDayShippingAvailable[0];
+    }
+    if (item.returnsAccepted) {
+        shippingDetail.returnsAccepted = item.returnsAccepted[0];
+    }
+    logger.info("Parsed shipping details", {trackingId})
+    return shippingDetail;
 }
 
 function getSellerDetails(item, trackingId) {
@@ -204,29 +185,71 @@ function getSellerDetails(item, trackingId) {
         storeName: null,
         buyProductAt: null,
     };
-    if(item.sellerInfo && item.sellerInfo[0].feedbackScore){
-        sellerDetails.feedBackScore= item.sellerInfo[0].feedbackScore[0];
+    if (item.sellerInfo && item.sellerInfo[0].feedbackScore) {
+        sellerDetails.feedBackScore = item.sellerInfo[0].feedbackScore[0];
     }
-    if(item.sellerInfo && item.sellerInfo[0].positiveFeedbackPercent){
-        sellerDetails.popularity= item.sellerInfo[0].positiveFeedbackPercent[0];
+    if (item.sellerInfo && item.sellerInfo[0].positiveFeedbackPercent) {
+        sellerDetails.popularity = item.sellerInfo[0].positiveFeedbackPercent[0];
     }
-    if(item.sellerInfo && item.sellerInfo[0].feedbackRatingStar){
-        sellerDetails.feedbackRatingStar= item.sellerInfo[0].feedbackRatingStar[0];
+    if (item.sellerInfo && item.sellerInfo[0].feedbackRatingStar) {
+        sellerDetails.feedbackRatingStar = item.sellerInfo[0].feedbackRatingStar[0];
     }
-    if(item.sellerInfo && item.sellerInfo[0].topRatedSeller){
-        sellerDetails.topRated= item.sellerInfo[0].topRatedSeller[0];
+    if (item.sellerInfo && item.sellerInfo[0].topRatedSeller) {
+        sellerDetails.topRated = item.sellerInfo[0].topRatedSeller[0];
     }
-    if(item.storeInfo && item.storeInfo[0].storeName){
-        sellerDetails.storeName= item.storeInfo[0].storeName[0];
+    if (item.storeInfo && item.storeInfo[0].storeName) {
+        sellerDetails.storeName = item.storeInfo[0].storeName[0];
     }
-    if(item.storeInfo && item.storeInfo[0].storeURL){
-        sellerDetails.buyProductAt= item.storeInfo[0].storeURL[0];
+    if (item.storeInfo && item.storeInfo[0].storeURL) {
+        sellerDetails.buyProductAt = item.storeInfo[0].storeURL[0];
     }
     logger.info("Parsed seller details", {trackingId})
     return sellerDetails;
 }
 
+function parseFindItemResponse(data, trackingId) {
+    if (!data.Item)
+        return null;
+    const itemData = {
+        'productImages': null,
+        'price': null,
+        'location': null,
+        'returnPolicy': null,
+        itemSpecifics: [],
+    };
+    if (data.Item.PictureURL && data.Item.PictureURL.length > 0) {
+        itemData.productImages = data.Item.PictureURL[0];
+    }
+    if (data.Item.CurrentPrice) {
+        itemData.price = data.Item.CurrentPrice.Value;
+    }
+    if (data.Item.Location) {
+        itemData.location = data.Item.Location;
+    }
+    if (data.Item.ReturnPolicy) {
+        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted;
+    }
+    if (data.Item.ReturnPolicy && data.Item.ReturnPolicy.ReturnsAccepted && data.Item.ReturnPolicy.ReturnsWithin) {
+        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted + " within " + data.Item.ReturnPolicy.ReturnsWithin;
+    }
+    if (data.Item.ItemSpecifics && data.Item.ItemSpecifics.NameValueList) {
+        for (let i = 0; i < data.Item.ItemSpecifics.NameValueList.length; i++) {
+            if (data.Item.ItemSpecifics.NameValueList[i].Name) {
+                if (data.Item.ItemSpecifics.NameValueList[i].Value && data.Item.ItemSpecifics.NameValueList[i].Value.length > 0) {
+                    itemData.itemSpecifics.push({
+                        name: data.Item.ItemSpecifics.NameValueList[i].Name,
+                        value: data.Item.ItemSpecifics.NameValueList[i].Value[0],
+                    });
+                }
+            }
+        }
+
+    }
+    return itemData;
+}
+
 module.exports = {
     createXMLRequestPayload,
     parseFindAllItemResponse,
+    parseFindItemResponse,
 };

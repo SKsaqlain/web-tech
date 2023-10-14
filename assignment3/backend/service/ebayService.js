@@ -64,6 +64,7 @@ const ebay = {
         try {
             logger.info(`Finding item with itemId: ${req.query.itemId}`, "")
             const token = await oauthToken.getApplicationToken();
+            const trackingId = req.trackingId = req.query.trackingId || uuidv4();
             const itemId = req.query.itemId;
             const params = {
                 callname: 'GetSingleItem',
@@ -80,7 +81,8 @@ const ebay = {
             const response = await axios.get(FIND_ITEM_URL, {params, headers});
             if (response.status === 200) {
                 logger.info('findItem returned status code 200')
-                res.send(response.data);
+                const parsedResponse=util.parseFindItemResponse(response.data,trackingId);
+                res.send(JSON.stringify(parsedResponse));
             } else {
                 logger.warn(`Warn findItem returned status code ${response.status}`)
                 res.send("Error");
