@@ -1,13 +1,23 @@
 'use strict';
 
-const controller = require('../controllers/zipCodeController');
+const zipController = require('../controllers/zipCodeController');
 const ebayController= require('../controllers/ebayController');
 const googleImgController= require('../controllers/googleImgController');
+const mongoDBController= require('../controllers/dbController');
 
 module.exports = (app) => {
-    app.route('/zipcode').get(controller.getZipCode);
+    //zipcode pai
+    app.route('/zipcode').get(zipController.getZipCode);
+
+    //ebay apis
     app.route('/ebay/findAllItems').get(ebayController.findAllItems);
     app.route('/ebay/findItem').get(ebayController.findItemById);
     app.route('/ebay/getSimilarItems').get(ebayController.getSimilarItems);
+
+    //google photos api
     app.route('/googleImg').get(googleImgController.getPhotos);
+
+    //mongoDB apis
+    app.route('/db/insertDoc').get(mongoDBController.insertDoc);
+
 }
