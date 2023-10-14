@@ -36,7 +36,7 @@ const ebay = {
 
             const payload = util.createXMLRequestPayload(trackingId, keywords, category, condition, shipping, distance, postalCode);
             logger.info(`Payload: ${payload}`, {trackingId});
-            const response=await axios.post(FIND_ALL_ITEMS_URL, payload, {
+            const response = await axios.post(FIND_ALL_ITEMS_URL, payload, {
                 headers: {
                     'Content-Type': 'application/xml'
                 },
@@ -49,9 +49,9 @@ const ebay = {
             });
             if (response.status === 200) {
                 logger.info('findAllItems returned status code 200', {trackingId});
-                res.send(response.data);
-            }
-            else {
+                const parsedResponse = util.parseFindAllItemResponse(response.data);
+                res.send(JSON.stringify(parsedResponse));
+            } else {
                 logger.warn(`Warn findAllItems returned status code ${response.status}`, {trackingId});
                 res.send("Error");
             }
