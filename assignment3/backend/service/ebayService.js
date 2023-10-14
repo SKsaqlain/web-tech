@@ -20,21 +20,21 @@ const ebay = {
         //trackingId, keyword, category, condition, shipping, distance, postalCode
         try {
             const trackingId = req.trackingId = req.query.trackingId || uuidv4();
-            const keyword = req.query.keywords;
+            const keywords = req.query.keywords;
             const category = req.query.category || [];
             const condition = req.query.condition || [];
             const shipping = req.query.shipping || [];
             const distance = req.query.distance || 0;
             const postalCode = req.query.postalCode || "";
 
-            logger.info(`Keyword: ${keyword}`, {trackingId});
-            logger.info(`Category: ${category.join(', ')}`, {trackingId});
-            logger.info(`Condition: ${condition.join(', ')}`, {trackingId});
-            logger.info(`Shipping: ${shipping.join(', ')}`, {trackingId});
+            logger.info(`Keyword: ${keywords}`, {trackingId});
+            logger.info(`Category: ${category}`, {trackingId});
+            logger.info(`Condition: ${condition}`, {trackingId});
+            logger.info(`Shipping: ${shipping}`, {trackingId});
             logger.info(`Distance: ${distance}`, {trackingId});
             logger.info(`Postal Code: ${postalCode}`, {trackingId});
 
-            const payload = util.createXMLRequestPayload(trackingId, keyword, category, condition, shipping, distance, postalCode);
+            const payload = util.createXMLRequestPayload(trackingId, keywords, category, condition, shipping, distance, postalCode);
             logger.info(`Payload: ${payload}`, {trackingId});
             const response=await axios.post(FIND_ALL_ITEMS_URL, payload, {
                 headers: {

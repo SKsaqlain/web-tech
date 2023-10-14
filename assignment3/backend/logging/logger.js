@@ -4,6 +4,9 @@ const logger = createLogger({
     format: format.combine(
         format.timestamp(),
         format.printf(({ level, message, timestamp, trackingId }) => {
+            if (!trackingId) {
+                trackingId = 'DefaultTrackingId'; // Provide a default tracking ID
+            }
             return `${timestamp} [${trackingId}] ${level}: ${message}`;
         })
     ),

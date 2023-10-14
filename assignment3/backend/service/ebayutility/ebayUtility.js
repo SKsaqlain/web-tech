@@ -7,24 +7,24 @@ const ENUM = {
   "Price: highest first": "CurrentPriceHighest",
   "Price + Shipping: highest first": "PricePlusShippingHighest",
   "Price + Shipping: lowest first": "PricePlusShippingLowest",
-  New: "1000",
-  Used: "3000",
+  'New': "1000",
+  'Used': "3000",
 };
 const CATEGORY_CODE = {
-  Art: "550",
-  Baby: "2984",
-  Books: "267",
+  'Art': "550",
+  'Baby': "2984",
+  'Books': "267",
   "Clothing, Shoes & Accessories": "11450",
   "Computers/Tablets & Networking": "58058",
   "Health & Beauty": "26395",
-  Music: "11233",
+  'Music': "11233",
   "Video Games & Consoles": "1249",
 };
 
 // trackingId ,keyword, Category, Condition, Shipping Option, Distance, From
 function createXMLRequestPayload(
   trackingId,
-  keyword,
+  keywords,
   category,
   condition,
   shipping,
@@ -33,20 +33,20 @@ function createXMLRequestPayload(
 ) {
   try {
     logger.info("Creating XML Request Payload", { trackingId });
-    const root = xmlbuilder.create("findItemsAdvancedRequest", {
-      xmlns: "http://www.ebay.com/marketplace/search/v1/services",
-    });
+    const root = xmlbuilder.create("findItemsAdvancedRequest");
+    root.att('xmlns', 'http://www.ebay.com/marketplace/search/v1/services');
+    root.att('version', '1.0');
+    root.att('encoding', 'utf-8');
 
-    root.ele("keywords", keyword);
-    root.ele("buyerPostalCode", postalCode);
+    root.ele("keywords", keywords);
 
     if (category && category.length >= 1) {
       logger.info("Adding Category tag");
       root.ele("categoryId", CATEGORY_CODE[category]);
     }
-    if (from && from.length > 0) {
+    if (postalCode && postalCode.length > 0) {
       logger.info("Adding From tag");
-      root.ele("buyerPostalCode", from);
+      root.ele("buyerPostalCode", postalCode);
     }
 
     if (distance) {
@@ -68,6 +68,7 @@ function createXMLRequestPayload(
       // TODO: donot add unspecified code below.
       if (condition.length > 1) {
         for (let i = 1; i < condition.length; i++) {
+          console.log("Adding Condition tag", ENUM[condition[i]])
           conditionTag.ele("value", ENUM[condition[i]]);
         }
       }
@@ -86,11 +87,6 @@ function createXMLRequestPayload(
       }
 
       // for unspecified do not add tag
-    }
-
-    if (distance && distance > 0) {
-        logger.info("Adding MaxDistance tag", { trackingId });
-      createFilterTag(root, "MaxDistance", distance);
     }
 
     createFilterTag(root, "HideDuplicateItems", "true");
