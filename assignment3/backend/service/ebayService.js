@@ -94,8 +94,9 @@ const ebay = {
 
     getSimilarItems: async (req, res) => {
         try {
-            logger.info(`Finding similar items with itemId: ${req.query.itemId}`);
             const itemId = req.query.itemId;
+            const trackingId = req.trackingId = req.query.trackingId || uuidv4();
+            logger.info(`Finding similar items for itemId: ${itemId}`, {trackingId})
             const params = {
                 'OPERATION-NAME': 'getSimilarItems',
                 'SERVICE-NAME': 'MerchandisingService',
@@ -109,8 +110,11 @@ const ebay = {
 
             const response = await axios.get(GET_SIMILAR_ITEMS_URL, {params});
             if (response.status === 200) {
-                logger.info('findItem returned status code 200')
-                res.send(response.data);
+                logger.info('findItem returned status code 200',{trackingId})
+
+                const parsedResponse=util.parseGetSimilarItemsResponse(response.data,trackingId);
+                // res.send(response.data);
+                res.send(JSON.stringify(parsedResponse));
             } else {
                 logger.warn(`Warn findItem returned status code ${response.status}`)
                 res.send("Warn");

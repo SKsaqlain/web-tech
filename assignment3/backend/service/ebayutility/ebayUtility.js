@@ -208,8 +208,11 @@ function getSellerDetails(item, trackingId) {
 }
 
 function parseFindItemResponse(data, trackingId) {
-    if (!data.Item)
+    logger.info("Parsing findItem response", {trackingId})
+    if (!data.Item) {
+        logger.warn("No item found", {trackingId})
         return null;
+    }
     const itemData = {
         'productImages': null,
         'price': null,
@@ -245,11 +248,48 @@ function parseFindItemResponse(data, trackingId) {
         }
 
     }
+    logger.info("Parsed findItem response", {trackingId})
     return itemData;
+}
+
+function parseGetSimilarItemsResponse(data, trackingId) {
+    logger.info("Parsing getSimilarItems response", {trackingId})
+    if (!data.getSimilarItemsResponse || !data.getSimilarItemsResponse.itemRecommendations || !data.getSimilarItemsResponse.itemRecommendations.item || data.getSimilarItemsResponse.itemRecommendations.item.length == 0) {
+        logger.warn("No similar items found", {trackingId})
+        return null;
+    }
+    const similarItems = [];
+    logger.info(`Found ${data.getSimilarItemsResponse.itemRecommendations.item.length} similar items`, {trackingId});
+    for (let i = 0; i < data.getSimilarItemsResponse.itemRecommendations.item.length; i++) {
+        const item = data.getSimilarItemsResponse.itemRecommendations.item[i];
+        similarItems.push({
+            itemId: item.itemId ? item.itemId : null,
+            productName: item.title ? item.title : null,
+            imageURL: item.imageURL ? item.imageURL : null,
+            viewItemURL: item.viewItemURL ? item.viewItemURL : null,
+            price: item.buyItNowPrice ? item.buyItNowPrice.__value__ : null,
+            shippingCost: item.shippingCost ? item.shippingCost.__value__ : null,
+            daysLeft: item.timeLeft ? extractDaysBtwPD(item.timeLeft,trackingId) : null,
+        });
+    }
+    logger.info("Parsed getSimilarItems response", {trackingId})
+    return similarItems;
+}
+
+function extractDaysBtwPD(value,trackingId) {
+    logger.info("Extracting days between purchase and delivery", {trackingId})
+    const regex = /P(\d+)D/;
+    const match = regex.exec(value);
+    if (match && match.length > 1) {
+        return match[1];
+    }
+    logger.warn("Unable to extract days between purchase and delivery", {trackingId});
+    return null;
 }
 
 module.exports = {
     createXMLRequestPayload,
     parseFindAllItemResponse,
     parseFindItemResponse,
+    parseGetSimilarItemsResponse
 };
