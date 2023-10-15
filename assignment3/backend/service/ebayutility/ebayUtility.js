@@ -235,6 +235,9 @@ function parseFindItemResponse(data, trackingId) {
     if (data.Item.ReturnPolicy && data.Item.ReturnPolicy.ReturnsAccepted && data.Item.ReturnPolicy.ReturnsWithin) {
         itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted + " within " + data.Item.ReturnPolicy.ReturnsWithin;
     }
+    if(data.Item.viewItemURLForNaturalSearch){
+        itemData.viewItemURL = data.Item.viewItemURLForNaturalSearch;
+    }
     if (data.Item.ItemSpecifics && data.Item.ItemSpecifics.NameValueList) {
         for (let i = 0; i < data.Item.ItemSpecifics.NameValueList.length; i++) {
             if (data.Item.ItemSpecifics.NameValueList[i].Name) {
@@ -267,8 +270,11 @@ function parseGetSimilarItemsResponse(data, trackingId) {
             productName: item.title ? item.title : null,
             imageURL: item.imageURL ? item.imageURL : null,
             viewItemURL: item.viewItemURL ? item.viewItemURL : null,
+            //todo: conver the price to float in the frontend
             price: item.buyItNowPrice ? item.buyItNowPrice.__value__ : null,
+            //todo: convert the below to float in the frontend
             shippingCost: item.shippingCost ? item.shippingCost.__value__ : null,
+            //todo: convert the below to int in the frontend
             daysLeft: item.timeLeft ? extractDaysBtwPD(item.timeLeft,trackingId) : null,
         });
     }

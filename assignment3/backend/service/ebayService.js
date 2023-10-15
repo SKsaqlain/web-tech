@@ -50,7 +50,8 @@ const ebay = {
             if (response.status === 200) {
                 logger.info('findAllItems returned status code 200', {trackingId});
                 const parsedResponse = util.parseFindAllItemResponse(response.data);
-                res.send(JSON.stringify(parsedResponse));
+                res.send(parsedResponse);
+                // res.send(response.data);
             } else {
                 logger.warn(`Warn findAllItems returned status code ${response.status}`, {trackingId});
                 res.send("Error");
@@ -82,7 +83,8 @@ const ebay = {
             if (response.status === 200) {
                 logger.info('findItem returned status code 200')
                 const parsedResponse=util.parseFindItemResponse(response.data,trackingId);
-                res.send(JSON.stringify(parsedResponse));
+                res.send(parsedResponse);
+                // res.send(response.data);
             } else {
                 logger.warn(`Warn findItem returned status code ${response.status}`)
                 res.send("Error");
@@ -114,7 +116,7 @@ const ebay = {
 
                 const parsedResponse=util.parseGetSimilarItemsResponse(response.data,trackingId);
                 // res.send(response.data);
-                res.send(JSON.stringify(parsedResponse));
+                res.send(parsedResponse);
             } else {
                 logger.warn(`Warn findItem returned status code ${response.status}`)
                 res.send("Warn");
