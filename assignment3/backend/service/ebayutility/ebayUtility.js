@@ -12,6 +12,7 @@ const ENUM = {
     'Used': "3000",
 };
 const CATEGORY_CODE = {
+    //todo: add categoryId for all categories
     'Art': "550",
     'Baby': "2984",
     'Books': "267",
