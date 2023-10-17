@@ -7,13 +7,17 @@ import "./ProductSearchForm.css";
 import ConditionCheckbox from "./conditioncheckbox/ConditionCheckBox";
 import ShippingCheckbox from "./shippingcheckbox/ShippingCheckBox";
 import PosalcodeRadioBtn from "./postalcoderadiobtn/PostalcodeRadioBtn";
+import Category from "./category/Category";
+import Autocomplete from "./autocomplete/Autocomplete";
 
 import { getZipCode } from "../services/zipCodeApi";
 
 function ProductSearchForm() {
+  //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
+  
   //form states
   const [postalCode, setPostalCode] = useState("");
   const [keyword, setKeyword] = useState("");
@@ -28,14 +32,14 @@ function ProductSearchForm() {
     freeShipping: false,
   });
   const [distance, setDistance] = useState("10");
-  const [postalCodeRadio,setPostalCodeRaio] = useState({
-    currentLocation:false,
-    other:false
+  const [postalCodeRadio, setPostalCodeRaio] = useState({
+    currentLocation: false,
+    other: false,
   });
 
-  console.log(condition);
-  console.log(shipping);
 
+
+  //handle change functions.
   const handleConditionChange = (e) => {
     const { value, name } = e.target;
     setCondition({ ...condition, [name]: e.target.checked });
@@ -45,32 +49,39 @@ function ProductSearchForm() {
     setShipping({ ...shipping, [e.target.value]: e.target.checked });
   };
 
-  const handlePostalcodeChange=(e)=>{
-    const value=e.target.value;
-    if(value=='currentLocation'){
-      setPostalCodeRaio({currentLocation:true,other:false})
-    }
-    else{
-      setPostalCodeRaio({currentLocation:false,other:true})
-    }
+  const handleCategoryChange=(e)=>{
+    setCategory(e.target.value);
   }
 
-  const handleZipCode = (e) => {
-    if(postalCodeRadio.other==true){
-    const { value } = e.target;
-    setPostalCode(value);
-    const regex = /\d+$/;
-    console.log(value);
-    if (value !== "" && regex.test(value)) {
-      console.log("valid zipcode entered");
-      setShowAutoComplete(true);
-      getZipCode(value, uuid4()).then((data) => {
-        console.log(data);
-        setZipCode(data);
-        setShowAutoComplete(true);
-      });
-    }
+  const handleDistanceChange=(e)=>{
+    setDistance(e.target.value);
   }
+
+  const handlePostalcodeChange = (e) => {
+    const value = e.target.value;
+    if (value == "currentLocation") {
+      setPostalCodeRaio({ currentLocation: true, other: false });
+    } else {
+      setPostalCodeRaio({ currentLocation: false, other: true });
+    }
+  };
+
+  const handleZipCode = (e) => {
+    if (postalCodeRadio.other == true) {
+      const { value } = e.target;
+      setPostalCode(value);
+      const regex = /\d+$/;
+      console.log(value);
+      if (value !== "" && regex.test(value)) {
+        console.log("valid zipcode entered");
+        setShowAutoComplete(true);
+        getZipCode(value, uuid4()).then((data) => {
+          console.log(data);
+          setZipCode(data);
+          setShowAutoComplete(true);
+        });
+      }
+    }
   };
 
   const onCodeClick = (e) => {
@@ -79,32 +90,33 @@ function ProductSearchForm() {
     setPostalCode(e.target.innerHTML);
     setShowAutoComplete(false);
   };
-  const renderAutocomplete = () => {
-    if (showAutoComplete && zipCode) {
-      console.log("rendering autocomplete");
-      return (
-        <div className="autocomplete">
-          {zipCode.map((code, index) => {
-            return (
-              <div
-                class="col-sm-8 bg-white text-dark "
-                key={index}
-                onClick={onCodeClick}
-              >
-                {code}{" "}
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
-  };
+
+  // const renderAutocomplete = () => {
+  //   if (showAutoComplete && zipCode) {
+  //     console.log("rendering autocomplete");
+  //     return (
+  //       <div className="autocomplete">
+  //         {zipCode.map((code, index) => {
+  //           return (
+  //             <div
+  //               class="col-sm-8 bg-white text-dark "
+  //               key={index}
+  //               onClick={onCodeClick}
+  //             >
+  //               {code}{" "}
+  //             </div>
+  //           );
+  //         })}
+  //       </div>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="card-container">
       <div className="inner-container">
         <div className="heading">Product Search</div>
-        <form>
+        <form name="prodcu">
           {/* keyword-section */}
           <div class="row my-3 keyword-container">
             <div class="col">
@@ -124,31 +136,7 @@ function ProductSearchForm() {
             </div>
           </div>
           {/* category-section */}
-          <div class="row my-3 category-container">
-            <div class="col">
-              <label>Category</label>
-            </div>
-            <div class="col">
-              <select
-                id="category"
-                name="category"
-                value={category}
-                onChange={(e) => setCategory(e.selected)}
-              >
-                <option value="1" defaultChecked>
-                  All Categories
-                </option>
-                <option value="2">Art</option>
-                <option value="3">Baby</option>
-                <option value="4">Books</option>
-                <option value="5">Clothing,Shoes & Accessories</option>
-                <option value="6">Health & Beauty</option>
-                <option value="7">Music</option>
-                <option value="8">Video Games & Console</option>
-              </select>
-            </div>
-          </div>
-          {/* condition-section */}
+          <Category value={category} onChange={handleCategoryChange}/>
           <div class="row my-3 condition-container">
             <div class="col">
               <label>Condition</label>
@@ -211,6 +199,8 @@ function ProductSearchForm() {
                 name="distance"
                 id="distance"
                 placeholder="10"
+                value={distance}
+                onChange={handleDistanceChange}
               />
             </div>
           </div>
@@ -222,26 +212,21 @@ function ProductSearchForm() {
               </label>
             </div>
             <div class="col">
-            <PosalcodeRadioBtn name='postalCode' id='currentLocation' value='currentLocation' label="'Current Location'" onChange={handlePostalcodeChange} />
-            <PosalcodeRadioBtn name='postalCode' id='other' value='other' label="'Other. Please specify zip code:'" onChange={handlePostalcodeChange} />
-              {/* <div class="custom-control custom-radio">
-                <input
-                  type="radio"
-                  name="postalCode"
-                  id="postalCode"
-                  value="currentLocation"
-                />{" "}
-                <label> 'Current Location'</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input
-                  type="radio"
-                  name="postalCode"
-                  id="postalCode"
-                  value="other"
-                />{" "}
-                <label>Other. Please specify zip code:</label>
-              </div> */}
+              <PosalcodeRadioBtn
+                name="postalCode"
+                id="currentLocation"
+                value="currentLocation"
+                label="'Current Location'"
+                onChange={handlePostalcodeChange}
+              />
+              <PosalcodeRadioBtn
+                name="postalCode"
+                id="other"
+                value="other"
+                label="'Other. Please specify zip code:'"
+                onChange={handlePostalcodeChange}
+              />
+
               <div class="row mb-3 location-container">
                 <label for="inputEmail3" class="col-sm-3 col-form-label">
                   {" "}
@@ -256,7 +241,7 @@ function ProductSearchForm() {
                     value={postalCode}
                     autoComplete="off"
                   />
-                  {renderAutocomplete()}
+                  <Autocomplete showAutoComplete={showAutoComplete} zipCode={zipCode} onCodeClick={onCodeClick}/>
                 </div>
               </div>
             </div>
