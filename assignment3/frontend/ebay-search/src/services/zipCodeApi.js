@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const baseURL = " http://localhost:8080/zipcode";
+const ipURL='https://ipinfo.io/json';
+const TOKEN='ef88210eb36381';
 
 export const getZipCode = async (zipCode,trackingId) => {
   try {
@@ -13,3 +15,18 @@ export const getZipCode = async (zipCode,trackingId) => {
     return "";
   }
 };
+
+export const getCurretZipCode= async () => {
+  try{
+    console.log("sending request to get current location zipCode ");
+    const response = await axios.get(ipURL,{params:{'token':TOKEN}});
+    console.log("received zipCode from backend " + response);
+    return response.data.postal;
+
+  }catch(error){
+    console.log(error);
+    return "";
+  }
+
+}
+

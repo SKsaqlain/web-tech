@@ -1,6 +1,6 @@
 import React from 'react';
 
-function RadioOption({ name, id, value, label, onChange }) {
+function RadioOption({ name, id, value, checked,label, onChange }) {
   return (
     <div className="custom-control custom-radio">
       <input
@@ -8,6 +8,7 @@ function RadioOption({ name, id, value, label, onChange }) {
         name={name}
         id={id}
         value={value}
+        checked={checked}
         onChange={onChange}
       />{" "}
       <label> {label}</label>

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { v4 as uuid4 } from "uuid";
-import search from "../assets/search.svg";
-import clear from "../assets/clear.svg";
 
 import "./ProductSearchForm.css";
 import ConditionCheckbox from "./conditioncheckbox/ConditionCheckBox";
@@ -9,15 +7,17 @@ import ShippingCheckbox from "./shippingcheckbox/ShippingCheckBox";
 import PosalcodeRadioBtn from "./postalcoderadiobtn/PostalcodeRadioBtn";
 import Category from "./category/Category";
 import Autocomplete from "./autocomplete/Autocomplete";
+import SearchBtn from "./btn/searchbtn/SearchBtn";
+import ClearBtn from "./btn/clearbtn/ClearBtn";
 
-import { getZipCode } from "../services/zipCodeApi";
+import { getZipCode,getCurretZipCode } from "../services/zipCodeApi";
 
 function ProductSearchForm() {
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  
+
   //form states
   const [postalCode, setPostalCode] = useState("");
   const [keyword, setKeyword] = useState("");
@@ -32,12 +32,10 @@ function ProductSearchForm() {
     freeShipping: false,
   });
   const [distance, setDistance] = useState("10");
-  const [postalCodeRadio, setPostalCodeRaio] = useState({
+  const [postalCodeRadio, setPostalCodeRadio] = useState({
     currentLocation: false,
     other: false,
   });
-
-
 
   //handle change functions.
   const handleConditionChange = (e) => {
@@ -49,23 +47,28 @@ function ProductSearchForm() {
     setShipping({ ...shipping, [e.target.value]: e.target.checked });
   };
 
-  const handleCategoryChange=(e)=>{
+  const handleCategoryChange = (e) => {
     setCategory(e.target.value);
-  }
+  };
 
-  const handleDistanceChange=(e)=>{
+  const handleDistanceChange = (e) => {
     setDistance(e.target.value);
-  }
+  };
 
   const handlePostalcodeChange = (e) => {
+    console.log(e.target.checked);
     const value = e.target.value;
     if (value == "currentLocation") {
-      setPostalCodeRaio({ currentLocation: true, other: false });
+      setPostalCodeRadio({ currentLocation: true, other: false });
+      getCurretZipCode().then((data) => {
+        console.log(data);
+        setPostalCode(data)});
     } else {
-      setPostalCodeRaio({ currentLocation: false, other: true });
+      setPostalCodeRadio({ currentLocation: false, other: true });
     }
   };
 
+  //functions for autocomplete features will be passed to the Autocomplete child component
   const handleZipCode = (e) => {
     if (postalCodeRadio.other == true) {
       const { value } = e.target;
@@ -91,26 +94,34 @@ function ProductSearchForm() {
     setShowAutoComplete(false);
   };
 
-  // const renderAutocomplete = () => {
-  //   if (showAutoComplete && zipCode) {
-  //     console.log("rendering autocomplete");
-  //     return (
-  //       <div className="autocomplete">
-  //         {zipCode.map((code, index) => {
-  //           return (
-  //             <div
-  //               class="col-sm-8 bg-white text-dark "
-  //               key={index}
-  //               onClick={onCodeClick}
-  //             >
-  //               {code}{" "}
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     );
-  //   }
-  // };
+  const productSearch = () => {
+    console.log("productSearch");
+  };
+
+  const clearSearch = () => {
+    console.log("clearSearch");
+    setPostalCode("");
+    setKeyword("");
+    setCategory("1");
+    setCondition({
+      new: false,
+      used: false,
+      unspecified: false,
+    });
+    setShipping({
+      localPickup: false,
+      freeShipping: false,
+    });
+    setDistance("10");
+    setPostalCodeRadio({
+      currentLocation: false,
+      other: false,
+    });
+    
+    setZipCode([]);
+    setInputValues([]);
+    setShowAutoComplete(false);
+  };
 
   return (
     <div className="card-container">
@@ -136,7 +147,7 @@ function ProductSearchForm() {
             </div>
           </div>
           {/* category-section */}
-          <Category value={category} onChange={handleCategoryChange}/>
+          <Category value={category} onChange={handleCategoryChange} />
           <div class="row my-3 condition-container">
             <div class="col">
               <label>Condition</label>
@@ -217,18 +228,20 @@ function ProductSearchForm() {
                 id="currentLocation"
                 value="currentLocation"
                 label="'Current Location'"
+                checked={postalCodeRadio.currentLocation}
                 onChange={handlePostalcodeChange}
               />
               <PosalcodeRadioBtn
                 name="postalCode"
                 id="other"
                 value="other"
+                checked={postalCodeRadio.other}
                 label="'Other. Please specify zip code:'"
                 onChange={handlePostalcodeChange}
               />
 
               <div class="row mb-3 location-container">
-                <label for="inputEmail3" class="col-sm-3 col-form-label">
+                <label class="col-sm-3 col-form-label">
                   {" "}
                 </label>
                 <div class="col-sm-8">
@@ -241,20 +254,18 @@ function ProductSearchForm() {
                     value={postalCode}
                     autoComplete="off"
                   />
-                  <Autocomplete showAutoComplete={showAutoComplete} zipCode={zipCode} onCodeClick={onCodeClick}/>
+                  <Autocomplete
+                    showAutoComplete={showAutoComplete}
+                    zipCode={zipCode}
+                    onCodeClick={onCodeClick}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="button-grp">
-            <button type="button" class="btn btn-secondary">
-              <img src={search} alt="" />
-              Search
-            </button>
-            <button type="button" class="btn btn-light clear-btn">
-              <img src={clear} alt="" />
-              Clear
-            </button>
+            <SearchBtn onClick={productSearch} />
+            <ClearBtn onClick={clearSearch} />
           </div>
         </form>
       </div>
