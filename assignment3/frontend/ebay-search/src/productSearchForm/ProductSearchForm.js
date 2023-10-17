@@ -6,6 +6,7 @@ import clear from "../assets/clear.svg";
 import "./ProductSearchForm.css";
 import ConditionCheckbox from "./conditioncheckbox/ConditionCheckBox";
 import ShippingCheckbox from "./shippingcheckbox/ShippingCheckBox";
+import PosalcodeRadioBtn from "./postalcoderadiobtn/PostalcodeRadioBtn";
 
 import { getZipCode } from "../services/zipCodeApi";
 
@@ -27,26 +28,35 @@ function ProductSearchForm() {
     freeShipping: false,
   });
   const [distance, setDistance] = useState("10");
+  const [postalCodeRadio,setPostalCodeRaio] = useState({
+    currentLocation:false,
+    other:false
+  });
 
   console.log(condition);
   console.log(shipping);
 
   const handleConditionChange = (e) => {
-    const {value,name}=e.target
-    setCondition({...condition, [name]:e.target.checked});
+    const { value, name } = e.target;
+    setCondition({ ...condition, [name]: e.target.checked });
   };
 
-  const handleShippingChange=(e)=>{
-    setShipping({...shipping, [e.target.value]:e.target.checked});
-  }
-  const handleOnchange = (event) => {
-    console.log(event.target.value);
-    const { value, name } = event.target;
-    const userInput = { ...inputValues, [name]: value };
-    console.log(userInput);
-    setInputValues(userInput);
+  const handleShippingChange = (e) => {
+    setShipping({ ...shipping, [e.target.value]: e.target.checked });
   };
+
+  const handlePostalcodeChange=(e)=>{
+    const value=e.target.value;
+    if(value=='currentLocation'){
+      setPostalCodeRaio({currentLocation:true,other:false})
+    }
+    else{
+      setPostalCodeRaio({currentLocation:false,other:true})
+    }
+  }
+
   const handleZipCode = (e) => {
+    if(postalCodeRadio.other==true){
     const { value } = e.target;
     setPostalCode(value);
     const regex = /\d+$/;
@@ -60,9 +70,8 @@ function ProductSearchForm() {
         setShowAutoComplete(true);
       });
     }
+  }
   };
-
-  const onKeyDown = (e) => {};
 
   const onCodeClick = (e) => {
     console.log("zipCode clicked " + e.target.innerHTML);
@@ -164,43 +173,6 @@ function ProductSearchForm() {
                   checked={condition.unspecified}
                   onChange={handleConditionChange}
                 />
-
-                {/* <div class="col">
-                  <input
-                    type="checkbox"
-                    name="condition"
-                    value="New"
-                    onChange={(e) =>
-                      setCondition({ ...condition, ["new"]: e.target.checked })
-                    }
-                  />
-                  <label>New</label>
-                </div> */}
-                {/* <div class="col">
-                  <input
-                    type="checkbox"
-                    name="condition"
-                    value="Used"
-                    onChange={(e) =>
-                      setCondition({ ...condition, ["used"]: e.target.checked })
-                    }
-                  />
-                  <label>Used</label>
-                </div>
-                <div class="col">
-                  <input
-                    type="checkbox"
-                    name="condition"
-                    value="Unspecified"
-                    onChange={(e) =>
-                      setCondition({
-                        ...condition,
-                        ["unspecified"]: e.target.checked,
-                      })
-                    }
-                  />
-                  <label>Unspecified</label>
-                </div> */}
               </div>
             </div>
           </div>
@@ -211,20 +183,20 @@ function ProductSearchForm() {
             </div>
             <div class="col">
               <div class="row">
-                  <ShippingCheckbox name="shipping" value='localPickup' label="Local Pickup" checked={shipping.localPickup} onChange={handleShippingChange}/>
-                  <ShippingCheckbox name="shipping" value='freeShipping' label="Free Shipping" checked={shipping.freeShipping} onChange={handleShippingChange}/>
-                {/* <div class="col">
-                  <input type="checkbox" name="shipping" value="Local Pickup" />
-                  <label>Local Pickup</label>
-                </div>
-                <div class="col">
-                  <input
-                    type="checkbox"
-                    name="shipping"
-                    value="Free Shipping"
-                  />
-                  <label>Free Shipping</label>
-                </div> */}
+                <ShippingCheckbox
+                  name="shipping"
+                  value="localPickup"
+                  label="Local Pickup"
+                  checked={shipping.localPickup}
+                  onChange={handleShippingChange}
+                />
+                <ShippingCheckbox
+                  name="shipping"
+                  value="freeShipping"
+                  label="Free Shipping"
+                  checked={shipping.freeShipping}
+                  onChange={handleShippingChange}
+                />
               </div>
             </div>
           </div>
@@ -250,7 +222,9 @@ function ProductSearchForm() {
               </label>
             </div>
             <div class="col">
-              <div class="custom-control custom-radio">
+            <PosalcodeRadioBtn name='postalCode' id='currentLocation' value='currentLocation' label="'Current Location'" onChange={handlePostalcodeChange} />
+            <PosalcodeRadioBtn name='postalCode' id='other' value='other' label="'Other. Please specify zip code:'" onChange={handlePostalcodeChange} />
+              {/* <div class="custom-control custom-radio">
                 <input
                   type="radio"
                   name="postalCode"
@@ -267,7 +241,7 @@ function ProductSearchForm() {
                   value="other"
                 />{" "}
                 <label>Other. Please specify zip code:</label>
-              </div>
+              </div> */}
               <div class="row mb-3 location-container">
                 <label for="inputEmail3" class="col-sm-3 col-form-label">
                   {" "}
@@ -279,7 +253,6 @@ function ProductSearchForm() {
                     id="inputEmail3"
                     name="zipCode"
                     onChange={(e) => handleZipCode(e)}
-                    onKeyDown={onKeyDown}
                     value={postalCode}
                     autoComplete="off"
                   />
