@@ -212,7 +212,7 @@ function createTable(parent, data) {
   if (data["itemCategoryTag"] != "") {
     categoryCode = `<tr>
 <td class="flying-table-container-td">Category: <i>${data["itemCategoryTag"]}</i>
-<a src="${data["productLink"]}" target="_blank" class="item-redirect-link"><img src="/static/images/redirect.png" class="item-redirect-logo"/></a>
+<a src="${data["productLink"]}" target="_blank" class="item-redirect-link" ><img src="/static/images/redirect.png" class="item-redirect-logo" /></a>
 </td>
 </tr>`;
   }
@@ -241,12 +241,23 @@ function createTable(parent, data) {
 
   // flyingTableContainer.appendChild(flyingTable);
   flyingTableContainer.innerHTML = flyingTableCode;
+
   flyingCardContainer.appendChild(flyingTableContainer);
+  flyingCardContainer.getElementsByClassName("item-redirect-logo")[0].addEventListener("click", openEbayItemWindow);
 
   parent.appendChild(flyingCardContainer);
 
   return flyingCardContainer;
   //table div ends
+}
+
+function openEbayItemWindow(event) {
+    console.log("openEbayItemWindow called");
+    let parent=this.parentElement;
+    let src=parent.getAttribute('src');
+    // console.log(src);
+    window.open(src);
+    event.stopPropagation();
 }
 
 function createImageSection(data) {
