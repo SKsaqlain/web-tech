@@ -1,5 +1,4 @@
 'use strict';
-const {log} = require("winston");
 const logger = require("../../logging/logger");
 const xmlbuilder = require("xmlbuilder");
 
