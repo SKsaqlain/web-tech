@@ -8,7 +8,7 @@ const USERNAME='sksaqlain25';
 const zipcode = {
     find: (req, res) => {
         let zipCode=req.query.zipcode;
-        let requestTrackingId=req.trackingId=req.query.trackingId || uuidv4();
+        let requestTrackingId=req.query.trackingId || uuidv4();
         logger.info(`Received Zipcode: ${zipCode}`, {requestTrackingId});
         const URL = `http://api.geonames.org/postalCodeSearchJSON?postalcode_startsWith=${zipCode}&maxRows=5&username=${USERNAME}&country=US`;
         axios

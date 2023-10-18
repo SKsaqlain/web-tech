@@ -10,7 +10,7 @@ import Autocomplete from "./autocomplete/Autocomplete";
 import SearchBtn from "./btn/searchbtn/SearchBtn";
 import ClearBtn from "./btn/clearbtn/ClearBtn";
 
-import { getZipCode,getCurretZipCode } from "../services/zipCodeApi";
+import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
 
 function ProductSearchForm() {
@@ -37,7 +37,7 @@ function ProductSearchForm() {
     currentLocation: false,
     other: false,
   });
-  const[currentLocation,setCurrentLocation]=useState('');
+  const [currentLocation, setCurrentLocation] = useState("");
 
   //handle change functions.
   const handleConditionChange = (e) => {
@@ -64,9 +64,9 @@ function ProductSearchForm() {
       setPostalCodeRadio({ currentLocation: true, other: false });
       getCurretZipCode().then((data) => {
         console.log(data);
-        setPostalCode('')
-        setCurrentLocation(data);}
-        );
+        setPostalCode("");
+        setCurrentLocation(data);
+      });
     } else {
       setPostalCodeRadio({ currentLocation: false, other: true });
     }
@@ -77,17 +77,19 @@ function ProductSearchForm() {
     if (postalCodeRadio.other == true) {
       const { value } = e.target;
       setPostalCode(value);
-      setCurrentLocation('');
+      setCurrentLocation("");
       const regex = /\d+$/;
       console.log(value);
       if (value !== "" && regex.test(value)) {
         console.log("valid zipcode entered");
-        setShowAutoComplete(true);
-        getZipCode(value, uuid4()).then((data) => {
-          console.log(data);
-          setZipCode(data);
+        if (value.length >= 4) {
           setShowAutoComplete(true);
-        });
+          getZipCode(value, uuid4()).then((data) => {
+            console.log(data);
+            setZipCode(data);
+            setShowAutoComplete(true);
+          });
+        }
       }
     }
   };
@@ -103,20 +105,19 @@ function ProductSearchForm() {
     e.preventDefault();
     console.log("productSearch");
     const trackingId = uuid4();
-    console.log('fetching All results for trackingId '+trackingId);
-    const data=fetchAllResults(
-    trackingId,
-    keyword,
-    category,
-    condition,
-    shipping,
-    distance,
-    postalCodeRadio.other?postalCode:currentLocation
-  );
-  data.then((data)=>{
-    console.log(data);
-  });
-  
+    console.log("fetching All results for trackingId " + trackingId);
+    const data = fetchAllResults(
+      trackingId,
+      keyword,
+      category,
+      condition,
+      shipping,
+      distance,
+      postalCodeRadio.other ? postalCode : currentLocation
+    );
+    data.then((data) => {
+      console.log(data);
+    });
   };
 
   const clearSearch = () => {
@@ -138,8 +139,8 @@ function ProductSearchForm() {
       currentLocation: false,
       other: false,
     });
-    setCurrentLocation('');
-    
+    setCurrentLocation("");
+
     setZipCode([]);
     setInputValues([]);
     setShowAutoComplete(false);
@@ -263,9 +264,7 @@ function ProductSearchForm() {
               />
 
               <div class="row mb-3 location-container">
-                <label class="col-sm-3 col-form-label">
-                  {" "}
-                </label>
+                <label class="col-sm-3 col-form-label"> </label>
                 <div class="col-sm-8">
                   <input
                     type="text"
