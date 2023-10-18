@@ -12,8 +12,9 @@ import ClearBtn from "./btn/clearbtn/ClearBtn";
 
 import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
+import { on } from "events";
 
-function ProductSearchForm() {
+function ProductSearchForm({onFormSubmit}) {
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
@@ -116,7 +117,9 @@ function ProductSearchForm() {
       postalCodeRadio.other ? postalCode : currentLocation
     );
     data.then((data) => {
-      console.log(data);
+      console.log("received results from backend " + data.length+ " for trackingId " + trackingId);
+      console.log("sending data to parent component "+ " for trackingId " + trackingId);
+      onFormSubmit(data);
     });
   };
 
@@ -155,7 +158,7 @@ function ProductSearchForm() {
           <div class="row my-3 keyword-container">
             <div class="col">
               <label>
-                Keyword<span id="mandatory">*</span>
+                Keyword<span class="mandatory">*</span>
               </label>
             </div>
             <div class="col">
@@ -242,7 +245,7 @@ function ProductSearchForm() {
           <div class="row zipcode-container">
             <div class="col">
               <label>
-                From<span id="mandatory">*</span>
+                From<span class="mandatory">*</span>
               </label>
             </div>
             <div class="col">

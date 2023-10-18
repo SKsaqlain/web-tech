@@ -1,13 +1,16 @@
-import React from 'react';
+import React,{useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import ProductSearchForm from "./productSearchForm/ProductSearchForm";
+
+
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+
+import WebSite from './website';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ProductSearchForm />
+    <WebSite />
   </React.StrictMode>
 );
 
