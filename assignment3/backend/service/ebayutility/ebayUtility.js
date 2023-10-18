@@ -3,10 +3,6 @@ const logger = require("../../logging/logger");
 const xmlbuilder = require("xmlbuilder");
 
 const ENUM = {
-    "Best Match": "BestMatch",
-    "Price: highest first": "CurrentPriceHighest",
-    "Price + Shipping: highest first": "PricePlusShippingHighest",
-    "Price + Shipping: lowest first": "PricePlusShippingLowest",
     'New': "1000",
     'Used': "3000",
 };
@@ -45,7 +41,10 @@ function createXMLRequestPayload(
 
         if (category && category.length >= 1) {
             logger.info("Adding Category tag");
-            root.ele("categoryId", CATEGORY_CODE[category]);
+            if(category!='All Categories') {
+                root.ele("categoryId", CATEGORY_CODE[category]);
+            }
+
         }
         if (postalCode && postalCode.length > 0) {
             logger.info("Adding From tag");

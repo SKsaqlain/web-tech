@@ -11,6 +11,7 @@ import SearchBtn from "./btn/searchbtn/SearchBtn";
 import ClearBtn from "./btn/clearbtn/ClearBtn";
 
 import { getZipCode,getCurretZipCode } from "../services/zipCodeApi";
+import { fetchAllResults } from "../services/EbaySearchApi";
 
 function ProductSearchForm() {
   //state to manage autocomplete feature
@@ -94,8 +95,24 @@ function ProductSearchForm() {
     setShowAutoComplete(false);
   };
 
-  const productSearch = () => {
+  const productSearch = (e) => {
+    e.preventDefault();
     console.log("productSearch");
+    const trackingId = uuid4();
+    console.log('fetching All results for trackingId '+trackingId);
+    const data=fetchAllResults(
+    trackingId,
+    keyword,
+    category,
+    condition,
+    shipping,
+    distance,
+    postalCode
+  );
+  data.then((data)=>{
+    console.log(data);
+  });
+  
   };
 
   const clearSearch = () => {
