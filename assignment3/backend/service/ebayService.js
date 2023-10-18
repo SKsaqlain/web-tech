@@ -49,7 +49,7 @@ const ebay = {
             });
             if (response.status === 200) {
                 logger.info('findAllItems returned status code 200', {trackingId});
-                const parsedResponse = util.parseFindAllItemResponse(response.data);
+                const parsedResponse = util.parseFindAllItemResponse(response.data,trackingId);
                 res.send(parsedResponse);
                 // res.send(response.data);
             } else {

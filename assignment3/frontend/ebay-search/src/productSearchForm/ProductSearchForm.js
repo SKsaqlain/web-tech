@@ -37,6 +37,7 @@ function ProductSearchForm() {
     currentLocation: false,
     other: false,
   });
+  const[currentLocation,setCurrentLocation]=useState('');
 
   //handle change functions.
   const handleConditionChange = (e) => {
@@ -63,7 +64,9 @@ function ProductSearchForm() {
       setPostalCodeRadio({ currentLocation: true, other: false });
       getCurretZipCode().then((data) => {
         console.log(data);
-        setPostalCode(data)});
+        setPostalCode('')
+        setCurrentLocation(data);}
+        );
     } else {
       setPostalCodeRadio({ currentLocation: false, other: true });
     }
@@ -74,6 +77,7 @@ function ProductSearchForm() {
     if (postalCodeRadio.other == true) {
       const { value } = e.target;
       setPostalCode(value);
+      setCurrentLocation('');
       const regex = /\d+$/;
       console.log(value);
       if (value !== "" && regex.test(value)) {
@@ -107,7 +111,7 @@ function ProductSearchForm() {
     condition,
     shipping,
     distance,
-    postalCode
+    postalCodeRadio.other?postalCode:currentLocation
   );
   data.then((data)=>{
     console.log(data);
@@ -134,6 +138,7 @@ function ProductSearchForm() {
       currentLocation: false,
       other: false,
     });
+    setCurrentLocation('');
     
     setZipCode([]);
     setInputValues([]);

@@ -40,14 +40,14 @@ function createXMLRequestPayload(
         root.ele('outputSelector', 'StoreInfo');
 
         if (category && category.length >= 1) {
-            logger.info("Adding Category tag");
+            logger.info("Adding Category tag",{trackingId});
             if(category!='All Categories') {
                 root.ele("categoryId", CATEGORY_CODE[category]);
             }
 
         }
         if (postalCode && postalCode.length > 0) {
-            logger.info("Adding From tag");
+            logger.info("Adding From tag",{trackingId});
             root.ele("buyerPostalCode", postalCode);
         }
 
@@ -67,10 +67,10 @@ function createXMLRequestPayload(
                 "Condition",
                 ENUM[condition[0]]
             );
-            // TODO: donot add unspecified code below.
+            // TODO: donot add unspecified code below. // have handled in the front-end
             if (condition.length > 1) {
                 for (let i = 1; i < condition.length; i++) {
-                    console.log("Adding Condition tag", ENUM[condition[i]])
+                    logger.info(`Adding Condition tag ${ENUM[condition[i]]}`, {trackingId});
                     conditionTag.ele("value", ENUM[condition[i]]);
                 }
             }
