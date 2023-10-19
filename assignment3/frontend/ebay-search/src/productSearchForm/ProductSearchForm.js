@@ -14,7 +14,7 @@ import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
 import { on } from "events";
 
-function ProductSearchForm({ onFormSubmit }) {
+function ProductSearchForm({ onFormSubmit ,onFormClear}) {
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
@@ -154,6 +154,9 @@ function ProductSearchForm({ onFormSubmit }) {
     setZipCode([]);
     setInputValues([]);
     setShowAutoComplete(false);
+
+    console.log("clearing all items from page");
+    onFormClear();
   };
 
   return (

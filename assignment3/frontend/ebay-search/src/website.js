@@ -10,11 +10,16 @@ function WebSite() {
         setAllItems(items);
     }
 
+    function handleOnFormClear(){
+      console.log("Clearing all items from page");
+      setAllItems([]);
+    }
+
     const viewAllItems= allItems.length>0?<AllItems allItems={allItems}/>:<div></div>;
 
   return (
     <div>
-      <ProductSearchForm onFormSubmit={handleOnFormSubmit}/>
+      <ProductSearchForm onFormSubmit={handleOnFormSubmit} onFormClear={handleOnFormClear}/>
       {viewAllItems}
     </div>
   );
