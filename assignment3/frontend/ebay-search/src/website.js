@@ -8,13 +8,14 @@ function WebSite() {
     function handleOnFormSubmit(items){
         console.log("Adding all items to page "+items.length);
         setAllItems(items);
-        console.log("All items added to page "+allItems.length );
     }
+
+    const viewAllItems= allItems.length>0?<AllItems allItems={allItems}/>:<div></div>;
 
   return (
     <div>
       <ProductSearchForm onFormSubmit={handleOnFormSubmit}/>
-      <AllItems allItems={allItems}/>
+      {viewAllItems}
     </div>
   );
 }
