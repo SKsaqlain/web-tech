@@ -14,7 +14,7 @@ import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
 import { on } from "events";
 
-function ProductSearchForm({onFormSubmit}) {
+function ProductSearchForm({ onFormSubmit }) {
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
@@ -117,8 +117,15 @@ function ProductSearchForm({onFormSubmit}) {
       postalCodeRadio.other ? postalCode : currentLocation
     );
     data.then((data) => {
-      console.log("received results from backend " + data.length+ " for trackingId " + trackingId);
-      console.log("sending data to parent component "+ " for trackingId " + trackingId);
+      console.log(
+        "received results from backend " +
+          data.length +
+          " for trackingId " +
+          trackingId
+      );
+      console.log(
+        "sending data to parent component " + " for trackingId " + trackingId
+      );
       onFormSubmit(data);
     });
   };
@@ -155,55 +162,54 @@ function ProductSearchForm({onFormSubmit}) {
         <div className="heading">Product Search</div>
         <form name="prodcu">
           {/* keyword-section */}
-          <div class="row my-3 keyword-container">
-            <div class="col">
-              <label>
-                Keyword<span class="mandatory">*</span>
-              </label>
-            </div>
-            <div class="col">
+          <div class="mb-3 row">
+            <label for="keyword" class="col-sm-3 col-form-label">
+              Keyword<span class="mandatory">*</span>
+            </label>
+            <div class="col-sm-8">
               <input
                 type="text"
                 name="keyword"
                 id="keyword"
+                style={{ width: "100%" }}
+                class='form-control'
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter Product Name(eg iPhone 8)"
               />
             </div>
           </div>
+
           {/* category-section */}
           <Category value={category} onChange={handleCategoryChange} />
-          <div class="row my-3 condition-container">
-            <div class="col">
-              <label>Condition</label>
-            </div>
-            <div class="col">
-              <div class="row">
-                <ConditionCheckbox
-                  name="new"
-                  label="New"
-                  checked={condition.new}
-                  onChange={handleConditionChange}
-                />
-                <ConditionCheckbox
-                  name="used"
-                  label="Used"
-                  checked={condition.used}
-                  onChange={handleConditionChange}
-                />
-                <ConditionCheckbox
-                  name="unspecified"
-                  label="Unspecified"
-                  checked={condition.unspecified}
-                  onChange={handleConditionChange}
-                />
-              </div>
+          <div class="row mb-3 condition-container">
+              <label class="col-sm-3 col-form-label">
+                Condition
+              </label>
+            <div class="col-sm-8 offset">
+              <ConditionCheckbox
+                name="new"
+                label="New"
+                checked={condition.new}
+                onChange={handleConditionChange}
+              />
+              <ConditionCheckbox
+                name="used"
+                label="Used"
+                checked={condition.used}
+                onChange={handleConditionChange}
+              />
+              <ConditionCheckbox
+                name="unspecified"
+                label="Unspecified"
+                checked={condition.unspecified}
+                onChange={handleConditionChange}
+              />
             </div>
           </div>
           {/* shipping-section */}
           <div class="row my-3 shipping-container">
-            <div class="col">
+            <div class="col-lg-3">
               <label>Shipping Options</label>
             </div>
             <div class="col">
@@ -227,7 +233,7 @@ function ProductSearchForm({onFormSubmit}) {
           </div>
           {/* distance-section */}
           <div class="row my-3 distance-container">
-            <div class="col">
+            <div class="col-lg-3">
               <label>Distance (Miles)</label>
             </div>
             <div class="col">
@@ -243,7 +249,7 @@ function ProductSearchForm({onFormSubmit}) {
           </div>
           {/* zipcode-section */}
           <div class="row zipcode-container">
-            <div class="col">
+            <div class="col-lg-3">
               <label>
                 From<span class="mandatory">*</span>
               </label>

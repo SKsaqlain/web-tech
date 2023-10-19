@@ -1,7 +1,9 @@
 
 .title-container{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 2fr 6fr 1fr 1fr 1fr 1fr;
+    padding:1rem;
+    /* flex-direction: row;
     align-items: left;
     justify-content: left;
     margin: 0 auto;
@@ -13,6 +15,6 @@
     
     border-radius: 0.5rem;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
-    background-color: black;
+    background-color: black; */
     color: white;
 }

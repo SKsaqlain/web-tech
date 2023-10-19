@@ -1,17 +1,19 @@
-import React from 'react';
+import React from "react";
 
 function CategorySelect({ value, onChange }) {
   return (
-    <div className="row my-3 category-container">
-      <div className="col">
-        <label>Category</label>
-      </div>
-      <div className="col">
+    <div class="mb-3 row">
+      <label for="category" class="col-sm-3 col-form-label">
+        Category
+      </label>
+      <div class="col-sm-8">
         <select
           id="category"
           name="category"
           value={value}
+          style={{ width: "30%" }}
           onChange={(e) => onChange(e)}
+          class='form-select'
         >
           <option value="1" defaultChecked>
             All Categories

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Title from "./Title";
 import Item from "./Item";
 
+import './AllItems.css'
+
 function AllItems({ allItems }) {
   console.log("Displaying all items ");
   const [items, setItems] = useState(allItems);
@@ -90,7 +92,7 @@ function AllItems({ allItems }) {
   };
 
   return (
-    <div>
+    <div className="allItems-container">
       {titleBar}
       {itemList}
       {navButton()}

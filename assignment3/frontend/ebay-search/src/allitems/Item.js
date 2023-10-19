@@ -19,13 +19,13 @@ function Item({ item }) {
   if (item) {
     return (
       <div id={item.itemId} class="row" className="item-card-container">
-        <div className="item-info col-1">{item.number}</div>
-        <div className="item-info col-2"><img src={item.image} alt="" className="img-fluid" style={{width:"200px",height:"150px"}}/></div>
-        <div className="item-info col-5">{truncateText(item.title,35)}</div>
-        <div className="item-info col-1">{item.price}</div>
-        <div className="item-info col-1">{item.shipping}</div>
-        <div className="item-info col-1">{item.zip}</div>
-        <div className="item-info col-1">"wishlist-btn"</div>
+        <div className="item-info ">{item.number}</div>
+        <div className="item-info "><img src={item.image} alt="" className="img-fluid allitem-item-img"/></div>
+        <div className="item-info ">{truncateText(item.title,35)}</div>
+        <div className="item-info ">{item.price}</div>
+        <div className="item-info ">{item.shipping}</div>
+        <div className="item-info ">{item.zip}</div>
+        <div className="item-info ">"wishlist-btn"</div>
       </div>
     );
   }
