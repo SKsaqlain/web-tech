@@ -119,6 +119,7 @@ function parseFindAllItemResponse(response, trackingId) {
     let parsedItems = [];
     for (let i = 0; i < items.length; i++) {
         let itemData = {}
+        itemData.number=(i+1)
         itemData.itemId = items[i].itemId[0];
         itemData.title = items[i].title[0] || null;
         itemData.image = items[i].galleryURL[0] || null;
