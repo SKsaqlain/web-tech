@@ -11,7 +11,7 @@ function CategorySelect({ value, onChange }) {
           id="category"
           name="category"
           value={value}
-          style={{ width: "30%" }}
+          style={{ width: "7rem" }}
           onChange={(e) => onChange(e)}
           class='form-select'
         >

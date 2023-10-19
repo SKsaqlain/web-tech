@@ -172,7 +172,7 @@ function ProductSearchForm({ onFormSubmit }) {
                 name="keyword"
                 id="keyword"
                 style={{ width: "100%" }}
-                class='form-control'
+                class="form-control"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter Product Name(eg iPhone 8)"
@@ -183,9 +183,7 @@ function ProductSearchForm({ onFormSubmit }) {
           {/* category-section */}
           <Category value={category} onChange={handleCategoryChange} />
           <div class="row mb-3 condition-container">
-              <label class="col-sm-3 col-form-label">
-                Condition
-              </label>
+            <label class="col-sm-3 col-form-label">Condition</label>
             <div class="col-sm-8 offset">
               <ConditionCheckbox
                 name="new"
@@ -209,52 +207,48 @@ function ProductSearchForm({ onFormSubmit }) {
           </div>
           {/* shipping-section */}
           <div class="row my-3 shipping-container">
-            <div class="col-lg-3">
-              <label>Shipping Options</label>
-            </div>
-            <div class="col">
-              <div class="row">
-                <ShippingCheckbox
-                  name="shipping"
-                  value="localPickup"
-                  label="Local Pickup"
-                  checked={shipping.localPickup}
-                  onChange={handleShippingChange}
-                />
-                <ShippingCheckbox
-                  name="shipping"
-                  value="freeShipping"
-                  label="Free Shipping"
-                  checked={shipping.freeShipping}
-                  onChange={handleShippingChange}
-                />
-              </div>
+            <label class="col-sm-3 col-form-label">Shipping Options</label>
+            <div class="col-sm-8 offset">
+              <ShippingCheckbox
+                name="shipping"
+                value="localPickup"
+                label="Local Pickup"
+                checked={shipping.localPickup}
+                onChange={handleShippingChange}
+              />
+              <ShippingCheckbox
+                name="shipping"
+                value="freeShipping"
+                label="Free Shipping"
+                checked={shipping.freeShipping}
+                onChange={handleShippingChange}
+              />
             </div>
           </div>
           {/* distance-section */}
           <div class="row my-3 distance-container">
-            <div class="col-lg-3">
-              <label>Distance (Miles)</label>
-            </div>
-            <div class="col">
+            <label for="distance" class="col-sm-3 col-form-label">
+              Distance (Miles)
+            </label>
+            <div class="col-sm-8">
               <input
                 type="number"
                 name="distance"
                 id="distance"
                 placeholder="10"
                 value={distance}
+                class="form-control"
+                style={{ width: "7rem" }}
                 onChange={handleDistanceChange}
               />
             </div>
           </div>
           {/* zipcode-section */}
-          <div class="row zipcode-container">
-            <div class="col-lg-3">
-              <label>
-                From<span class="mandatory">*</span>
-              </label>
-            </div>
-            <div class="col">
+          <div class="mb-3 row zipcode-container">
+            <label for="postalCode" class="col-sm-3 col-form-label">
+              From<span class="mandatory">*</span>
+            </label>
+            <div class="col-sm-8">
               <PosalcodeRadioBtn
                 name="postalCode"
                 id="currentLocation"
@@ -268,29 +262,24 @@ function ProductSearchForm({ onFormSubmit }) {
                 id="other"
                 value="other"
                 checked={postalCodeRadio.other}
-                label="'Other. Please specify zip code:'"
+                label="Other. Please specify zip code:"
                 onChange={handlePostalcodeChange}
               />
-
-              <div class="row mb-3 location-container">
-                <label class="col-sm-3 col-form-label"> </label>
-                <div class="col-sm-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputEmail3"
-                    name="zipCode"
-                    onChange={(e) => handleZipCode(e)}
-                    value={postalCode}
-                    autoComplete="off"
-                  />
-                  <Autocomplete
-                    showAutoComplete={showAutoComplete}
-                    zipCode={zipCode}
-                    onCodeClick={onCodeClick}
-                  />
-                </div>
-              </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputEmail3"
+                  name="zipCode"
+                  onChange={(e) => handleZipCode(e)}
+                  value={postalCode}
+                  style={{ width: "100%" }}
+                  autoComplete="off"
+                />
+                <Autocomplete
+                  showAutoComplete={showAutoComplete}
+                  zipCode={zipCode}
+                  onCodeClick={onCodeClick}
+                />
             </div>
           </div>
           <div className="button-grp">
