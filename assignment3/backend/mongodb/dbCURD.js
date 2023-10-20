@@ -9,8 +9,9 @@ const dbOps={
     insertOne: async (req,res)=>{
         try{
             await dbClient.connect();
-            const doc = req.body;
-            const trackingId = doc.trackingId || uuidv4();
+            // const doc = req.body;
+            const doc=JSON.parse(req.query.body);
+            const trackingId = req.query.trackingId || "0000-0000-000";
             logger.info('dbOps.insertOne', {trackingId});
             const myDB = dbClient.db(DB_NAME);
             const Collection = myDB.collection(COLLECTION_NAME);
@@ -19,7 +20,7 @@ const dbOps={
             const result = await Collection.insertOne(doc);
             logger.info('dbOps.insertOne', {trackingId, result});
             await dbClient.close();
-            res.send(result);
+            res.send("Post Success");
 
         }catch (error){
             logger.error('dbOps.insertOne', error);

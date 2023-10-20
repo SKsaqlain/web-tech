@@ -14,7 +14,7 @@ import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
 import { on } from "events";
 
-function ProductSearchForm({ onFormSubmit ,onFormClear}) {
+function ProductSearchForm({ onFormSubmit, onFormClear }) {
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
@@ -102,6 +102,17 @@ function ProductSearchForm({ onFormSubmit ,onFormClear}) {
     setShowAutoComplete(false);
   };
 
+  const addWishListAttr = (data) => {
+    if (data && data.length > 0) {
+      const newItems = [...data];
+      newItems.forEach((item) => {
+        item.isWishListed = false;
+      });
+      return newItems;
+    }
+    return data;
+  };
+
   const productSearch = (e) => {
     e.preventDefault();
     console.log("productSearch");
@@ -126,6 +137,7 @@ function ProductSearchForm({ onFormSubmit ,onFormClear}) {
       console.log(
         "sending data to parent component " + " for trackingId " + trackingId
       );
+      data = addWishListAttr(data);
       onFormSubmit(data);
     });
   };
@@ -268,21 +280,21 @@ function ProductSearchForm({ onFormSubmit ,onFormClear}) {
                 label="Other. Please specify zip code:"
                 onChange={handlePostalcodeChange}
               />
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputEmail3"
-                  name="zipCode"
-                  onChange={(e) => handleZipCode(e)}
-                  value={postalCode}
-                  style={{ width: "100%" }}
-                  autoComplete="off"
-                />
-                <Autocomplete
-                  showAutoComplete={showAutoComplete}
-                  zipCode={zipCode}
-                  onCodeClick={onCodeClick}
-                />
+              <input
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+                name="zipCode"
+                onChange={(e) => handleZipCode(e)}
+                value={postalCode}
+                style={{ width: "100%" }}
+                autoComplete="off"
+              />
+              <Autocomplete
+                showAutoComplete={showAutoComplete}
+                zipCode={zipCode}
+                onCodeClick={onCodeClick}
+              />
             </div>
           </div>
           <div className="button-grp">

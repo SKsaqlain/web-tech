@@ -4,6 +4,7 @@ import Title from "./Title";
 import Item from "./Item";
 
 import './AllItems.css'
+import {AddItemToWishlist,RemoveItemFromWishlist} from "../services/MongoDbApi";
 
 function AllItems({ allItems }) {
   console.log("Displaying all items ");
@@ -53,9 +54,31 @@ function AllItems({ allItems }) {
     }
   };
 
+  const handleOnWishlistClick = (item) => {
+    console.log("Wishlist button clicked for item " + item.isWishListed);
+    console.log("Wishlist button clicked for item " + item.itemId);
+    const newItems = [...items];
+    const index = newItems.indexOf(item);
+    newItems[index] = { ...newItems[index] };
+    newItems[index].isWishListed = ! newItems[index].isWishListed;
+    if(newItems[index].isWishListed){
+      console.log("Adding item to DB");
+      AddItemToWishlist(newItems[index]);
+    }
+    else{
+      console.log("Removing item from DB");
+      RemoveItemFromWishlist(newItems[index]);
+    }
+    console.log("newItems[index].isWishListed is " + newItems[index].isWishListed);
+    setItems(newItems);
+    setItemsToDisplay(newItems.slice(itemRange[0], itemRange[1]));
+    
+
+  }
+
   const titleBar = itemsToDisplay.length > 0 ? <Title /> : "";
   const itemList = itemsToDisplay.map((eachItem) => (
-    <Item item={eachItem} key={eachItem.itemId} />
+    <Item item={eachItem} onClick={handleOnWishlistClick} key={eachItem.itemId} />
   ));
   const navButton = () => {
     const prevButton =
