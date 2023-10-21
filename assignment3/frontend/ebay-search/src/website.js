@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import ProductSearchForm from "./productSearchForm/ProductSearchForm";
 import AllItems from "./allitems/AllItems";
 import ResultsWishlistBtn from "./rstwshbtn/ResultWishlistBtn";
+import { v4 as uuidv4 } from "uuid";
+
+import {GetWishlistItems} from "./services/MongoDbApi";
+
 
 function WebSite() {
   const [allItems, setAllItems] = useState([]); //state to store all items
   const [resultsBtn, setResultsBtn] = useState(true); //state to store results button
   const [wishlistBtn, setWishlistBtn] = useState(false); //state to store wishlist button
+  const [wishListItems, setWishListItems] = useState([]); //state to store wishlist items
 
   function handleOnFormSubmit(items) {
     console.log("Adding all items to page " + items.length);
@@ -24,10 +29,16 @@ function WebSite() {
     setWishlistBtn(false);
   }
 
+
   function handleOnWishlistBtnClick() {
     console.log("Wishlist button clicked");
     setResultsBtn(false);
     setWishlistBtn(true);
+    function setWishListItemsHandler(data) {
+      console.log("Received wishlist items " + data.length);
+      setWishListItems(data);
+    }
+    GetWishlistItems(setWishListItemsHandler);
   }
 
   function renderBtns() {
@@ -57,8 +68,12 @@ function WebSite() {
     }
   }
 
-  // const viewAllItems =
-  //   allItems.length > 0 ? <AllItems allItems={allItems} /> : <div></div>;
+  function renderWishListItems() {
+    if (wishListItems.length > 0 && wishlistBtn) {
+      return <AllItems allItems={wishListItems} />;
+    }
+  }
+
 
   return (
     <div>
@@ -68,6 +83,7 @@ function WebSite() {
       />
       {renderBtns()}
       {renderAllItems()}
+      {renderWishListItems()}
     </div>
   );
 }

@@ -46,6 +46,26 @@ const dbOps={
             return null;
         }
     },
+    getAll: async (req, res) => {
+        try {
+            await dbClient.connect();
+            const trackingId = req.query.trackingId || uuidv4();
+            logger.info('Fetching all wishlist items', { trackingId });
+            const myDB = dbClient.db(DB_NAME);
+            const Collection = myDB.collection(COLLECTION_NAME);
+
+            // Use the find method to retrieve all wishlist items
+            const result = await Collection.find({}).toArray();
+
+            logger.info('Fetched all wishlist items', { trackingId });
+            await dbClient.close();
+
+            res.send(result);
+        } catch (error) {
+            logger.error('Error fetching wishlist items', error);
+            return null;
+        }
+    },
     deleteOne: async (req,res)=>{
         try{
             await dbClient.connect();
@@ -58,7 +78,7 @@ const dbOps={
             const result = await Collection.deleteOne(doc);
             logger.info(`dbOps.deleteOne for item ${itemId}`, {trackingId});
             await dbClient.close();
-            logger.info(`response from dbOps.deleteOne for item ${itemId} ${result}`, {trackingId }`)
+            logger.info(`response from dbOps.deleteOne for item ${itemId} ${result}`, {trackingId })
             res.send(result);
 
         }catch (error){
