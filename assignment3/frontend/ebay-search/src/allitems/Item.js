@@ -50,9 +50,9 @@ function Item({ item, onClick, itemType }) {
       <div id={item.itemId} class="row" className={className()}>
         <div className="item-info ">{item.number}</div>
         <div className="item-info ">
-          <img src={item.image} alt="" className="img-fluid allitem-item-img" />
+          <a href={item.image} target="_blank" rel="noopener noreferrer" ><img src={item.image} alt="" className="img-fluid allitem-item-img" /></a>
         </div>
-        <div className="item-info" id={item.id+"_title"}><a href="#" data-tooltip-id={item.id+"_title"} data-tooltip-content={item.title}>{truncateText(item.title, 35)}</a><Tooltip id={item.id+"_title"} /></div>
+        <div className="item-info" id={item.id+"_title"} target="_blank" rel="noopener noreferrer" ><a href="#" data-tooltip-id={item.id+"_title"} data-tooltip-content={item.title}>{truncateText(item.title, 35)}</a><Tooltip id={item.id+"_title"} /></div>
         <div className="item-info ">{item.price}</div>
         <div className="item-info ">{item.shipping}</div>
         {itemType == "results" ? (
