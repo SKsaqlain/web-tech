@@ -1,5 +1,5 @@
 
-.title-container{
+.title-container-results{
     display: grid;
     grid-template-columns: 1fr 2fr 6fr 1fr 1fr 1fr 1fr;
     padding:1rem;
@@ -17,4 +17,11 @@
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     background-color: black; */
     color: white;
+}
+
+.title-container-wishlist{
+    display: grid;
+    grid-template-columns: 1fr 2fr 6fr 1fr 1fr 1fr;
+    padding:1rem;
+    color: white;    
 }

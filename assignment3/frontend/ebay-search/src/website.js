@@ -34,15 +34,16 @@ function WebSite() {
     console.log("Wishlist button clicked");
     setResultsBtn(false);
     setWishlistBtn(true);
-    function setWishListItemsHandler(data) {
-      console.log("Received wishlist items " + data.length);
+    function responseHandler(data) {
+      console.log("Received wishlist data items " + data.length);
       setWishListItems(data);
+      console.log("should rerender wishlist items after setting state " + wishListItems.length  );
+      return;
     }
-    GetWishlistItems(setWishListItemsHandler);
+    GetWishlistItems(responseHandler);
   }
 
   function renderBtns() {
-    if (allItems.length > 0) {
       return (
         <div class="d-flex justify-content-center mt-3">
             <ResultsWishlistBtn
@@ -57,20 +58,17 @@ function WebSite() {
             />
         </div>
       );
-    } else {
-      return <div></div>;
-    }
   }
 
   function renderAllItems() {
     if (allItems.length > 0 && resultsBtn) {
-      return <AllItems allItems={allItems} />;
+      return <AllItems allItems={allItems} itemType="results"/>;
     }
   }
 
   function renderWishListItems() {
     if (wishListItems.length > 0 && wishlistBtn) {
-      return <AllItems allItems={wishListItems} />;
+      return <AllItems allItems={wishListItems} itemType="wishList" removeFromParentWishlistState={setWishListItems}/>;
     }
   }
 

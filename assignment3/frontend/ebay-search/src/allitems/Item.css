@@ -1,5 +1,5 @@
 
-.item-card-container{
+.item-card-container-results{
     display: grid;
     grid-template-columns: 1fr 2fr 6fr 1fr 1fr 1fr 1fr;
     padding:1rem;
@@ -18,8 +18,19 @@
     color: white;
 }
 
+.item-card-container-wishlist{
+    display: grid;
+    grid-template-columns: 1fr 2fr 6fr 1fr 1fr  1fr;
+    padding:1rem;
+    color: white;
+}
+
 .allitem-item-img{
     width: 6rem;
     height: 7rem;
     
 }
+
+
+
+

@@ -6,8 +6,10 @@ import Item from "./Item";
 import './AllItems.css'
 import {AddItemToWishlist,RemoveItemFromWishlist} from "../services/MongoDbApi";
 
-function AllItems({ allItems }) {
-  console.log("Displaying all items ");
+function AllItems(props) {
+  let allItems=props.allItems;
+  let itemType=props.itemType;
+  console.log("Displaying all items for itemType " + itemType);
   const [items, setItems] = useState(allItems);
   const [itemsToDisplay, setItemsToDisplay] = useState(items.slice(0, 10)); //items to be displayed on the page
   const [itemRange, setItemsRange] = useState([0, 10]); //range of items to be displayed [start,end
@@ -72,13 +74,17 @@ function AllItems({ allItems }) {
     console.log("newItems[index].isWishListed is " + newItems[index].isWishListed);
     setItems(newItems);
     setItemsToDisplay(newItems.slice(itemRange[0], itemRange[1]));
-    
 
+    if(itemType == "wishList"){
+      console.log("Removing item from parent state");
+      const filteredItems = newItems.filter((eachItem) => eachItem.itemId != item.itemId);
+      props.removeFromParentWishlistState(filteredItems);
+    }
   }
 
-  const titleBar = itemsToDisplay.length > 0 ? <Title /> : "";
+  const titleBar = itemsToDisplay.length > 0 ? <Title itemType={itemType}/> : "";
   const itemList = itemsToDisplay.map((eachItem) => (
-    <Item item={eachItem} onClick={handleOnWishlistClick} key={eachItem.itemId} />
+    <Item item={eachItem} onClick={handleOnWishlistClick} key={eachItem.itemId} itemType={itemType}/>
   ));
   const navButton = () => {
     const prevButton =
