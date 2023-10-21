@@ -58,6 +58,7 @@ const dbOps={
             const result = await Collection.deleteOne(doc);
             logger.info(`dbOps.deleteOne for item ${itemId}`, {trackingId});
             await dbClient.close();
+            logger.info(`response from dbOps.deleteOne for item ${itemId} ${result}`, {trackingId }`)
             res.send(result);
 
         }catch (error){
