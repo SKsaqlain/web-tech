@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { v4 as uuid4 } from "uuid";
 
 import "./ProductSearchForm.css";
@@ -13,8 +13,12 @@ import ClearBtn from "./btn/clearbtn/ClearBtn";
 import { getZipCode, getCurretZipCode } from "../services/zipCodeApi";
 import { fetchAllResults } from "../services/EbaySearchApi";
 import { on } from "events";
+import { valid } from "semver";
 
 function ProductSearchForm({ onFormSubmit, onFormClear }) {
+  //states to check for validation
+  const [isKeywordValid, setIsKeywordValid] = useState(true);
+  const [isZipCodeValid, setIsZipCodeValid] = useState(true);
   //state to manage autocomplete feature
   const [zipCode, setZipCode] = useState([]);
   const [inputValues, setInputValues] = useState([]);
@@ -35,10 +39,10 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
   });
   const [distance, setDistance] = useState("10");
   const [postalCodeRadio, setPostalCodeRadio] = useState({
-    currentLocation: false,
+    currentLocation: true,
     other: false,
   });
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [currentZip, setCurrentZip] = useState("");
 
   //handle change functions.
   const handleConditionChange = (e) => {
@@ -58,16 +62,27 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     setDistance(e.target.value);
   };
 
+  useEffect(() => {
+    getCurrentPostalcode();
+  },[]);
+
+  const getCurrentPostalcode = () => {
+    console.log("getCurrentPostalcode");
+    setPostalCodeRadio({ currentLocation: true, other: false });
+      getCurretZipCode().then((data) => {
+        console.log(data);
+        // setPostalCode((prevState)=>{return "";});
+        // setCurrentZip((prevState)=>{return data});
+        setPostalCode("");
+        setCurrentZip(data);
+      });
+    }
+
   const handlePostalcodeChange = (e) => {
     console.log(e.target.checked);
     const value = e.target.value;
     if (value == "currentLocation") {
-      setPostalCodeRadio({ currentLocation: true, other: false });
-      getCurretZipCode().then((data) => {
-        console.log(data);
-        setPostalCode("");
-        setCurrentLocation(data);
-      });
+      getCurrentPostalcode();
     } else {
       setPostalCodeRadio({ currentLocation: false, other: true });
     }
@@ -78,7 +93,7 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     if (postalCodeRadio.other == true) {
       const { value } = e.target;
       setPostalCode(value);
-      setCurrentLocation("");
+      setCurrentZip("");
       const regex = /\d+$/;
       console.log(value);
       if (value !== "" && regex.test(value)) {
@@ -117,7 +132,23 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     e.preventDefault();
     console.log("productSearch");
     const trackingId = uuid4();
-    console.log("fetching All results for trackingId " + trackingId);
+    console.log("Validating form fields");
+  
+    let validKeyword = true;
+    let validZipCode = true;
+    if (/^\s*$/.test(keyword)) {
+      validKeyword = false;
+    }
+    if(postalCodeRadio.other && /^\s*$/.test(postalCode)){
+      validZipCode = false;
+    }
+    // if(validKeyword && postalCodeRadio.currentLocation){
+    //   getCurrentPostalcode();
+    // }
+
+    if (validKeyword && validZipCode) {
+      console.log("fetching All results for trackingId " + trackingId);
+      console.log(postalCodeRadio.other ? postalCode : currentZip);
     const data = fetchAllResults(
       trackingId,
       keyword,
@@ -125,25 +156,37 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
       condition,
       shipping,
       distance,
-      postalCodeRadio.other ? postalCode : currentLocation
+      postalCodeRadio.other ? postalCode : currentZip
     );
-    data.then((data) => {
-      console.log(
-        "received results from backend " +
-          data.length +
-          " for trackingId " +
-          trackingId
-      );
-      console.log(
-        "sending data to parent component " + " for trackingId " + trackingId
-      );
-      data = addWishListAttr(data);
-      onFormSubmit(data);
+      data.then((data) => {
+        console.log(
+          "received results from backend " +
+            data.length +
+            " for trackingId " +
+            trackingId
+        );
+        console.log(
+          "sending data to parent component " + " for trackingId " + trackingId
+        );
+        data = addWishListAttr(data);
+        onFormSubmit(data);
+      });
+    }
+    setIsKeywordValid((prevState) => {
+      return validKeyword;
+    });
+    setIsZipCodeValid((prevState) => {
+      return validZipCode;
     });
   };
 
   const clearSearch = () => {
     console.log("clearSearch");
+
+    //removing error messages
+    setIsKeywordValid(true);
+    setIsZipCodeValid(true);
+    //clearing all form states
     setPostalCode("");
     setKeyword("");
     setCategory("1");
@@ -158,10 +201,10 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     });
     setDistance("10");
     setPostalCodeRadio({
-      currentLocation: false,
+      currentLocation: true,
       other: false,
     });
-    setCurrentLocation("");
+    setCurrentZip("");
 
     setZipCode([]);
     setInputValues([]);
@@ -186,12 +229,19 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
                 type="text"
                 name="keyword"
                 id="keyword"
-                style={{ width: "100%" }}
-                class="form-control"
+                style={{
+                  width: "100%",
+                  border: isKeywordValid ? "" : "2px solid red",
+                }}
+                class={"form-control " + (isKeywordValid ? "" : "is-invalid")}
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter Product Name(eg iPhone 8)"
+                required
               />
+              <div class="invalid-feedback">
+                Please provide a valid keyword.
+              </div>
             </div>
           </div>
 
@@ -255,6 +305,7 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
                 class="form-control"
                 style={{ width: "7rem" }}
                 onChange={handleDistanceChange}
+                min="10"
               />
             </div>
           </div>
@@ -282,14 +333,20 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
               />
               <input
                 type="text"
-                class="form-control"
                 id="inputEmail3"
                 name="zipCode"
                 onChange={(e) => handleZipCode(e)}
                 value={postalCode}
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  border: isZipCodeValid ? "" : "2px solid red",
+                }}
+                class={"form-control " + (isZipCodeValid ? "" : "is-invalid")}
                 autoComplete="off"
               />
+              <div class="invalid-feedback">
+                Please provide a valid zip code.
+              </div>
               <Autocomplete
                 showAutoComplete={showAutoComplete}
                 zipCode={zipCode}
@@ -298,8 +355,8 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
             </div>
           </div>
           <div className="button-grp">
-            <SearchBtn onClick={productSearch} />
-            <ClearBtn onClick={clearSearch} />
+            <SearchBtn onClick={productSearch} type="submit" />
+            <ClearBtn onClick={clearSearch} type="button" />
           </div>
         </form>
       </div>

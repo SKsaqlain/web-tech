@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Title from "./Title";
 import Item from "./Item";
@@ -14,6 +14,7 @@ function AllItems(props) {
   const [itemsToDisplay, setItemsToDisplay] = useState(items.slice(0, 10)); //items to be displayed on the page
   const [itemRange, setItemsRange] = useState([0, 10]); //range of items to be displayed [start,end
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [removeWishListItemAndRender,setRemoveWishListItemAndRender]=useState(false);
 
   const n = parseInt(items.length / 10);
   console.log("n is " + n);
@@ -81,6 +82,11 @@ function AllItems(props) {
       props.removeFromParentWishlistState(filteredItems);
     }
   }
+  useEffect(() => {
+    
+    
+  }
+  ,[removeWishListItemAndRender]);
 
   const titleBar = itemsToDisplay.length > 0 ? <Title itemType={itemType}/> : "";
   const itemList = itemsToDisplay.map((eachItem) => (

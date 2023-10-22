@@ -20,7 +20,8 @@ export const getCurretZipCode= async () => {
   try{
     console.log("sending request to get current location zipCode ");
     const response = await axios.get(ipURL,{params:{'token':TOKEN}});
-    console.log("received zipCode from backend " + response);
+    // console.log("received zipCode from backend " + response);
+    console.log("received zipCode from backend " + response.data.postal);
     return response.data.postal;
 
   }catch(error){

@@ -62,6 +62,7 @@ function createXMLRequestPayload(
 
         if (condition && condition.length >= 1) {
             logger.info("Adding Condition tag", {trackingId});
+            
             const conditionTag = createFilterTag(
                 root,
                 "Condition",

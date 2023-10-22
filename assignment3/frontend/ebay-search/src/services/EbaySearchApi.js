@@ -17,11 +17,7 @@ const categoryOptions = {
 
 function filterCondition(condition) {
   const result = [];
-  if (condition.unspecified) {
-    result.push("New");
-    result.push("Used");
-    return result;
-  }
+  //for Unspecified don't pass anything
   if (condition.new) {
     result.push("New");
   }

@@ -46,6 +46,24 @@ const dbOps={
             return null;
         }
     },
+    findAllByItemIds: async (req,res)=> {
+        try {
+            await dbClient.connect();
+            const trackingId = req.query.trackingId || uuidv4();
+            const itemIds = req.query.itemIds;
+            logger.info('Fetching all wishlist items', {trackingId});
+            const myDB = dbClient.db(DB_NAME);
+            const Collection = myDB.collection(COLLECTION_NAME);
+            const result = await Collection.find({_id: {$in: itemIds}}).toArray();
+            logger.info('Fetched all wishlist items', {trackingId});
+            await dbClient.close();
+            res.send(result);
+
+        } catch (error) {
+            logger.error('dbOps.findMany', error);
+            return null;
+        }
+    },
     getAll: async (req, res) => {
         try {
             await dbClient.connect();
