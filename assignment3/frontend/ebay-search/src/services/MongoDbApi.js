@@ -50,6 +50,37 @@ export const RemoveItemFromWishlist = async (item) => {
   }
 };
 
+export const GetAllWishlistItems = async () => {
+  try {
+    const trackingId = uuidv4();
+    console.log("fetching All wishlist data from db for trackingId " + trackingId);
+    const params = {
+      trackingId: trackingId,
+    };
+    const response = await axios
+      .get(GET_ALL_URL, {
+        params: params,
+      });
+      if(response.status=='200' && response.data.length>0)
+      {
+        console.log("received results from backend " +
+        response.data.length +
+        " for trackingId " +
+        trackingId);
+        return response.data;
+      }else{
+        console.log("No results received from backend " +
+        response.data +
+        " for trackingId " +
+        trackingId);
+        return [];
+      }
+  } catch (error) {
+    console.log(error);
+    return "";
+  }
+};
+
 export const GetWishlistItems = async (onReceivingResponse) => {
   try {
     const trackingId = uuidv4();

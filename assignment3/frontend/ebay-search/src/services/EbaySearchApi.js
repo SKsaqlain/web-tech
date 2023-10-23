@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { v4 as uuidv4 } from "uuid";
 // todo: fetch results and console log it for now.
 
 const URL = "http://localhost:8080";
@@ -65,11 +65,41 @@ export const fetchAllResults = async (
       params: params,
     });
     console.log("received results from backend " + response.length);
-    if(response.status=='200' && response.data.length>0)
-    {return response.data}
-    else{
-        console.log(`findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword}`);
-        return null;
+    if (response.status == "200" && response.data.length > 0) {
+      return response.data;
+    } else {
+      console.log(
+        `findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword}`
+      );
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const fetchItemDetails = async (itemId) => {
+  try {
+    const trackingId = uuidv4();
+    console.log(`sending request to get item details ${itemId}`);
+    const params = {
+      itemId: itemId,
+      trackingId: trackingId,
+    };
+    const response = await axios.get(URL + "/ebay/findItem", {
+      params: params,
+    });
+    console.log("received results from backend " + response.length);
+    if (response.status == "200" && response.data.length > 0) {
+      console.dir(response.data);
+      return response.data;
+    } else {
+      console.log(
+        `findItemDetails returned ${response.status} for itemId ${itemId}`
+      );
+      console.dir(response);
+      return null;
     }
   } catch (error) {
     console.log(error);

@@ -62,7 +62,7 @@ function createXMLRequestPayload(
 
         if (condition && condition.length >= 1) {
             logger.info("Adding Condition tag", {trackingId});
-            
+
             const conditionTag = createFilterTag(
                 root,
                 "Condition",
@@ -135,7 +135,7 @@ function parseFindAllItemResponse(response, trackingId) {
 
         itemData.shippingDetails = getShippingDetails(items[i], itemData.shipping, trackingId);
         itemData.sellerDetails = getSellerDetails(items[i], trackingId);
-
+        itemData.isWishListed=false;
         parsedItems.push(itemData);
 
 

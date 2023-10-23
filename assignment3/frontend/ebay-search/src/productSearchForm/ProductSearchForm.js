@@ -117,16 +117,17 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     setShowAutoComplete(false);
   };
 
-  const addWishListAttr = (data) => {
-    if (data && data.length > 0) {
-      const newItems = [...data];
-      newItems.forEach((item) => {
-        item.isWishListed = false;
-      });
-      return newItems;
-    }
-    return data;
-  };
+  //todo : remove the below code as I am adding the wishlist state in the website componenets only
+  // const addWishListAttr = (data) => {
+  //   if (data && data.length > 0) {
+  //     const newItems = [...data];
+  //     newItems.forEach((item) => {
+  //       item.isWishListed = false;
+  //     });
+  //     return newItems;
+  //   }
+  //   return data;
+  // };
 
   const productSearch = (e) => {
     e.preventDefault();
@@ -168,7 +169,6 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
         console.log(
           "sending data to parent component " + " for trackingId " + trackingId
         );
-        data = addWishListAttr(data);
         onFormSubmit(data);
       });
     }

@@ -6,33 +6,104 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
   GetWishlistItems,
+  GetAllWishlistItems,
   FindAllWishlistItemsById,
+  AddItemToWishlist,
+  RemoveItemFromWishlist,
 } from "./services/MongoDbApi";
 
 function WebSite() {
-  const [allItems, setAllItems] = useState([]); //state to store all items
-  const [resultsBtn, setResultsBtn] = useState(true); //state to store results button
-  const [wishlistBtn, setWishlistBtn] = useState(false); //state to store wishlist button
-  const [wishListItems, setWishListItems] = useState([]); //state to store wishlist items
+  const [itemsAndWishlist, setItemsAndWishlist] = useState({
+    allItems: [],
+    wishListItems: [],
+    resultsBtn: true,
+    wishlistBtn: false,
+  }); //state to store all items and wishlist items
 
+  const [itemDetail, setItemDetail] = useState({
+    product: {},
+    photos: [],
+    shipping: {},
+    seller: {},
+    similarProducts: [],
+  });
 
+  // const [rstWstBtn, setRstWstBtn] = useState({
+  //   resultsBtn: false,
+  //   wishlistBtn: false,
+  // });
 
-  
+  function UpdateItemsWishListState(item, data) {
+    console.log("Updating items wishlist state");
+    const wishListMap = new Map();
+    data.forEach((item) => {
+      wishListMap.set(item.itemId, item);
+    });
+    item.forEach((i) => {
+      if (wishListMap.has(i.itemId)) {
+        console.log("Item is present in wishlist " + i.itemId);
+        i.isWishListed = true;
+      } else {
+        i.isWishListed = false;
+      }
+    });
+    console.log("Updated items with wishlist state " + item.length);
+    return item;
+  }
+
   function handleOnFormSubmit(items) {
-    console.log("Adding all items to page " + items.length);
-    setAllItems(items);
+    console.log(
+      "Received All items after search, updating items with wishlist state " +
+        items.length
+    );
+    const wishListData = GetAllWishlistItems();
+    wishListData.then((wlistdata) => {
+      if (wlistdata != null && wlistdata.length > 0) {
+        console.log("Received wishlist data items " + wlistdata.length);
+        const itemsWithWList = UpdateItemsWishListState(items, wlistdata);
+        console.log("Updated items with wishlist state " + itemsWithWList);
+        setItemsAndWishlist({
+          allItems: itemsWithWList,
+          wishListItems: wlistdata,
+          resultsBtn: true,
+          wishlistBtn: false,
+        });
+      } else {
+        setItemsAndWishlist({
+          allItems: items,
+          wishListItems: [],
+          resultsBtn: true,
+          wishlistBtn: false,
+        });
+      }
+    });
   }
 
   function handleOnFormClear() {
     console.log("Clearing all items from page");
-    setAllItems([]);
+    setItemsAndWishlist({
+      allItems: [],
+      wishListItems: [],
+      resultsBtn: true,
+      wishlistBtn: false,
+    });
+    // setRstWstBtn({
+    //   resultsBtn: false,
+    //   wishlistBtn: false,
+    // });
   }
 
   function handleOnResultsBtnClick() {
     console.log("Results button clicked");
-    setResultsBtn(true);
-    setWishlistBtn(false);
-    setWishListItems([]);
+    setItemsAndWishlist((prevState)=>{return {
+      ...prevState,
+      resultsBtn: true,
+      wishlistBtn: false,
+    }});
+    // setRstWstBtn({
+    //   resultsBtn: true,
+    //   wishlistBtn: false,
+    // });
   }
 
   //todo: once all items have been fetched , use useEffect method and call the db apis tp update the wishlist state of all the items
@@ -54,33 +125,107 @@ function WebSite() {
 
   function handleOnWishlistBtnClick() {
     console.log("Wishlist button clicked");
-    setResultsBtn(false);
-    setWishlistBtn(true);
-    function responseHandler(data) {
-      console.log("Received wishlist data items " + data.length);
-      setWishListItems((prevState) => {
-        return data;
+
+    const wishListData = GetAllWishlistItems();
+    wishListData.then((wlistdata) => {
+      console.log("Received wishlist data items " + wlistdata.length);
+      // let itemsWithWList = [...itemsAndWishlist.allItems];
+      // if (wlistdata != null && wlistdata.length > 0 && itemsAndWishlist.allItems.length>0) {
+      //   console.log("Updating items with wishlist state " + itemsAndWishlist.allItems.length );
+      //   itemsWithWList = UpdateItemsWishListState(
+      //     itemsAndWishlist.allItems,
+      //     wlistdata
+      //   );
+      //   console.log("Updated items with wishlist state " + itemsWithWList);
+      // }
+      setItemsAndWishlist((prevState) => {
+        return {
+          ...prevState,
+          wishListItems: wlistdata,
+          resultsBtn: false,
+          wishlistBtn: true,  
+        };
       });
-      console.log(
-        "should rerender wishlist items after setting state " +
-          wishListItems.length
-      );
-      return;
-    }
-    GetWishlistItems(responseHandler);
+      // setRstWstBtn({
+      //   resultsBtn: false,
+      //   wishlistBtn: true,
+      // });
+    });
   }
+
+  const handleWishListClickforResulst = (item) => {
+    console.log("Handling wishlist click for results for item " + item.itemId);
+    const newItems = [...itemsAndWishlist.allItems];
+    const index = newItems.indexOf(item);
+    // newItems[index] = { ...newItems[index] };
+    newItems[index].isWishListed = !newItems[index].isWishListed;
+    if (newItems[index].isWishListed) {
+      console.log("Adding item to DB");
+      AddItemToWishlist(newItems[index]);
+    } else {
+      console.log("Removing item from DB");
+      RemoveItemFromWishlist(newItems[index]);
+    }
+    console.log(
+      "newItems[index].isWishListed is " + newItems[index].isWishListed
+    );
+    setItemsAndWishlist((prevState) => {
+      return {
+        ...prevState,
+        wishListItems: itemsAndWishlist.wishListItems,
+        allItems: newItems,
+      };
+    });
+  };
+
+  const handleWishListClickForWishList = (item) => {
+    const updatedItems = [...itemsAndWishlist.allItems];
+    console.log("Finding item in all items to update wishlist state");
+    for (let i = 0; i < updatedItems.length; i++) {
+      if (updatedItems[i].itemId == item.itemId) {
+        console.log("Found item in all items, updating wishlist state");
+        updatedItems[i].isWishListed = !updatedItems[i].isWishListed;
+      }
+    }
+    console.log("Removing item from DB");
+    RemoveItemFromWishlist(item);
+
+    const updatedWithlistItems=itemsAndWishlist.wishListItems.filter((i)=>i.itemId!=item.itemId);
+    setItemsAndWishlist((prevState) => {
+      return {
+        ...prevState,
+        wishListItems: updatedWithlistItems,
+        allItems: updatedItems,
+      };
+    });
+  };
+
+  const handleOnWishlistClick = (item) => {
+    console.log("Wishlist button clicked for item " + item.isWishListed);
+    console.log(
+      "Wishlist button clicked for item " +
+        item.itemId +
+        "itemNumber " +
+        item.number
+    );
+    if (itemsAndWishlist.resultsBtn) {
+      handleWishListClickforResulst(item);
+    } else if (itemsAndWishlist.wishlistBtn) {
+      handleWishListClickForWishList(item);
+    }
+  };
 
   function renderBtns() {
     return (
       <div class="d-flex justify-content-center mt-3">
         <ResultsWishlistBtn
           btnName="Results"
-          isActive={resultsBtn}
+          isActive={itemsAndWishlist.resultsBtn}
           onClick={handleOnResultsBtnClick}
         />
         <ResultsWishlistBtn
           btnName="WishList"
-          isActive={wishlistBtn}
+          isActive={itemsAndWishlist.wishlistBtn}
           onClick={handleOnWishlistBtnClick}
         />
       </div>
@@ -88,22 +233,38 @@ function WebSite() {
   }
 
   function renderAllItems() {
-    if (allItems.length > 0 && resultsBtn) {
-      return <AllItems allItems={allItems} itemType="results" />;
-    }
-  }
-
-  function renderWishListItems() {
-    if (wishListItems.length > 0 && wishlistBtn) {
+    if (itemsAndWishlist.allItems.length > 0 && itemsAndWishlist.resultsBtn) {
       return (
         <AllItems
-          allItems={wishListItems}
-          itemType="wishList"
-          removeFromParentWishlistState={setWishListItems}
+          allItemsAndWList={itemsAndWishlist}
+          itemType="results"
+          handleOnWishlistClick={handleOnWishlistClick}
+          onItemLinkClick={handleOnItemLinkClick}
         />
       );
     }
   }
+
+  function renderWishListItems() {
+    if (itemsAndWishlist.wishListItems.length > 0 && itemsAndWishlist.wishlistBtn) {
+      return (
+        <AllItems
+          allItemsAndWList={itemsAndWishlist}
+          itemType="wishList"
+          handleOnWishlistClick={handleOnWishlistClick}
+          onItemLinkClick={handleOnItemLinkClick}
+          
+        />
+      );
+    }
+  }
+
+  function handleOnItemLinkClick(item) {
+    console.log("Item link clicked for item " + item.itemId);
+    console.dir(item);
+  }
+
+  function renderItemPage(item) {}
 
   return (
     <div>

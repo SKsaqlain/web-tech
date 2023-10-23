@@ -5,13 +5,21 @@ import Item from "./Item";
 
 import './AllItems.css'
 import {AddItemToWishlist,RemoveItemFromWishlist} from "../services/MongoDbApi";
+import { right } from "@popperjs/core";
 
 function AllItems(props) {
-  let allItems=props.allItems;
+  let allItems=[];
   let itemType=props.itemType;
+  if(itemType=="wishList"){
+    allItems=props.allItemsAndWList.wishListItems;
+  }
+  if(itemType=="results"){
+    allItems=props.allItemsAndWList.allItems;
+  }
+
   console.log("Displaying all items for itemType " + itemType);
   const [items, setItems] = useState(allItems);
-  const [itemsToDisplay, setItemsToDisplay] = useState(items.slice(0, 10)); //items to be displayed on the page
+  const [itemsToDisplay, setItemsToDisplay] = useState(allItems.slice(0, 10)); //items to be displayed on the page
   const [itemRange, setItemsRange] = useState([0, 10]); //range of items to be displayed [start,end
   const [currentIndex, setCurrentIndex] = useState(0);
   const [removeWishListItemAndRender,setRemoveWishListItemAndRender]=useState(false);
@@ -57,42 +65,15 @@ function AllItems(props) {
     }
   };
 
-  const handleOnWishlistClick = (item) => {
-    console.log("Wishlist button clicked for item " + item.isWishListed);
-    console.log("Wishlist button clicked for item " + item.itemId);
-    const newItems = [...items];
-    const index = newItems.indexOf(item);
-    newItems[index] = { ...newItems[index] };
-    newItems[index].isWishListed = ! newItems[index].isWishListed;
-    if(newItems[index].isWishListed){
-      console.log("Adding item to DB");
-      AddItemToWishlist(newItems[index]);
-    }
-    else{
-      console.log("Removing item from DB");
-      RemoveItemFromWishlist(newItems[index]);
-    }
-    console.log("newItems[index].isWishListed is " + newItems[index].isWishListed);
-    setItems(newItems);
-    setItemsToDisplay(newItems.slice(itemRange[0], itemRange[1]));
-
-    if(itemType == "wishList"){
-      console.log("Removing item from parent state");
-      const filteredItems = newItems.filter((eachItem) => eachItem.itemId != item.itemId);
-      props.removeFromParentWishlistState(filteredItems);
-    }
-  }
-  useEffect(() => {
-    
-    
-  }
-  ,[removeWishListItemAndRender]);
 
   const titleBar = itemsToDisplay.length > 0 ? <Title itemType={itemType}/> : "";
   const itemList = itemsToDisplay.map((eachItem) => (
-    <Item item={eachItem} onClick={handleOnWishlistClick} key={eachItem.itemId} itemType={itemType}/>
+    <Item item={eachItem} onIconClick={props.handleOnWishlistClick} key={eachItem.itemId} itemType={itemType} onLinkClick={props.onItemLinkClick}/>
   ));
   const navButton = () => {
+    if(itemType=="wishList"){
+      return "";
+    }
     const prevButton =
       items.length > 0 ? (
         <button onClick={handlePrevClick}>Previous</button>
@@ -118,7 +99,7 @@ function AllItems(props) {
     }
 
     return (
-      <div>
+      <div key="navBtn">
         {prevButton}
         {numBtns}
         {nextButton}
@@ -126,10 +107,26 @@ function AllItems(props) {
     );
   };
 
+  const totalBar = () => {
+    
+    if(itemType=="wishList"){
+      let total=0;
+      items.forEach(item=>{
+        total+=parseFloat(item.price);
+      });
+      return (
+      <div key="total-shopping-component" class="total-container">
+        <div style={{textAlign:right}}>Total Shopping:</div>
+        <div>&nbsp;&nbsp;&nbsp;${total.toFixed(2)}</div>
+      </div>)
+    }
+  }
+
   return (
-    <div className="allItems-container">
+    <div className="allItems-container" key="results-container">
       {titleBar}
       {itemList}
+      {totalBar()}
       {navButton()}
     </div>
   );
