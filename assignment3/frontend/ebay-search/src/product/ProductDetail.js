@@ -37,13 +37,14 @@ const ProductDetail = (props) => {
       productDetail.productImages.length > 0
     ) {
       return (
-        <>
-          <div>Product Images</div>
-          <div><a href="#"
+        <div class="row itemDetailsRow">
+          <div class="col">Product Images</div>
+          <div class="col"><a href="#"
             onClick={(e) => {
               e.preventDefault();
+
             }}>View Product Images Here</a></div>
-        </>
+        </div>
       );
     }
   };
@@ -51,10 +52,10 @@ const ProductDetail = (props) => {
   const renderPrice = () => {
     if (productDetail && productDetail.price) {
       return (
-        <>
-          <div>Price</div>
-          <div>${productDetail.price}</div>
-        </>
+        <div class="row itemDetailsRow">
+          <div class="col">Price</div>
+          <div class="col">${productDetail.price}</div>
+        </div>
       );
     }
   };
@@ -62,10 +63,10 @@ const ProductDetail = (props) => {
   const renderLocation = () => {
     if (productDetail && productDetail.location) {
       return (
-        <>
-          <div>Location</div>
-          <div>{productDetail.location}</div>
-        </>
+        <div class="row itemDetailsRow">
+          <div class="col">Location</div>
+          <div class="col">{productDetail.location}</div>
+        </div>
       );
     }
   };
@@ -73,10 +74,10 @@ const ProductDetail = (props) => {
   const renderReturnPolicy = () => {
     if (productDetail && productDetail.returnPolicy) {
       return (
-        <>
-          <div>Return Policy</div>
-          <div>{productDetail.returnPolicy}</div>
-        </>
+        <div class="row itemDetailsRow">
+          <div class="col">Return Policy</div>
+          <div class="col">{productDetail.returnPolicy}</div>
+        </div>
       );
     }
   };
@@ -84,13 +85,13 @@ const ProductDetail = (props) => {
   const renderItemSpecificDetails = () => {
     if (productDetail && productDetail.itemSpecifics) {
       return (
-        <>
+        <> 
           {productDetail.itemSpecifics.map((itemSpecific) => {
             return (
-              <>
-                <div>{itemSpecific.name}</div>
-                <div>{itemSpecific.value}</div>
-              </>
+              <div class="row itemDetailsRow"> 
+                <div class="col">{itemSpecific.name}</div>
+                <div class="col">{itemSpecific.value}</div>
+              </div >
             );
           })}
         </>
@@ -98,11 +99,12 @@ const ProductDetail = (props) => {
     }
   };
 
+
   if (productDetail) {
     const fieldsToDisplay = new Map();
 
     return (
-      <div key={itemId + "_itemDetails"} className="item-details-container">
+      <div key={itemId + "_itemDetails"} class="container item-details-container">
         {renderProductImage()}
         {renderPrice()}
         {renderLocation()}

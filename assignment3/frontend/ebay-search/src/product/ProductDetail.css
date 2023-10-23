@@ -1,7 +1,6 @@
 .item-details-container{
-    display: grid;
-    grid-template-columns: 4fr 8fr;
-    padding:1rem;
+    
+    /* padding:1rem; */
     color: white;
     background-color: black;
     margin: 0 auto;
@@ -9,13 +8,17 @@
     margin-top:8rem;
 }
 
-.item-details-container div:nth-child(even) {
-    background-color: black;
-    color: white;
+.itemDetailsRow{
+    height: 3rem;
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    align-items: center;
 }
 
-/* Apply styles to every odd row */
-.item-details-container div:nth-child(odd) {
-    background-color: orange;
-    color: white;
+
+.itemDetailsRow:nth-child(odd) {
+    background-color: black;
+}
+.itemDetailsRow:nth-child(even) {
+    background-color: darkslategray;
 }

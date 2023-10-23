@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import ProductDetail from "./ProductDetail";
-
+import "./Product.css"
 
 const Product = (props) => {
     console.log("Rendering Product component");
@@ -10,7 +10,7 @@ const Product = (props) => {
        isDetailPage: true,
        isPhotosPage: false,
        isShippingPage: false,
-       isSellr:false,
+       isSellerPage:false,
        isSimilarProducts:false,
     });
 
@@ -20,9 +20,14 @@ const Product = (props) => {
             return <ProductDetail item={props.item}/>
         }
     }
+    const renderProductTitle = () => {
+        
+            return <div class="product-title-container">{props.item.title}</div>
+        
+    }
     return (
         <div>
-            <h1>Product</h1>
+            {renderProductTitle()}
             {renderProductDetail()}
         </div>
     );
