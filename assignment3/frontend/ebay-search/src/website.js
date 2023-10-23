@@ -189,6 +189,7 @@ function WebSite() {
     }
     console.log("Removing item from DB");
     RemoveItemFromWishlist(item);
+    console.log("Removing item from wishlist items state");
 
     const updatedWithlistItems=itemsAndWishlist.wishListItems.filter((i)=>i.itemId!=item.itemId);
     setItemsAndWishlist((prevState) => {

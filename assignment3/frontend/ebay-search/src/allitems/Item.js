@@ -3,7 +3,7 @@ import "./Item.css";
 import "../assets/wishlist.svg";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
-import { Tooltip } from 'react-tooltip'
+import { Tooltip } from "react-tooltip";
 
 function truncateText(text, maxLength) {
   if (text.length <= maxLength) {
@@ -19,7 +19,6 @@ function truncateText(text, maxLength) {
 }
 
 function Item({ item, onIconClick, itemType, onLinkClick }) {
-
   function renderWishlistIcon() {
     if (itemType == "wishList") {
       return <RemoveShoppingCartIcon style={{ color: "burlywood" }} />;
@@ -48,9 +47,33 @@ function Item({ item, onIconClick, itemType, onLinkClick }) {
       <div id={item.itemId} class="row" className={className()}>
         <div className="item-info ">{item.number}</div>
         <div className="item-info ">
-          <a href={item.image} target="_blank" rel="noopener noreferrer" ><img src={item.image} alt="" className="img-fluid allitem-item-img" /></a>
+          <a href={item.image} target="_blank" rel="noopener noreferrer">
+            <img
+              src={item.image}
+              alt=""
+              className="img-fluid allitem-item-img"
+            />
+          </a>
         </div>
-        <div className="item-info" id={item.itemId+"_title"} target="_blank" rel="noopener noreferrer" onClick={()=>onLinkClick(item)}><a href="#" data-tooltip-id={item.id+"_title"} data-tooltip-content={item.title}>{truncateText(item.title, 35)}</a><Tooltip id={item.id+"_title"} /></div>
+        <div
+          className="item-info"
+          id={item.itemId + "_title"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <a
+            href="#"
+            data-tooltip-id={item.id + "_title"}
+            data-tooltip-content={item.title}
+            onClick={(e) => {
+              e.preventDefault();
+              onLinkClick(item);
+            }}
+          >
+            {truncateText(item.title, 35)}
+          </a>
+          <Tooltip id={item.id + "_title"} />
+        </div>
         <div className="item-info ">{item.price}</div>
         <div className="item-info ">{item.shipping}</div>
         {itemType == "results" ? (
