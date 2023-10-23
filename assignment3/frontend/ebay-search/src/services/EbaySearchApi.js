@@ -90,8 +90,9 @@ export const fetchItemDetails = async (itemId) => {
     const response = await axios.get(URL + "/ebay/findItem", {
       params: params,
     });
-    console.log("received results from backend " + response.length);
-    if (response.status == "200" && response.data.length > 0) {
+
+    console.log("received results from backend ");
+    if (response.status == "200") {
       console.dir(response.data);
       return response.data;
     } else {

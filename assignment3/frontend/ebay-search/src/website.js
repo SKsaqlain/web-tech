@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+
 import ProductSearchForm from "./productSearchForm/ProductSearchForm";
 import AllItems from "./allitems/AllItems";
 import ResultsWishlistBtn from "./rstwshbtn/ResultWishlistBtn";
-import { v4 as uuidv4 } from "uuid";
+import Product from "./product/Product";
 
 import {
   GetWishlistItems,
@@ -18,19 +21,16 @@ function WebSite() {
     wishListItems: [],
     resultsBtn: true,
     wishlistBtn: false,
+    itemComponent: {},
+    showProductComponent:false
   }); //state to store all items and wishlist items
 
-  const [itemDetail, setItemDetail] = useState({
-    product: {},
-    photos: [],
-    shipping: {},
-    seller: {},
-    similarProducts: [],
-  });
-
-  // const [rstWstBtn, setRstWstBtn] = useState({
-  //   resultsBtn: false,
-  //   wishlistBtn: false,
+  // const [itemDetail, setItemDetail] = useState({
+  //   product: {},
+  //   photos: [],
+  //   shipping: {},
+  //   seller: {},
+  //   similarProducts: [],
   // });
 
   function UpdateItemsWishListState(item, data) {
@@ -61,20 +61,25 @@ function WebSite() {
       if (wlistdata != null && wlistdata.length > 0) {
         console.log("Received wishlist data items " + wlistdata.length);
         const itemsWithWList = UpdateItemsWishListState(items, wlistdata);
-        console.log("Updated items with wishlist state " + itemsWithWList);
-        setItemsAndWishlist({
+        console.log("Updated items with wishlist state itemsWithWList:");
+        console.dir(itemsWithWList);
+        setItemsAndWishlist((prevState)=>{return {
+          ...prevState,
           allItems: itemsWithWList,
           wishListItems: wlistdata,
           resultsBtn: true,
           wishlistBtn: false,
-        });
+          showProductComponent:false
+        }});
       } else {
-        setItemsAndWishlist({
+        setItemsAndWishlist((prevState) =>{ return {
+          ...prevState,
           allItems: items,
           wishListItems: [],
           resultsBtn: true,
           wishlistBtn: false,
-        });
+          showProductComponent:false
+        }});
       }
     });
   }
@@ -83,14 +88,12 @@ function WebSite() {
     console.log("Clearing all items from page");
     setItemsAndWishlist({
       allItems: [],
-      wishListItems: [],
-      resultsBtn: true,
-      wishlistBtn: false,
+    wishListItems: [],
+    resultsBtn: true,
+    wishlistBtn: false,
+    itemComponent: {},
+    showProductComponent:false
     });
-    // setRstWstBtn({
-    //   resultsBtn: false,
-    //   wishlistBtn: false,
-    // });
   }
 
   function handleOnResultsBtnClick() {
@@ -100,10 +103,6 @@ function WebSite() {
       resultsBtn: true,
       wishlistBtn: false,
     }});
-    // setRstWstBtn({
-    //   resultsBtn: true,
-    //   wishlistBtn: false,
-    // });
   }
 
   //todo: once all items have been fetched , use useEffect method and call the db apis tp update the wishlist state of all the items
@@ -129,15 +128,6 @@ function WebSite() {
     const wishListData = GetAllWishlistItems();
     wishListData.then((wlistdata) => {
       console.log("Received wishlist data items " + wlistdata.length);
-      // let itemsWithWList = [...itemsAndWishlist.allItems];
-      // if (wlistdata != null && wlistdata.length > 0 && itemsAndWishlist.allItems.length>0) {
-      //   console.log("Updating items with wishlist state " + itemsAndWishlist.allItems.length );
-      //   itemsWithWList = UpdateItemsWishListState(
-      //     itemsAndWishlist.allItems,
-      //     wlistdata
-      //   );
-      //   console.log("Updated items with wishlist state " + itemsWithWList);
-      // }
       setItemsAndWishlist((prevState) => {
         return {
           ...prevState,
@@ -146,10 +136,6 @@ function WebSite() {
           wishlistBtn: true,  
         };
       });
-      // setRstWstBtn({
-      //   resultsBtn: false,
-      //   wishlistBtn: true,
-      // });
     });
   }
 
@@ -157,7 +143,6 @@ function WebSite() {
     console.log("Handling wishlist click for results for item " + item.itemId);
     const newItems = [...itemsAndWishlist.allItems];
     const index = newItems.indexOf(item);
-    // newItems[index] = { ...newItems[index] };
     newItems[index].isWishListed = !newItems[index].isWishListed;
     if (newItems[index].isWishListed) {
       console.log("Adding item to DB");
@@ -234,7 +219,7 @@ function WebSite() {
   }
 
   function renderAllItems() {
-    if (itemsAndWishlist.allItems.length > 0 && itemsAndWishlist.resultsBtn) {
+    if (itemsAndWishlist.showProductComponent==false && itemsAndWishlist.allItems.length > 0 && itemsAndWishlist.resultsBtn) {
       return (
         <AllItems
           allItemsAndWList={itemsAndWishlist}
@@ -247,7 +232,7 @@ function WebSite() {
   }
 
   function renderWishListItems() {
-    if (itemsAndWishlist.wishListItems.length > 0 && itemsAndWishlist.wishlistBtn) {
+    if (itemsAndWishlist.showProductComponent==false && itemsAndWishlist.wishListItems.length > 0 && itemsAndWishlist.wishlistBtn) {
       return (
         <AllItems
           allItemsAndWList={itemsAndWishlist}
@@ -262,10 +247,21 @@ function WebSite() {
 
   function handleOnItemLinkClick(item) {
     console.log("Item link clicked for item " + item.itemId);
-    console.dir(item);
+    // console.dir(item);
+    setItemsAndWishlist((prevState)=>{return {
+      ...prevState,
+      itemComponent:item,
+      showProductComponent:true
+    }});
   }
 
-  function renderItemPage(item) {}
+  function renderItemPage() {
+    if(itemsAndWishlist.showProductComponent){
+      console.log("About to Rendering item page from website componenet");
+      console.dir(itemsAndWishlist.itemComponent);
+      return <Product item={itemsAndWishlist.itemComponent}/>
+    }
+  }
 
   return (
     <div>
@@ -276,6 +272,7 @@ function WebSite() {
       {renderBtns()}
       {renderAllItems()}
       {renderWishListItems()}
+      {renderItemPage()}
     </div>
   );
 }

@@ -222,7 +222,7 @@ function parseFindItemResponse(data, trackingId) {
         itemSpecifics: [],
     };
     if (data.Item.PictureURL && data.Item.PictureURL.length > 0) {
-        itemData.productImages = data.Item.PictureURL[0];
+        itemData.productImages = data.Item.PictureURL;
     }
     if (data.Item.CurrentPrice) {
         itemData.price = data.Item.CurrentPrice.Value;

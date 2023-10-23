@@ -1,0 +1,21 @@
+.item-details-container{
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    padding:1rem;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+    width: 80%;
+    margin-top:8rem;
+}
+
+.item-details-container div:nth-child(even) {
+    background-color: black;
+    color: white;
+}
+
+/* Apply styles to every odd row */
+.item-details-container div:nth-child(odd) {
+    background-color: orange;
+    color: white;
+}
