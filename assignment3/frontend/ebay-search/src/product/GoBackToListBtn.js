@@ -1,18 +1,25 @@
-import React, { useState } from "react";
-
-const GoBackToListBtn=(props) => {
-    return <button class="btn btn-light go-back-btn-container" onClick={(e) => {
+const GoBackToListBtn = (props) => {
+  return (
+    <button
+      class="btn btn-light go-back-btn-container"
+      onClick={(e) => {
         e.preventDefault();
-        props.setProductState({
+        props.setProductState((prevState) => {
+          return {
+            ...prevState,
             isDetailPage: false,
             isPhotosPage: false,
             isShippingPage: false,
-            isSellerPage:false,
-            isSimilarProducts:false,
+            isSellerPage: false,
+            isSimilarProducts: false,
+          };
         });
         props.onGoBackToBtnClick();
-    }}>{"<"} List</button>
-}
-
+      }}
+    >
+      {"<"} List
+    </button>
+  );
+};
 
 export default GoBackToListBtn;

@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 
 const URL="http://localhost:8080/googleImg";
 
-export const fetchGoogleImages = async (keyword) => {
+export const fetchGoogleImages = async (title) => {
     try {
       const trackingId = uuidv4();
-      console.log(`sending request to get item details ${itemId}`);
+      console.log(`sending request to get item details for ${title}`);
       const params = {
-        itemId: itemId,
-        keyword: keyword,
+        trackingId: trackingId,
+        keyword: title,
       };
       const response = await axios.get(URL , {
         params: params,
@@ -22,7 +22,7 @@ export const fetchGoogleImages = async (keyword) => {
         return response.data;
       } else {
         console.log(
-          `Google Img Search returned ${response.status} for itemId ${itemId}`
+          `Google Img Search returned ${response.status} for title ${title}`
         );
         console.dir(response);
         return null;
