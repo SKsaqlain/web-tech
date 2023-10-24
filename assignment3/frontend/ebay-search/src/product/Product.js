@@ -41,10 +41,72 @@ const Product = (props) => {
             }}>{"<"} List</button>
         }
     }
+
+    const renderNavBtns = () => {
+
+        return <ul class="nav justify-content-end nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" tabindex="-1">Disabled</a>
+        </li>
+      </ul>;
+        
+            return <div class="nav-btns-container">
+                <button class="btn btn-light nav-btn" onClick={(e) => {
+                    e.preventDefault();
+                    setProductState({
+                        isDetailPage: false,
+                        isPhotosPage: true,
+                        isShippingPage: false,
+                        isSellerPage:false,
+                        isSimilarProducts:false,
+                    });
+                }}>Photos</button>
+                <button class="btn btn-light nav-btn" onClick={(e) => {
+                    e.preventDefault();
+                    setProductState({
+                        isDetailPage: false,
+                        isPhotosPage: false,
+                        isShippingPage: true,
+                        isSellerPage:false,
+                        isSimilarProducts:false,
+                    });
+                }}>Shipping</button>
+                <button class="btn btn-light nav-btn" onClick={(e) => {
+                    e.preventDefault();
+                    setProductState({
+                        isDetailPage: false,
+                        isPhotosPage: false,
+                        isShippingPage: false,
+                        isSellerPage:true,
+                        isSimilarProducts:false,
+                    });
+                }}>Seller</button>
+                <button class="btn btn-light nav-btn" onClick={(e) => {
+                    e.preventDefault();
+                    setProductState({
+                        isDetailPage: false,
+                        isPhotosPage: false,
+                        isShippingPage: false,
+                        isSellerPage:false,
+                        isSimilarProducts:true,
+                    });
+                }}>Similar Products</button>
+            </div>
+    }
     return (
         <div>
             {renderProductTitle()}
             {renderGoBackToListBtn()}
+            {renderNavBtns()}
             {renderProductDetail()}
         </div>
     );
