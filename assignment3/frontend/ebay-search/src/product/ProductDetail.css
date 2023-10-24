@@ -1,0 +1,32 @@
+.item-details-container{
+    
+    /* padding:1rem; */
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+    /* width: 80%; */
+    margin-top:1rem;
+}
+
+.itemDetailsRow{
+    height: 3rem;
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    align-items: center;
+}
+
+
+.product-images-link{
+    color:rgb(116 ,150 ,152);
+    cursor: pointer;
+
+}
+
+
+.itemDetailsRow:nth-child(odd) {
+    background-color: rgb(34, 36, 41);
+}
+.itemDetailsRow:nth-child(even) {
+    background-color: rgb(46,48,52);
+    
+}

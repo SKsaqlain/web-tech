@@ -10,6 +10,12 @@ const dbController = {
     findDoc(req,res){
         dbCURD.findOne(req,res);
     },
+    getAll(req,res){
+        dbCURD.getAll(req,res);
+    },
+    findAllByItemIds(req,res){
+        dbCURD.findAllByItemIds(req,res);
+    },
     deleteDoc(req,res){
         dbCURD.deleteOne(req,res);
     }

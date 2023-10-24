@@ -20,6 +20,9 @@ module.exports = (app) => {
     //mongoDB apis
     app.route('/mongodb/insertDoc').get(mongoDBController.insertDoc);
     app.route('/mongodb/findDoc').get(mongoDBController.findDoc);
+    app.route('/mongodb/findAllByItemIds').get(mongoDBController.findAllByItemIds);
     app.route('/mongodb/deleteDoc').get(mongoDBController.deleteDoc);
+    app.route('/mongodb/getAll').get(mongoDBController.getAll);
+
 
 }

@@ -1,17 +1,14 @@
 'use strict';
-const {log} = require("winston");
 const logger = require("../../logging/logger");
 const xmlbuilder = require("xmlbuilder");
 
 const ENUM = {
-    "Best Match": "BestMatch",
-    "Price: highest first": "CurrentPriceHighest",
-    "Price + Shipping: highest first": "PricePlusShippingHighest",
-    "Price + Shipping: lowest first": "PricePlusShippingLowest",
     'New': "1000",
     'Used': "3000",
 };
 const CATEGORY_CODE = {
+    //todo: add categoryId for all categories
+
     'Art': "550",
     'Baby': "2984",
     'Books': "267",
@@ -44,11 +41,14 @@ function createXMLRequestPayload(
         root.ele('outputSelector', 'StoreInfo');
 
         if (category && category.length >= 1) {
-            logger.info("Adding Category tag");
-            root.ele("categoryId", CATEGORY_CODE[category]);
+            logger.info("Adding Category tag",{trackingId});
+            if(category!='All Categories') {
+                root.ele("categoryId", CATEGORY_CODE[category]);
+            }
+
         }
         if (postalCode && postalCode.length > 0) {
-            logger.info("Adding From tag");
+            logger.info("Adding From tag",{trackingId});
             root.ele("buyerPostalCode", postalCode);
         }
 
@@ -68,10 +68,10 @@ function createXMLRequestPayload(
                 "Condition",
                 ENUM[condition[0]]
             );
-            // TODO: donot add unspecified code below.
+            // TODO: donot add unspecified code below. // have handled in the front-end
             if (condition.length > 1) {
                 for (let i = 1; i < condition.length; i++) {
-                    console.log("Adding Condition tag", ENUM[condition[i]])
+                    logger.info(`Adding Condition tag ${ENUM[condition[i]]}`, {trackingId});
                     conditionTag.ele("value", ENUM[condition[i]]);
                 }
             }
@@ -120,6 +120,7 @@ function parseFindAllItemResponse(response, trackingId) {
     let parsedItems = [];
     for (let i = 0; i < items.length; i++) {
         let itemData = {}
+        itemData.number=(i+1)
         itemData.itemId = items[i].itemId[0];
         itemData.title = items[i].title[0] || null;
         itemData.image = items[i].galleryURL[0] || null;
@@ -134,7 +135,7 @@ function parseFindAllItemResponse(response, trackingId) {
 
         itemData.shippingDetails = getShippingDetails(items[i], itemData.shipping, trackingId);
         itemData.sellerDetails = getSellerDetails(items[i], trackingId);
-
+        itemData.isWishListed=false;
         parsedItems.push(itemData);
 
 
@@ -221,7 +222,7 @@ function parseFindItemResponse(data, trackingId) {
         itemSpecifics: [],
     };
     if (data.Item.PictureURL && data.Item.PictureURL.length > 0) {
-        itemData.productImages = data.Item.PictureURL[0];
+        itemData.productImages = data.Item.PictureURL;
     }
     if (data.Item.CurrentPrice) {
         itemData.price = data.Item.CurrentPrice.Value;

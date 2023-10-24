@@ -1,0 +1,30 @@
+.product-title-container {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.product-container {
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 3rem;
+}
+
+
+.nav-tabs .nav-link.active {
+  color: white;
+  background-color: black;
+  /* margin: 0 auto;
+    width: 80%; */
+}
+
+.nav {
+  /* width: 80%; */
+  margin: 0 auto;
+}
+
+.nav-tabs .nav-link{
+    text-decoration: none;
+  color: inherit;
+}
