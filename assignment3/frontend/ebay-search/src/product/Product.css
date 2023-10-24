@@ -21,3 +21,8 @@
   width: 80%;
   margin: 0 auto;
 }
+
+.nav-tabs .nav-link{
+    text-decoration: none;
+  color: inherit;
+}

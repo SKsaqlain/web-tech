@@ -27,7 +27,6 @@ const Product = (props) => {
     }
 
     const renderGoBackToListBtn=() => {
-        if(productState.isDetailPage){
             return <button class="btn btn-light go-back-btn-container" onClick={(e) => {
                 e.preventDefault();
                 setProductState({
@@ -39,28 +38,25 @@ const Product = (props) => {
                 });
                 props.onGoBackToBtnClick();
             }}>{"<"} List</button>
-        }
     }
 
     const renderNavBtns = () => {
 
         return <ul class="nav justify-content-end nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
+          <a class={"nav-link "+(productState.isDetailPage?"active":"")} href="#"  onClick={(e) => {
+                    e.preventDefault();
+                    setProductState({
+                        isDetailPage: true,
+                        isPhotosPage: false,
+                        isShippingPage: false,
+                        isSellerPage:false,
+                        isSimilarProducts:false,
+                    });
+                }}>Product</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" tabindex="-1">Disabled</a>
-        </li>
-      </ul>;
-        
-            return <div class="nav-btns-container">
-                <button class="btn btn-light nav-btn" onClick={(e) => {
+          <a class={"nav-link "+(productState.isPhotosPage?"active":"")} href="#" onClick={(e) => {
                     e.preventDefault();
                     setProductState({
                         isDetailPage: false,
@@ -69,8 +65,10 @@ const Product = (props) => {
                         isSellerPage:false,
                         isSimilarProducts:false,
                     });
-                }}>Photos</button>
-                <button class="btn btn-light nav-btn" onClick={(e) => {
+                }}>Photos</a>
+        </li>
+        <li class="nav-item">
+          <a class={"nav-link "+(productState.isShippingPage?"active":"")} href="#" onClick={(e) => {
                     e.preventDefault();
                     setProductState({
                         isDetailPage: false,
@@ -79,8 +77,10 @@ const Product = (props) => {
                         isSellerPage:false,
                         isSimilarProducts:false,
                     });
-                }}>Shipping</button>
-                <button class="btn btn-light nav-btn" onClick={(e) => {
+                }}>Shipping</a>
+        </li>
+        <li class="nav-item">
+          <a class={"nav-link "+(productState.isSellerPage?"active":"")} href="#" onClick={(e) => {
                     e.preventDefault();
                     setProductState({
                         isDetailPage: false,
@@ -89,8 +89,10 @@ const Product = (props) => {
                         isSellerPage:true,
                         isSimilarProducts:false,
                     });
-                }}>Seller</button>
-                <button class="btn btn-light nav-btn" onClick={(e) => {
+                }}>Seller</a>
+        </li>
+        <li class="nav-item">
+          <a class={"nav-link "+(productState.isSimilarProducts?"active":"")} href="#" onClick={(e) => {
                     e.preventDefault();
                     setProductState({
                         isDetailPage: false,
@@ -99,8 +101,9 @@ const Product = (props) => {
                         isSellerPage:false,
                         isSimilarProducts:true,
                     });
-                }}>Similar Products</button>
-            </div>
+                }}>Similar Products</a>
+        </li>
+      </ul>;
     }
     return (
         <div>
