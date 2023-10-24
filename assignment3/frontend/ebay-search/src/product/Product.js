@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import ProductDetail from "./ProductDetail";
 import "./Product.css"
 
+import NavBtns from "./NavBtns";
+
+import GoBackToListBtn from "./GoBackToListBtn";
+
 const Product = (props) => {
     console.log("Rendering Product component");
     console.dir(props.item);
@@ -26,91 +30,18 @@ const Product = (props) => {
         
     }
 
-    const renderGoBackToListBtn=() => {
-            return <button class="btn btn-light go-back-btn-container" onClick={(e) => {
-                e.preventDefault();
-                setProductState({
-                    isDetailPage: false,
-                    isPhotosPage: false,
-                    isShippingPage: false,
-                    isSellerPage:false,
-                    isSimilarProducts:false,
-                });
-                props.onGoBackToBtnClick();
-            }}>{"<"} List</button>
-    }
-
-    const renderNavBtns = () => {
-
-        return <ul class="nav justify-content-end nav-tabs">
-        <li class="nav-item">
-          <a class={"nav-link "+(productState.isDetailPage?"active":"")} href="#"  onClick={(e) => {
-                    e.preventDefault();
-                    setProductState({
-                        isDetailPage: true,
-                        isPhotosPage: false,
-                        isShippingPage: false,
-                        isSellerPage:false,
-                        isSimilarProducts:false,
-                    });
-                }}>Product</a>
-        </li>
-        <li class="nav-item">
-          <a class={"nav-link "+(productState.isPhotosPage?"active":"")} href="#" onClick={(e) => {
-                    e.preventDefault();
-                    setProductState({
-                        isDetailPage: false,
-                        isPhotosPage: true,
-                        isShippingPage: false,
-                        isSellerPage:false,
-                        isSimilarProducts:false,
-                    });
-                }}>Photos</a>
-        </li>
-        <li class="nav-item">
-          <a class={"nav-link "+(productState.isShippingPage?"active":"")} href="#" onClick={(e) => {
-                    e.preventDefault();
-                    setProductState({
-                        isDetailPage: false,
-                        isPhotosPage: false,
-                        isShippingPage: true,
-                        isSellerPage:false,
-                        isSimilarProducts:false,
-                    });
-                }}>Shipping</a>
-        </li>
-        <li class="nav-item">
-          <a class={"nav-link "+(productState.isSellerPage?"active":"")} href="#" onClick={(e) => {
-                    e.preventDefault();
-                    setProductState({
-                        isDetailPage: false,
-                        isPhotosPage: false,
-                        isShippingPage: false,
-                        isSellerPage:true,
-                        isSimilarProducts:false,
-                    });
-                }}>Seller</a>
-        </li>
-        <li class="nav-item">
-          <a class={"nav-link "+(productState.isSimilarProducts?"active":"")} href="#" onClick={(e) => {
-                    e.preventDefault();
-                    setProductState({
-                        isDetailPage: false,
-                        isPhotosPage: false,
-                        isShippingPage: false,
-                        isSellerPage:false,
-                        isSimilarProducts:true,
-                    });
-                }}>Similar Products</a>
-        </li>
-      </ul>;
+    const renderGoogleImgaes=()=>{
+        return ""
     }
     return (
         <div>
             {renderProductTitle()}
-            {renderGoBackToListBtn()}
-            {renderNavBtns()}
+            {/* {renderGoBackToListBtn()} */}
+            <GoBackToListBtn setProductState={setProductState} onGoBackToBtnClick={props.onGoBackToBtnClick}/>
+            {/* {renderNavBtns()} */}
+            <NavBtns productState={productState} setProductState={setProductState}/>
             {renderProductDetail()}
+            {renderGoogleImgaes()}
         </div>
     );
 }

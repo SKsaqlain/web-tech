@@ -64,7 +64,7 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
 
   useEffect(() => {
     getCurrentPostalcode();
-  },[]);
+  },[currentZip]);
 
   const getCurrentPostalcode = () => {
     console.log("getCurrentPostalcode");
