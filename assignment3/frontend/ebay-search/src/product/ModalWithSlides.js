@@ -1,14 +1,15 @@
 
 
-const ModalWithSlides = ({ images }) => {
+const ModalWithSlides = (props) => {
+  console.log("Rendering ModalWithSlides");
   return (
     <div
       class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
+      id="productDetailsModal"
+      tabIndex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      aria-labelledby="productDetailsModalLabel"
+      style={{display: "block"}}
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">

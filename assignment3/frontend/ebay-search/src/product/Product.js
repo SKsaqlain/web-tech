@@ -6,6 +6,7 @@ import "./Product.css";
 import NavBtns from "./NavBtns";
 import GoBackToListBtn from "./GoBackToListBtn";
 import GoogleImgaes from "./GoogleImages";
+import ShippingDetails from "./ShippingDetails";
 
 const Product = (props) => {
   console.log("Rendering Product component");
@@ -38,7 +39,8 @@ const Product = (props) => {
       <NavBtns productState={productState} setProductState={setProductState} />
       {renderProductDetail()}
       {/* {renderGoogleImgaes()} */}
-      {GoogleImgaes({productState:productState, setProductState:setProductState, item:props.item})}
+      <GoogleImgaes productState={productState} setProductState={setProductState} item={props.item}/>
+      <ShippingDetails productState={productState} setProductState={setProductState} item={props.item}/>
     </div>
   );
 };

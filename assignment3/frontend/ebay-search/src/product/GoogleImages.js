@@ -21,7 +21,6 @@ const GoogleImgaes = (props) => {
     }
   };
 
-  const checkIfImageAvailable = props.productState.googleImageList.length > 0;
   if (
     props.productState.isPhotosPage &&
     props.productState.googleImageList.length == 0

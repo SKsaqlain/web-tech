@@ -4,6 +4,8 @@ import { fetchItemDetails } from "../services/EbaySearchApi";
 
 import "./ProductDetail.css";
 
+import ModalWithSlides from "./ModalWithSlides";
+
 
 const ProductDetail = (props) => {
   const itemId = props.item.itemId;
@@ -28,6 +30,14 @@ const ProductDetail = (props) => {
     });
   }, []);
 
+  const enableModalWithSlides = () => {
+    setProductDetail((prevState)=>{
+      return{
+        ...prevState,
+        isModalActive: true,
+      }
+    });
+  }
   const renderProductImage = () => {
     if (
       productDetail.details &&
@@ -39,11 +49,10 @@ const ProductDetail = (props) => {
           <div class="col">Product Images</div>
           <div
             class="col product-images-link"
+            data-toggle="modal"
+            data-target="#productDetailsModal"
 
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >View Product Images Here
+          ><button type="button" class="btn product-image-btn" data-toggle="modal" data-target="#productDetailsModal">View Product Images Here</button>
           </div>
         </div>
       );
