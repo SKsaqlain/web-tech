@@ -4,94 +4,95 @@ import { fetchItemDetails } from "../services/EbaySearchApi";
 
 import "./ProductDetail.css";
 
-//: todo filter out the fields from the items response check and perform is present and null check validation and return the map
-const filterAndGetFieldsToDisplay = (productDetail) => {
-  const fieldsToDisplay = new Map();
-
-  //todo
-
-  return fieldsToDisplay;
-};
 
 const ProductDetail = (props) => {
   const itemId = props.item.itemId;
-  const [productDetail, setProductDetail] = useState(null);
+  const [productDetail, setProductDetail] = useState({
+    details: {},
+    isModalActive: false,
+  });
 
-  // useEffect(()=>{
-  //   console.log("Fetching product details for item " + itemId);
-  //   console.log("useEffect called");
-  // },[])
+
 
   useEffect(() => {
     fetchItemDetails(itemId).then((details) => {
       console.log("Received product detail for item " + itemId);
       console.dir(details);
-      setProductDetail(details);
+      setProductDetail((prevState)=>{
+        return{
+          ...prevState,
+          details: details,
+          isModalActive: false,
+        }
+      });
     });
   }, []);
 
   const renderProductImage = () => {
     if (
-      productDetail &&
-      productDetail.productImages &&
-      productDetail.productImages.length > 0
+      productDetail.details &&
+      productDetail.details.productImages &&
+      productDetail.details.productImages.length > 0
     ) {
       return (
         <div class="row itemDetailsRow">
           <div class="col">Product Images</div>
-          <div class="col"><a href="#"
+          <div
+            class="col product-images-link"
+
             onClick={(e) => {
               e.preventDefault();
-
-            }}>View Product Images Here</a></div>
+            }}
+          >View Product Images Here
+          </div>
         </div>
       );
     }
   };
 
   const renderPrice = () => {
-    if (productDetail && productDetail.price) {
+    if (productDetail.details && productDetail.details.price) {
       return (
         <div class="row itemDetailsRow">
           <div class="col">Price</div>
-          <div class="col">${productDetail.price}</div>
+          <div class="col">${productDetail.details.price}</div>
         </div>
       );
     }
   };
 
   const renderLocation = () => {
-    if (productDetail && productDetail.location) {
+    if (productDetail.details && productDetail.details.location) {
       return (
         <div class="row itemDetailsRow">
           <div class="col">Location</div>
-          <div class="col">{productDetail.location}</div>
+          <div class="col">{productDetail.details.location}</div>
         </div>
       );
     }
   };
 
   const renderReturnPolicy = () => {
-    if (productDetail && productDetail.returnPolicy) {
+    if (productDetail.details && productDetail.details.returnPolicy) {
       return (
         <div class="row itemDetailsRow">
           <div class="col">Return Policy</div>
-          <div class="col">{productDetail.returnPolicy}</div>
+          <div class="col">{productDetail.details.returnPolicy}</div>
         </div>
       );
     }
   };
 
   const renderItemSpecificDetails = () => {
-    if (productDetail && productDetail.itemSpecifics) {
+    if (productDetail.details && productDetail.details.itemSpecifics) {
       return (
-        <> 
-          {productDetail.itemSpecifics.map((itemSpecific) => {
+        <>
+          {productDetail.details.itemSpecifics.map((itemSpecific) => {
             return (
-              <div class="row itemDetailsRow"> 
+              <div class="row itemDetailsRow">
                 <div class="col">{itemSpecific.name}</div>
                 <div class="col">{itemSpecific.value}</div>
-              </div >
+              </div>
             );
           })}
         </>
@@ -99,12 +100,12 @@ const ProductDetail = (props) => {
     }
   };
 
-
-  if (productDetail) {
-    const fieldsToDisplay = new Map();
-
+  if (productDetail.details) {
     return (
-      <div key={itemId + "_itemDetails"} class="container item-details-container">
+      <div
+        key={itemId + "_itemDetails"}
+        class="container item-details-container"
+      >
         {renderProductImage()}
         {renderPrice()}
         {renderLocation()}

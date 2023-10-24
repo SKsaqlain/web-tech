@@ -4,4 +4,9 @@
 
 .google-img{
     border: 10px solid;
+    cursor: pointer;
+}
+
+.google-image-row{
+    margin-top:1rem;
 }

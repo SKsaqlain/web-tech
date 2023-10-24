@@ -4,6 +4,10 @@ import { fetchGoogleImages } from "../services/GoogleImgService";
 import "./GoogleImages.css";
 
 const GoogleImgaes = (props) => {
+    const openImageInNewWindow=(imageUrl)=> {
+        window.open(imageUrl, '_blank', 'width=auto, height=auto');
+      }
+      
   const renderImage = (link) => {
     if (link) {
       return (
@@ -11,6 +15,7 @@ const GoogleImgaes = (props) => {
           src={link}
           class="w-100 shadow-1-strong mb-2 google-img"
           alt="Boat on Calm Water"
+          onClick={() => openImageInNewWindow(link)}
         />
       );
     }
@@ -41,7 +46,7 @@ const GoogleImgaes = (props) => {
   ) {
     console.log("renderGoogleImgaes");
     return (
-      <div class="row ">
+      <div class="row google-image-row">
         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 google-image-column">
           {renderImage(props.productState.googleImageList[0])}
           {renderImage(props.productState.googleImageList[1])}

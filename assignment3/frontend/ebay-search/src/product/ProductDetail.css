@@ -4,7 +4,7 @@
     color: white;
     background-color: black;
     margin: 0 auto;
-    width: 80%;
+    /* width: 80%; */
     margin-top:1rem;
 }
 
@@ -16,9 +16,17 @@
 }
 
 
+.product-images-link{
+    color:rgb(116 ,150 ,152);
+    cursor: pointer;
+
+}
+
+
 .itemDetailsRow:nth-child(odd) {
-    background-color: black;
+    background-color: rgb(34, 36, 41);
 }
 .itemDetailsRow:nth-child(even) {
-    background-color: darkslategray;
+    background-color: rgb(46,48,52);
+    
 }
