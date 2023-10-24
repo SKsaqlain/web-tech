@@ -255,11 +255,20 @@ function WebSite() {
     }});
   }
 
+  function handleGoBackToListClick(){
+    console.log("Go back to list clicked");
+    setItemsAndWishlist((prevState)=>{return {
+      ...prevState,
+      itemComponent:{},
+      showProductComponent:false
+    }});
+  }
+
   function renderItemPage() {
     if(itemsAndWishlist.showProductComponent){
       console.log("About to Rendering item page from website componenet");
       console.dir(itemsAndWishlist.itemComponent);
-      return <Product item={itemsAndWishlist.itemComponent}/>
+      return <Product item={itemsAndWishlist.itemComponent} onGoBackToBtnClick={handleGoBackToListClick}/>
     }
   }
 

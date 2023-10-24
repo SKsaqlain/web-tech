@@ -25,9 +25,26 @@ const Product = (props) => {
             return <div class="product-title-container">{props.item.title}</div>
         
     }
+
+    const renderGoBackToListBtn=() => {
+        if(productState.isDetailPage){
+            return <button class="btn btn-light go-back-btn-container" onClick={(e) => {
+                e.preventDefault();
+                setProductState({
+                    isDetailPage: false,
+                    isPhotosPage: false,
+                    isShippingPage: false,
+                    isSellerPage:false,
+                    isSimilarProducts:false,
+                });
+                props.onGoBackToBtnClick();
+            }}>{"<"} List</button>
+        }
+    }
     return (
         <div>
             {renderProductTitle()}
+            {renderGoBackToListBtn()}
             {renderProductDetail()}
         </div>
     );
