@@ -12,6 +12,7 @@ const GoBackToListBtn = (props) => {
             isShippingPage: false,
             isSellerPage: false,
             isSimilarProducts: false,
+            googleImageList: [],
           };
         });
         props.onGoBackToBtnClick();
