@@ -8,6 +8,7 @@ const ENUM = {
 };
 const CATEGORY_CODE = {
     //todo: add categoryId for all categories
+
     'Art': "550",
     'Baby': "2984",
     'Books': "267",
@@ -62,7 +63,6 @@ function createXMLRequestPayload(
 
         if (condition && condition.length >= 1) {
             logger.info("Adding Condition tag", {trackingId});
-
             const conditionTag = createFilterTag(
                 root,
                 "Condition",

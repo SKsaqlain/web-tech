@@ -24,4 +24,5 @@ module.exports = (app) => {
     app.route('/mongodb/deleteDoc').get(mongoDBController.deleteDoc);
     app.route('/mongodb/getAll').get(mongoDBController.getAll);
 
+
 }

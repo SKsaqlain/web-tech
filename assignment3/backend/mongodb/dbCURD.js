@@ -9,9 +9,11 @@ const dbOps={
     insertOne: async (req,res)=>{
         try{
             await dbClient.connect();
+
             // const doc = req.body;
             const doc=JSON.parse(req.query.body);
             const trackingId = req.query.trackingId || "0000-0000-000";
+
             logger.info('dbOps.insertOne', {trackingId});
             const myDB = dbClient.db(DB_NAME);
             const Collection = myDB.collection(COLLECTION_NAME);
@@ -84,6 +86,7 @@ const dbOps={
             return null;
         }
     },
+
     deleteOne: async (req,res)=>{
         try{
             await dbClient.connect();
@@ -97,6 +100,7 @@ const dbOps={
             logger.info(`dbOps.deleteOne for item ${itemId}`, {trackingId});
             await dbClient.close();
             logger.info(`response from dbOps.deleteOne for item ${itemId} ${result}`, {trackingId })
+
             res.send(result);
 
         }catch (error){
