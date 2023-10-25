@@ -5,6 +5,10 @@ import './SellerDetail.css'
 import { CircularProgressbar,buildStyles  } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+
 const SellerDetail = (props) => {
     const renderSellerName = () => {
         if(props.item.sellerDetails.storeName){
@@ -55,7 +59,11 @@ const SellerDetail = (props) => {
           return (
             <div class="row shippingDetailsRow">
               <div class="col shippingFieldName">Top Rated</div>
-              <div class="col">{props.item.sellerDetails.topRated}</div>
+              <div class="col">{props.item.sellerDetails.topRated === "true" ? (
+              <CheckIcon style={{ color: "green" }} />
+            ) : (
+              <CloseIcon style={{ color: "red" }} />
+            )}</div>
             </div>
           );
         }
@@ -71,11 +79,11 @@ const SellerDetail = (props) => {
         }
       }
       const renderBuyProductAt = () => {
-        if (props.item.sellerDetails.feedBackScore) {
+        if (props.item.sellerDetails.buyProductAt) {
           return (
             <div class="row shippingDetailsRow">
               <div class="col shippingFieldName">Buy Product At</div>
-              <div class="col">{props.item.sellerDetails.shippingLocation}</div>
+              <div class="col"><a href={props.item.sellerDetails.buyProductAt}>Store</a></div>
             </div>
           );
         }
