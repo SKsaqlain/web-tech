@@ -25,18 +25,14 @@ const SellerDetail = (props) => {
     SilverShooting: "rgb(192, 192, 192)", // Silver
   };
 
-  // Example usage:
-  const colorName = "Yellow"; // Replace with the color name you want
-  const rgbValue = colorRGBValues[colorName];
-  console.log(`Color Name: ${colorName}, RGB Value: ${rgbValue}`);
 
   const renderSellerName = () => {
     if (props.item.sellerDetails.storeName) {
       return (
-        <div class="row align-items-center justify-content-center">
-          <div class="col text-center sellerName" style={{ color: "white" }}>
-            {props.item.sellerDetails.storeName}
-          </div>
+        <div class="row  ">
+          <div className="col text-center d-flex justify-content-center align-items-center sellerName" >
+    {props.item.sellerDetails.storeName}
+  </div>
         </div>
       );
     }
@@ -44,7 +40,7 @@ const SellerDetail = (props) => {
   const renderFeedbackScore = () => {
     if (props.item.sellerDetails.feedBackScore) {
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Feedback Score</div>
           <div class="col">{props.item.sellerDetails.feedBackScore}</div>
         </div>
@@ -56,9 +52,8 @@ const SellerDetail = (props) => {
     if (props.item.sellerDetails.popularity) {
       const popularity = parseFloat(props.item.sellerDetails.popularity);
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Popularity</div>
-          {/* <div class="col">{props.item.sellerDetails.popularity}</div> */}
           <div class="col">
             <div style={{ width: "3rem", height: "3rem" }}>
               <CircularProgressbar
@@ -76,7 +71,7 @@ const SellerDetail = (props) => {
   const renderFeedbackRatingStar = () => {
     if (props.item.sellerDetails.feedbackRatingStar) {
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Feedback Rating Star</div>
           <div class="col">
             <StarsIcon
@@ -95,7 +90,7 @@ const SellerDetail = (props) => {
   const renderTopRated = () => {
     if (props.item.sellerDetails.topRated) {
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Top Rated</div>
           <div class="col">
             {props.item.sellerDetails.topRated === "true" ? (
@@ -111,20 +106,27 @@ const SellerDetail = (props) => {
   const renderStoreName = () => {
     if (props.item.sellerDetails.storeName) {
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Store Name</div>
           <div class="col">{props.item.sellerDetails.storeName}</div>
         </div>
       );
     }
   };
+
+  const openStoreInNewTab=(link)=>{
+    if(link){
+        window.open(link, "_blank");
+        }
+  }
+
   const renderBuyProductAt = () => {
     if (props.item.sellerDetails.buyProductAt) {
       return (
-        <div class="row shippingDetailsRow">
+        <div class="row sellerDetailsRow">
           <div class="col shippingFieldName">Buy Product At</div>
           <div class="col">
-            <a href={props.item.sellerDetails.buyProductAt}>Store</a>
+          <button type="button" class="btn buy-product-at-store-btn" onClick={()=>openStoreInNewTab(props.item.sellerDetails.buyProductAt)}>Store</button>
           </div>
         </div>
       );
