@@ -1,0 +1,26 @@
+
+
+.item-seller-details-container {
+    /* padding:1rem; */
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+    /* width: 80%; */
+    margin-top: 1rem;
+  }
+
+.sellerFieldName{
+    font-size: medium;
+    font-weight: bold;
+}
+
+.sellerDetailsRow{height: 4rem;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  align-items: center;}
+  
+
+  .sellerName{
+    font-size: larger;
+    font-weight: bold;
+  }
