@@ -15,6 +15,7 @@
 .shippingDetailsRow {
   height: 4rem;
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 4fr 6fr;
   align-items: center;
+  border-bottom: 0.5px solid rgb(46, 48, 52);;
 }
