@@ -8,6 +8,7 @@ import GoBackToListBtn from "./GoBackToListBtn";
 import GoogleImgaes from "./GoogleImages";
 import ShippingDetails from "./ShippingDetails";
 import SellerDetail from "./SellerDetail";
+import SimilarProduct from "./SimilarProduct";
 
 const Product = (props) => {
   console.log("Rendering Product component");
@@ -43,6 +44,7 @@ const Product = (props) => {
       <GoogleImgaes productState={productState} setProductState={setProductState} item={props.item}/>
       <ShippingDetails productState={productState} setProductState={setProductState} item={props.item}/>
       <SellerDetail productState={productState} setProductState={setProductState} item={props.item}/>
+      <SimilarProduct productState={productState} setProductState={setProductState} item={props.item}/>
     </div>
   );
 };

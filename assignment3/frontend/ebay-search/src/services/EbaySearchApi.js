@@ -107,3 +107,32 @@ export const fetchItemDetails = async (itemId) => {
     return null;
   }
 };
+
+
+export const fetchSimilarItems = async (itemId) => {
+  try {
+    const trackingId = uuidv4();
+    console.log(`sending request to get similar Items details ${itemId}`);
+    const params = {
+      itemId: itemId,
+      trackingId: trackingId,
+    };
+    const response = await axios.get(URL + "/ebay/getSimilarItems", {
+      params: params,
+    });
+    console.log("received results from backend ");
+    if (response.status == "200") {
+      console.dir(response.data);
+      return response.data;
+    } else {
+      console.log(
+        `fetchSimilarItems returned ${response.status} for itemId ${itemId}`
+      );
+      console.dir(response);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
