@@ -1,3 +1,4 @@
+import './SimilarProductItem.css';
 const SimilarProductItem = (props) => {
     // console.log("rendering similar product item");
   if (props.item) {

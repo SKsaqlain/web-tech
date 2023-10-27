@@ -1,0 +1,9 @@
+.similarProductItemDetailsRow {
+  color: white;
+  background-color: black;
+  margin: 0 auto;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  align-items: center;
+}
