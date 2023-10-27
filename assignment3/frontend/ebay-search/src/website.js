@@ -56,6 +56,7 @@ function WebSite() {
       "Received All items after search, updating items with wishlist state " +
         items.length
     );
+    handleOnFormClear();
     const wishListData = GetAllWishlistItems();
     wishListData.then((wlistdata) => {
       if (wlistdata != null && wlistdata.length > 0) {
