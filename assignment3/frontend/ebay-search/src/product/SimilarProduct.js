@@ -20,13 +20,18 @@ const SimilarProduct = (props) => {
         sortBy: event.target.value,
       };
     });
-  }
-
+  };
 
   const renderSortByDropDown = () => {
     return (
-      <select class="form-select" aria-label="sort-by" onChange={handleSortChange}>
-        <option selected value="default">Default</option>
+      <select
+        class="form-select"
+        aria-label="sort-by"
+        onChange={handleSortChange}
+      >
+        <option selected value="default">
+          Default
+        </option>
         <option value="productName">Product Name</option>
         <option value="daysLeft">Days Left</option>
         <option value="price">Price</option>
@@ -35,7 +40,7 @@ const SimilarProduct = (props) => {
     );
   };
 
-  const handleOrderChange=(event)=>{
+  const handleOrderChange = (event) => {
     console.log("order by changed to " + event.target.value);
     setSimilarProductState((prevState) => {
       return {
@@ -43,11 +48,15 @@ const SimilarProduct = (props) => {
         sortOrder: event.target.value,
       };
     });
-  }
+  };
 
   const renderOrderByDropDown = () => {
     return (
-      <select class="form-select" aria-label="sort-order" onChange={handleOrderChange}>
+      <select
+        class="form-select"
+        aria-label="sort-order"
+        onChange={handleOrderChange}
+      >
         <option value="ascending" selected>
           Ascending
         </option>
@@ -56,24 +65,47 @@ const SimilarProduct = (props) => {
     );
   };
 
+  const sortItemsBasedOnFilter = () => {
+    console.log("sorting items based on filter");
+    let sortedItems = [...similarProductState.similarProducts];
+    if (similarProductState.sortBy == "default") {
+      return sortedItems;
+    } else {
+      sortedItems.sort((a, b) => {
+        if (a[similarProductState.sortBy] < b[similarProductState.sortBy]) {
+          return -1;
+        }
+        if (a[similarProductState.sortBy] > b[similarProductState.sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    if (similarProductState.sortOrder == "descending") {
+      sortedItems.reverse();
+    }
+    return sortedItems;
+  };
+
   const renderSimilarItems = () => {
     if (similarProductState.similarProducts.length > 0) {
-      return similarProductState.similarProducts.map((item) => {
+      const sortedItems = sortItemsBasedOnFilter();
+      return sortedItems.map((item) => {
         return <SimilarProductItem item={item} />;
       });
     }
   };
 
-  const parseFieldsType=(details)=>{
-    return details.map((item)=>{
-      return{
+  const parseFieldsType = (details) => {
+    return details.map((item) => {
+      return {
         ...item,
         price: parseFloat(item.price),
         shippingCost: parseFloat(item.shippingCost),
         daysLeft: parseInt(item.daysLeft),
-      }
+      };
     });
-  }
+  };
 
   if (
     props.productState.isSimilarProducts &&
@@ -84,8 +116,8 @@ const SimilarProduct = (props) => {
       console.log(
         "Received similar product detail for item " + props.item.itemId
       );
-      console.dir(details);
-      const parsedDetails=parseFieldsType(details)
+      const parsedDetails = parseFieldsType(details);
+      console.dir(parsedDetails);
       setSimilarProductState((prevState) => {
         return {
           ...prevState,
