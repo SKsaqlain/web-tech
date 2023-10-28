@@ -30,14 +30,18 @@ const ProductDetail = (props) => {
     });
   }, []);
 
-  const enableModalWithSlides = () => {
-    setProductDetail((prevState)=>{
-      return{
-        ...prevState,
-        isModalActive: true,
-      }
+  const openModal = () => {
+    setProductDetail((prevState) => {
+      return { ...prevState, isModalActive: true };
     });
-  }
+  };
+
+  const closeModal = () => {
+    setProductDetail((prevState) => { 
+      return { ...prevState, isModalActive: false };
+    });
+  };
+
   const renderProductImage = () => {
     if (
       productDetail.details &&
@@ -49,10 +53,14 @@ const ProductDetail = (props) => {
           <div class="col">Product Images</div>
           <div
             class="col product-images-link"
-            data-toggle="modal"
-            data-target="#productDetailsModal"
-
-          ><button type="button" class="btn product-image-btn" data-toggle="modal" data-target="#productDetailsModal">View Product Images Here</button>
+            // data-toggle="modal"
+            // data-target="#productDetailsModal"
+          >
+            <button type="button" class="btn product-image-btn" data-bs-toggle="modal" data-bs-target="#productDetailsModal" onClick={openModal}>View Product Images Here</button>
+      <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal}>
+        <p>Modal Content Goes Here</p>
+      </ModalWithSlides>
+          
           </div>
         </div>
       );
@@ -114,7 +122,7 @@ const ProductDetail = (props) => {
       <div
         key={itemId + "_itemDetails"}
         class="container item-details-container"
-      >
+      >        
         {renderProductImage()}
         {renderPrice()}
         {renderLocation()}

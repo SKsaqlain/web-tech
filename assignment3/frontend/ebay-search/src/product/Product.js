@@ -40,7 +40,6 @@ const Product = (props) => {
       />
       <NavBtns productState={productState} setProductState={setProductState} />
       {renderProductDetail()}
-      {/* {renderGoogleImgaes()} */}
       <GoogleImgaes productState={productState} setProductState={setProductState} item={props.item}/>
       <ShippingDetails productState={productState} setProductState={setProductState} item={props.item}/>
       <SellerDetail productState={productState} setProductState={setProductState} item={props.item}/>
