@@ -20,23 +20,24 @@ const googleImgService = {
                 'q': keyword,
                 'cx': SEARCH_ENGINE_ID,
                 'imgSize': 'huge',
-                'imgType': 'STOCK',
+                'imgType': 'photo',
                 'num': 8,
                 'searchType': 'image',
                 'key': API_KEY,
             };
             const response = await axios.get(URL, {params});
             if (response.status === 200) {
-                logger.info('findItem returned status code 200')
+                logger.info('find google images by keyword returned status code 200');
                 res.send(response.data);
             } else {
-                logger.warn(`Warn findItem returned status code ${response.status}`)
+                logger.warn(`Warn find google images by keyword returned status code ${response.status}`);
                 res.send("Error");
             }
 
         } catch (error) {
-            logger.error('Error calling findItem', error)
-            res.send("Error");
+            logger.error('Error calling find google images by keyword', error)
+            console.dir(error);
+            return null;
         }
     }
 }

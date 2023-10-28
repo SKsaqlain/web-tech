@@ -4,12 +4,18 @@ import React, { useEffect, useState } from "react";
 
 import "./SimilarProduct.css";
 import SimilarProductItem from "./SimilarProductItem";
+import { render } from "@testing-library/react";
 
 const SimilarProduct = (props) => {
   const [similarProductState, setSimilarProductState] = useState({
     similarProducts: [],
     sortBy: "default",
     sortOrder: "ascending",
+    isShowLess: true,
+    isShowMore: false,
+    isShowMoreBtn: true,
+    isShowLessBtn: false,
+
   });
 
   const handleSortChange = (event) => {
@@ -90,9 +96,51 @@ const SimilarProduct = (props) => {
   const renderSimilarItems = () => {
     if (similarProductState.similarProducts.length > 0) {
       const sortedItems = sortItemsBasedOnFilter();
-      return sortedItems.map((item) => {
-        return <SimilarProductItem item={item} />;
-      });
+      if (similarProductState.isShowLess) {
+        return sortedItems.slice(0, 5).map((item) => {
+          return <SimilarProductItem item={item} />;
+        });
+      }
+      if(similarProductState.isShowMore)
+      {
+        return sortedItems.map((item) => {
+          return <SimilarProductItem item={item} />;
+        });
+      }
+      // return sortedItems.map((item) => {
+      //   return <SimilarProductItem item={item} />;
+      // });
+    }
+  };
+
+  const renderShowMoreBtn = () => {
+    if (similarProductState.isShowMoreBtn && similarProductState.similarProducts.length > 5) {
+      return (
+        <button type="button" class="btn btn-primary" onClick={() =>
+          setSimilarProductState((prevState) => {
+            return { ...prevState, isShowLess: false, isShowMore: true, isShowMoreBtn: false, isShowLessBtn: true };
+          })
+        }>
+          Show More
+        </button>
+      );
+    }
+  };
+  const renderShowLessBtn = () => {
+    if (similarProductState.isShowLessBtn && similarProductState.similarProducts.length > 5) {
+      return (
+        <button
+          type="button"
+          class="btn btn-primary"
+          onClick={() =>
+            setSimilarProductState((prevState) => {
+              return { ...prevState, isShowLess: true, isShowMore: false ,isShowMoreBtn: true, isShowLessBtn: false  };
+            })
+          }
+        >
+          Show Less
+        </button>
+      );
     }
   };
 
@@ -137,6 +185,8 @@ const SimilarProduct = (props) => {
         {renderSortByDropDown()}
         {renderOrderByDropDown()}
         {renderSimilarItems()}
+        {renderShowMoreBtn()}
+        {renderShowLessBtn()}
       </div>
     );
   }
