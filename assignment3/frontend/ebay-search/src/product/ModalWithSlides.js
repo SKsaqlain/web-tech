@@ -26,7 +26,7 @@ const ModalWithSlides = (props) => {
             console.log("Rendering product image " + index);
               return (
                 <MDBCarouselItem
-                  className='w-100 d-block'
+                  className='w-100 d-block '
                   itemId={index+1}
                   src={productImage}
                   alt="Product Images"

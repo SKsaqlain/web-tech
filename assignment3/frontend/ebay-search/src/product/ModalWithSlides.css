@@ -16,3 +16,13 @@
   height: 5rem;
 }
 
+/* .carousel-item  image{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+} */
+
+.carousel-item > img{
+    width: 25rem;
+    height: 25rem;
+}
