@@ -38,6 +38,16 @@ function filterShipping(shipping) {
   return result;
 }
 
+const displayProgressBar=()=>{
+  const progressBar = document.getElementById("progressBar");
+  progressBar.style.display = "block";
+}
+
+const hideProgressBar=()=>{
+  const progressBar = document.getElementById("progressBar");
+  progressBar.style.display = "none";
+}
+
 export const fetchAllResults = async (
   trackingId,
   keyword,
@@ -48,6 +58,7 @@ export const fetchAllResults = async (
   zipcode
 ) => {
   try {
+    displayProgressBar();
     console.log(
       `sending request to get all results ${trackingId} ${keyword} ${category} ${condition} ${shipping} ${distance} ${zipcode}`
     );
@@ -64,6 +75,7 @@ export const fetchAllResults = async (
     const response = await axios.get(URL + "/ebay/findAllItems", {
       params: params,
     });
+    hideProgressBar();
     console.log("received results from backend " + response.length);
     if (response.status == "200" && response.data.length > 0) {
       return response.data;
