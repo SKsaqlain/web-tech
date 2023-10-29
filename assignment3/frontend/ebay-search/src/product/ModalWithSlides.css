@@ -1,3 +1,14 @@
+.modal-title{
+    color:black
+}
+.close{
+    background-color: white;
+    border:none;
+    color:gray;
+    font-size: large;
+    font-weight: bold;
+}
+
 .carousel-control-next{
     /* padding-left: 4rem; */
     padding-right: 4rem;
@@ -24,15 +35,15 @@
     margin: 0 auto ;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .carousel-item > img{
     width: 28rem;
     height: 30rem;
     display: block;
     margin: 0 auto;
-  /* margin: 0 auto;  */
   border: 1rem solid black ;
   border-radius : 0.5rem;
 }
+

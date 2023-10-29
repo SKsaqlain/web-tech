@@ -15,7 +15,7 @@ const ModalWithSlides = (props) => {
       <div className='modal-dialog'>
         <div className='modal-content'>
           <div className='modal-header'>
-            <h5 className='modal-title'>Product Images</h5>
+            <p className='modal-title'>Product Images</p>
             <button type='button' className='close' onClick={onClose}>
               <span aria-hidden='true'>&times;</span>
             </button>
