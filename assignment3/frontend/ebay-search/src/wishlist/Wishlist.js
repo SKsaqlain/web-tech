@@ -62,10 +62,11 @@ const WishList = (props) => {
     });
   };
   const itemList = () =>
-    wishListItems.items.map((eachItem) => (
+    wishListItems.items.map((eachItem,index) => (
       <WishListItem
         onIconClick={handleOnWishlistClick}
         item={eachItem}
+        index={index}
         key={eachItem.itemId}
         onLinkClick={onItemLinkClick}
       />

@@ -17,7 +17,7 @@ function truncateText(text, maxLength) {
 }
 
 const WishListItem = (props) => {
-  const { item, onIconClick, itemType, onLinkClick } = props;
+  const { item, onIconClick, index, onLinkClick } = props;
 
   function renderWishlistIcon() {
     return <RemoveShoppingCartIcon style={{ color: "burlywood" }} />;
@@ -27,7 +27,7 @@ const WishListItem = (props) => {
   
     return (
       <div id={item.itemId} class='row' className='item-card-container-wishlist'>
-        <div className='item-info '>{item.number}</div>
+        <div className='item-info '>{index+1}</div>
         <div className='item-info '>
           <a href={item.image} target='_blank' rel='noopener noreferrer'>
             <img src={item.image} alt='' className='img-fluid allitem-item-img' />
