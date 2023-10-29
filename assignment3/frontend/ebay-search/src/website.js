@@ -6,6 +6,7 @@ import AllItems from "./allitems/AllItems";
 import ResultsWishlistBtn from "./rstwshbtn/ResultWishlistBtn";
 import Product from "./product/Product";
 import ProgressBar from "./progressbar/ProgressBar";
+import WishList from "./wishlist/Wishlist";
 
 import {
   GetWishlistItems,
@@ -239,10 +240,9 @@ function WebSite() {
       itemsAndWishlist.wishlistBtn
     ) {
       return (
-        <AllItems
-          allItemsAndWList={itemsAndWishlist}
-          itemType='wishList'
-          handleOnWishlistClick={handleOnWishlistClick}
+        <WishList
+        itemsAndWishlist={itemsAndWishlist}
+          setItemsAndWishlist={setItemsAndWishlist}
           onItemLinkClick={handleOnItemLinkClick}
         />
       );

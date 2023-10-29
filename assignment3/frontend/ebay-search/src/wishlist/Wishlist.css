@@ -1,0 +1,13 @@
+.wishListItem-container{
+    background-color: black;
+    margin: 0 auto;
+    width: 80%;
+    margin-top:8rem;
+}
+
+.total-container{
+    display: grid;
+    grid-template-columns: 11fr  1fr;
+    padding:1rem;
+    color: white;
+}
