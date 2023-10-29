@@ -7,3 +7,26 @@
   grid-template-columns: 3fr 4fr;
   align-items: center;
 }
+
+.similarProductItemUrl{
+  all:unset;
+  cursor: pointer;
+}
+.productName{
+color:rgb(113, 149, 152	);
+}
+.productName:hover{
+  text-decoration: underline;
+  }
+
+.price{
+  color:rgb(172, 210, 157);
+}
+
+.shippingCost{
+  color:rgb(213,185,115);
+}
+
+.daysLeft{
+color: rgb(255,255,255);
+}
