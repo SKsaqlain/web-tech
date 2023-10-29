@@ -354,7 +354,7 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
               />
             </div>
           </div>
-          <div className="button-grp">
+          <div className="button-grp m-3">
             <SearchBtn onClick={productSearch} type="submit" />
             <ClearBtn onClick={clearSearch} type="button" />
           </div>
