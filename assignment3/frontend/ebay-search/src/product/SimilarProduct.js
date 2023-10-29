@@ -15,7 +15,6 @@ const SimilarProduct = (props) => {
     isShowMore: false,
     isShowMoreBtn: true,
     isShowLessBtn: false,
-
   });
 
   const handleSortChange = (event) => {
@@ -30,18 +29,14 @@ const SimilarProduct = (props) => {
 
   const renderSortByDropDown = () => {
     return (
-      <select
-        class="form-select"
-        aria-label="sort-by"
-        onChange={handleSortChange}
-      >
-        <option selected value="default">
+      <select class='form-select sort-btn' aria-label='sort-by' onChange={handleSortChange}>
+        <option selected value='default'>
           Default
         </option>
-        <option value="productName">Product Name</option>
-        <option value="daysLeft">Days Left</option>
-        <option value="price">Price</option>
-        <option value="shippingCost">Shipping Cost</option>
+        <option value='productName'>Product Name</option>
+        <option value='daysLeft'>Days Left</option>
+        <option value='price'>Price</option>
+        <option value='shippingCost'>Shipping Cost</option>
       </select>
     );
   };
@@ -58,15 +53,11 @@ const SimilarProduct = (props) => {
 
   const renderOrderByDropDown = () => {
     return (
-      <select
-        class="form-select"
-        aria-label="sort-order"
-        onChange={handleOrderChange}
-      >
-        <option value="ascending" selected>
+      <select class='form-select sort-btn' aria-label='sort-order' onChange={handleOrderChange}>
+        <option value='ascending' selected>
           Ascending
         </option>
-        <option value="descending">Descending</option>
+        <option value='descending'>Descending</option>
       </select>
     );
   };
@@ -101,26 +92,25 @@ const SimilarProduct = (props) => {
           return <SimilarProductItem item={item} />;
         });
       }
-      if(similarProductState.isShowMore)
-      {
+      if (similarProductState.isShowMore) {
         return sortedItems.map((item) => {
           return <SimilarProductItem item={item} />;
         });
       }
-      // return sortedItems.map((item) => {
-      //   return <SimilarProductItem item={item} />;
-      // });
     }
   };
 
   const renderShowMoreBtn = () => {
     if (similarProductState.isShowMoreBtn && similarProductState.similarProducts.length > 5) {
       return (
-        <button type="button" class="btn btn-primary" onClick={() =>
-          setSimilarProductState((prevState) => {
-            return { ...prevState, isShowLess: false, isShowMore: true, isShowMoreBtn: false, isShowLessBtn: true };
-          })
-        }>
+        <button
+          type='button'
+          className='btn showMoreLessBtn'
+          onClick={() =>
+            setSimilarProductState((prevState) => {
+              return { ...prevState, isShowLess: false, isShowMore: true, isShowMoreBtn: false, isShowLessBtn: true };
+            })
+          }>
           Show More
         </button>
       );
@@ -130,14 +120,13 @@ const SimilarProduct = (props) => {
     if (similarProductState.isShowLessBtn && similarProductState.similarProducts.length > 5) {
       return (
         <button
-          type="button"
-          class="btn btn-primary"
+          type='button'
+          className='btn showMoreLessBtn'
           onClick={() =>
             setSimilarProductState((prevState) => {
-              return { ...prevState, isShowLess: true, isShowMore: false ,isShowMoreBtn: true, isShowLessBtn: false  };
+              return { ...prevState, isShowLess: true, isShowMore: false, isShowMoreBtn: true, isShowLessBtn: false };
             })
-          }
-        >
+          }>
           Show Less
         </button>
       );
@@ -155,15 +144,10 @@ const SimilarProduct = (props) => {
     });
   };
 
-  if (
-    props.productState.isSimilarProducts &&
-    similarProductState.similarProducts.length == 0
-  ) {
+  if (props.productState.isSimilarProducts && similarProductState.similarProducts.length == 0) {
     console.log("fetching similar products");
     fetchSimilarItems(props.item.itemId).then((details) => {
-      console.log(
-        "Received similar product detail for item " + props.item.itemId
-      );
+      console.log("Received similar product detail for item " + props.item.itemId);
       const parsedDetails = parseFieldsType(details);
       console.dir(parsedDetails);
       setSimilarProductState((prevState) => {
@@ -174,19 +158,22 @@ const SimilarProduct = (props) => {
       });
     });
   }
-  if (
-    props.productState.isSimilarProducts &&
-    similarProductState.similarProducts?.length > 0
-  ) {
+  if (props.productState.isSimilarProducts && similarProductState.similarProducts?.length > 0) {
     console.log("rendering similar products");
 
     return (
       <div>
-        {renderSortByDropDown()}
-        {renderOrderByDropDown()}
+        <div className='row justify-content-left sort-btn-container'>
+          <div className='col'>{renderSortByDropDown()}</div>
+          <div className='col'>{renderOrderByDropDown()}</div>
+        </div>
         {renderSimilarItems()}
-        {renderShowMoreBtn()}
-        {renderShowLessBtn()}
+        <div className='container'>
+          <div className='row justify-content-center'>
+            {renderShowMoreBtn()}
+            {renderShowLessBtn()}
+          </div>
+        </div>
       </div>
     );
   }

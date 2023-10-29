@@ -1,0 +1,22 @@
+.showMoreLessBtn{
+    margin-top:5rem;
+    width: 10rem;
+    background-color: black;
+    color:white;
+}
+
+.showMoreLessBtn:hover{
+    background-color: black;
+    color:white;
+}
+
+.sort-btn{
+    width: 15rem;
+}
+
+.sort-btn-container{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    justify-content: start;
+}
