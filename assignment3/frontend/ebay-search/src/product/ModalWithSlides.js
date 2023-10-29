@@ -21,16 +21,15 @@ const ModalWithSlides = (props) => {
             </button>
           </div>
 
-          <MDBCarousel showControls dealy={3000}>
+          <MDBCarousel showControls pause={true}>
           {productImages.map((productImage, index) => {
             console.log("Rendering product image " + index);
               return (
                 <MDBCarouselItem
-                  className='w-100 d-block '
+                  className='d-block '
+                  src={productImage} alt='Product Images'
                   itemId={index+1}
-                  src={productImage}
-                  alt="Product Images"
-                />
+                /> 
               );
             })}
           </MDBCarousel>

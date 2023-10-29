@@ -1,28 +1,38 @@
+.carousel-control-next{
+    /* padding-left: 4rem; */
+    padding-right: 4rem;
+    width: 5vw;
+    
+}
+.carousel-control-prev{
+    padding-left: 4rem;
+    width: 5vw;
+
+}
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: gray; /* Change the arrow color to white */
-  width: 5rem;
-  height: 5rem;
-  font-size: 3rem;
-  font-weight: bold;
-  
 }
 
 .carousel-control-prev-icon:hover,
 .carousel-control-next-icon:hover {
-  background-color: orange; /* Change the arrow color to white */
-  width: 5rem;
-  height: 5rem;
+  background-color: black; /* Change the arrow color to white */
 }
 
-/* .carousel-item  image{
-    width: 5rem;
-    height: 5rem;
-    object-fit: cover;
-} */
-
+.carousel-inner{
+    margin: 0 auto ;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 0;
+    padding-right: 0;
+}
 .carousel-item > img{
-    width: 25rem;
-    height: 25rem;
+    width: 28rem;
+    height: 30rem;
+    display: block;
+    margin: 0 auto;
+  /* margin: 0 auto;  */
+  border: 1rem solid black ;
+  border-radius : 0.5rem;
 }
