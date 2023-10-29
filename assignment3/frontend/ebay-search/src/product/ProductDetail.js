@@ -53,14 +53,9 @@ const ProductDetail = (props) => {
           <div class="col">Product Images</div>
           <div
             class="col product-images-link"
-            // data-toggle="modal"
-            // data-target="#productDetailsModal"
           >
             <button type="button" class="btn product-image-btn" data-bs-toggle="modal" data-bs-target="#productDetailsModal" onClick={openModal}>View Product Images Here</button>
-      <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal}>
-        <p>Modal Content Goes Here</p>
-      </ModalWithSlides>
-          
+      <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/>
           </div>
         </div>
       );
