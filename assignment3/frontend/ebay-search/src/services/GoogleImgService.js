@@ -1,6 +1,6 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-
+import {displayProgressBar, hideProgressBar} from "./ProgressBarHandler";
 
 const URL="http://localhost:8080/googleImg";
 
@@ -12,9 +12,11 @@ export const fetchGoogleImages = async (title) => {
         trackingId: trackingId,
         keyword: title,
       };
+      displayProgressBar();
       const response = await axios.get(URL , {
         params: params,
       });
+      hideProgressBar();
   
       console.log("received results for Google Img Search from backend ");
       if (response.status == "200") {

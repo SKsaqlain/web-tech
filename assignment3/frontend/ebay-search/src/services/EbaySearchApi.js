@@ -1,5 +1,7 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+
+import {displayProgressBar, hideProgressBar} from "./ProgressBarHandler";
 // todo: fetch results and console log it for now.
 
 const URL = "http://localhost:8080";
@@ -38,16 +40,6 @@ function filterShipping(shipping) {
   return result;
 }
 
-const displayProgressBar=()=>{
-  const progressBar = document.getElementById("progressBar");
-  progressBar.style.display = "block";
-}
-
-const hideProgressBar=()=>{
-  const progressBar = document.getElementById("progressBar");
-  progressBar.style.display = "none";
-}
-
 export const fetchAllResults = async (
   trackingId,
   keyword,
@@ -58,7 +50,6 @@ export const fetchAllResults = async (
   zipcode
 ) => {
   try {
-    displayProgressBar();
     console.log(
       `sending request to get all results ${trackingId} ${keyword} ${category} ${condition} ${shipping} ${distance} ${zipcode}`
     );
@@ -72,6 +63,7 @@ export const fetchAllResults = async (
       postalCode: zipcode,
     };
     console.log(params + " " + trackingId);
+    displayProgressBar();
     const response = await axios.get(URL + "/ebay/findAllItems", {
       params: params,
     });
@@ -93,16 +85,18 @@ export const fetchAllResults = async (
 
 export const fetchItemDetails = async (itemId) => {
   try {
+    
     const trackingId = uuidv4();
     console.log(`sending request to get item details ${itemId}`);
     const params = {
       itemId: itemId,
       trackingId: trackingId,
     };
+    displayProgressBar();
     const response = await axios.get(URL + "/ebay/findItem", {
       params: params,
     });
-
+    hideProgressBar();
     console.log("received results from backend ");
     if (response.status == "200") {
       console.dir(response.data);
@@ -129,9 +123,11 @@ export const fetchSimilarItems = async (itemId) => {
       itemId: itemId,
       trackingId: trackingId,
     };
+    displayProgressBar();
     const response = await axios.get(URL + "/ebay/getSimilarItems", {
       params: params,
     });
+    hideProgressBar();
     console.log("received results from backend ");
     if (response.status == "200") {
       console.dir(response.data);
