@@ -7,6 +7,7 @@ import ResultsWishlistBtn from "./rstwshbtn/ResultWishlistBtn";
 import Product from "./product/Product";
 import ProgressBar from "./progressbar/ProgressBar";
 import WishList from "./wishlist/Wishlist";
+import DetailsBtn from "./allitems/DetailsBtn";
 
 import {
   GetWishlistItems,
@@ -24,15 +25,7 @@ function WebSite() {
     wishlistBtn: false,
     itemComponent: {},
     showProductComponent: false,
-  }); //state to store all items and wishlist items
-
-  // const [itemDetail, setItemDetail] = useState({
-  //   product: {},
-  //   photos: [],
-  //   shipping: {},
-  //   seller: {},
-  //   similarProducts: [],
-  // });
+  }); 
 
   function UpdateItemsWishListState(item, data) {
     console.log("Updating items wishlist state");
@@ -108,23 +101,6 @@ function WebSite() {
         wishlistBtn: false,
       };
     });
-  }
-
-  //todo: once all items have been fetched , use useEffect method and call the db apis tp update the wishlist state of all the items
-  // and then re-render the entire page. this will ensure that the wishlist icon is displayed correctly for all the items
-  //
-
-  function handleAddtoWishList(item) {
-    console.log("Adding item to wishlist " + item.itemId);
-    const trackingId = uuidv4();
-    //todo: add item to wish list here and update the states for just allItem
-  }
-
-  function handleRemoveFromWishList(item) {
-    console.log("Removing item from wishlist " + item.itemId);
-    const trackingId = uuidv4();
-    //todo: make db api call remove item from wishlist , if it is allItems just call the db and update the attribute for all items
-    //if it is wishlist items then call the db and update the attribute for wishlist items and if the item is present in the
   }
 
   function handleOnWishlistBtnClick() {
@@ -241,7 +217,7 @@ function WebSite() {
     ) {
       return (
         <WishList
-        itemsAndWishlist={itemsAndWishlist}
+          itemsAndWishlist={itemsAndWishlist}
           setItemsAndWishlist={setItemsAndWishlist}
           onItemLinkClick={handleOnItemLinkClick}
         />
@@ -266,7 +242,7 @@ function WebSite() {
     setItemsAndWishlist((prevState) => {
       return {
         ...prevState,
-        itemComponent: {},
+        // itemComponent: {},
         showProductComponent: false,
       };
     });
@@ -279,13 +255,18 @@ function WebSite() {
       return <Product item={itemsAndWishlist.itemComponent} onGoBackToBtnClick={handleGoBackToListClick} />;
     }
   }
-
+  const renderDetailsBtn = () => {
+    if(itemsAndWishlist.showProductComponent==false && ((itemsAndWishlist.resultsBtn==true && itemsAndWishlist.allItems.length>0) || (itemsAndWishlist.wishlistBtn==true && itemsAndWishlist.wishListItems.length>0))  ){
+      return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />
+    }
+  };
 
   return (
     <div>
       <ProductSearchForm onFormSubmit={handleOnFormSubmit} onFormClear={handleOnFormClear} />
       {renderBtns()}
       <ProgressBar />
+      {renderDetailsBtn()}
       {renderAllItems()}
       {renderWishListItems()}
       {renderItemPage()}

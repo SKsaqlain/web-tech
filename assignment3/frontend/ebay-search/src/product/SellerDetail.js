@@ -143,7 +143,7 @@ const SellerDetail = (props) => {
     return (
       <div
         key={props.item.itemId + "_itemSellerDetails"}
-        class="container item-seller-details-container"
+        class="item-seller-details-container"
       >
         {renderSellerName()}
         {renderFeedbackScore()}

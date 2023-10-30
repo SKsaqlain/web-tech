@@ -1,6 +1,7 @@
 const GoBackToListBtn = (props) => {
   return (
     <button
+    
       class="btn btn-light go-back-btn-container"
       onClick={(e) => {
         e.preventDefault();

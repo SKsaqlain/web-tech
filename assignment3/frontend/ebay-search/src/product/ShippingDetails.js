@@ -102,7 +102,7 @@ const ShippingDetails = (props) => {
     return (
       <div
         key={props.item.itemId + "_itemShippingDetails"}
-        class="container item-shipping-details-container"
+        class="item-shipping-details-container"
       >
         {renderShippingCost()}
         {renderShippingLocation()}

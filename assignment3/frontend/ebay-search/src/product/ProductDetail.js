@@ -116,7 +116,7 @@ const ProductDetail = (props) => {
     return (
       <div
         key={itemId + "_itemDetails"}
-        class="container item-details-container"
+        class="item-details-container"
       >        
         {renderProductImage()}
         {renderPrice()}
