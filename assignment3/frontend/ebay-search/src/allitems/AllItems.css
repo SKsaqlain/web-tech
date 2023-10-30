@@ -11,3 +11,63 @@
     padding:1rem;
     color: white;
 }
+
+.navBtn-contianer{
+    
+    /* align-items: center; */
+    justify-content: center;
+    display: flex;
+    padding-top: 1rem;
+}
+
+.previous-nav-btn:hover{
+    background-color: gray ;
+    text-decoration: underline;
+}
+
+.previous-nav-btn:focus{
+    color:black;
+    box-shadow: none;
+    outline: none;    
+}
+
+.next-nav-btn:hover{
+    background-color: gray ;
+    text-decoration: underline;
+}
+
+.next-nav-btn:focus{
+    color:black;
+    box-shadow: none;
+    outline: none;    
+}
+
+
+.previous-nav-btn , .next-nav-btn{
+    border:none;
+    color:black
+}
+
+.nbr-nav-btn{
+    border:none;
+    color:black
+}
+
+.nbr-nav-btn:hover{
+    color:black;
+    background-color: lightgray;
+    text-decoration: underline;
+}
+
+
+
+.nbr-nav-btn:focus{
+    background-color: rgb(33,142,255);
+    color:white;
+    box-shadow: none;
+    outline: none;
+  
+}
+
+
+
