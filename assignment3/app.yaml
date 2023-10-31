@@ -1,0 +1,11 @@
+handlers:
+  - url: /
+    static_files: frontend/ebay-search/build/index.html
+    upload: frontend/ebay-search/build/index.html
+
+  - url: /
+    static_dir: frontend/ebay-search/build
+
+runtime: nodejs14
+entrypoint: app.js
+

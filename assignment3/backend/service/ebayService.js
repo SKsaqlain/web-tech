@@ -19,6 +19,7 @@ const ebay = {
     findAllItems: async (req, res) => {
         //trackingId, keyword, category, condition, shipping, distance, postalCode
         try {
+
             const trackingId = req.trackingId = req.query.trackingId || uuidv4();
             const keywords = req.query.keywords;
             const category = req.query.category || [];

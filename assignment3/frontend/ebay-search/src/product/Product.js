@@ -10,6 +10,7 @@ import ShippingDetails from "./ShippingDetails";
 import SellerDetail from "./SellerDetail";
 import SimilarProduct from "./SimilarProduct";
 import WishListBtn from "./WishListBtn";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 const Product = (props) => {
   console.log("Rendering Product component");
@@ -37,13 +38,21 @@ const Product = (props) => {
       <div class='item-detial-btn-container'>
         <div class='row'>
           <div class='col'>
-              <div class="mr-auto">
-                <GoBackToListBtn setProductState={setProductState} onGoBackToBtnClick={props.onGoBackToBtnClick} />
-              </div>
+            <div class='mr-auto'>
+              <GoBackToListBtn setProductState={setProductState} onGoBackToBtnClick={props.onGoBackToBtnClick} />
+            </div>
           </div>
           <div class='col'>
-            <div class="ml-auto" style={{float:'right'}}>
-              <WishListBtn item={props.item} />
+            <div class='ml-auto' style={{ float: "right" }}>
+              <div className='row'>
+                <div className='col'>
+                <div class="fb-share-button" data-href={props.item.viewItemURL} data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ebay.com%2Fitm%2F194935793906%3F_trkparms%3Damclksrc%253DITM%2526mehot%253Dpp%2526itm%253D194935793906%2526pmt%253D1%2526noa%253D1%2526brand%253DApple%26_trksid%3Dp0&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><FacebookIcon style={{ color: "dodgerblue", fontSize:'3rem' }} /></a></div>
+                  
+                </div>
+                <div className='col align-middle'>
+                  <WishListBtn item={props.item} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
