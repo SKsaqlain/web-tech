@@ -73,6 +73,7 @@ function AllItems(props) {
       key={eachItem.itemId}
       itemType={itemType}
       onLinkClick={props.onItemLinkClick}
+      selectedItemId={props.allItemsAndWList.selectedItemId}
     />
   ));
 

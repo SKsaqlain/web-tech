@@ -18,6 +18,11 @@
     color: white;
 }
 
+.selected-item{
+    background-color: rgb(185,187,190) !important;
+    
+}
+
 .item-card-container-wishlist{
     display: grid;
     grid-template-columns: 1fr 2fr 6fr 1fr 1fr  1fr;

@@ -25,6 +25,7 @@ function WebSite() {
     wishlistBtn: false,
     itemComponent: {},
     showProductComponent: false,
+    selectedItemId: "",
   });
 
   function UpdateItemsWishListState(item, data) {
@@ -89,6 +90,7 @@ function WebSite() {
       wishlistBtn: false,
       itemComponent: {},
       showProductComponent: false,
+      selectedItemId: "",
     });
   }
 
@@ -233,6 +235,7 @@ function WebSite() {
         ...prevState,
         itemComponent: item,
         showProductComponent: true,
+        selectedItemId: item.itemId,
       };
     });
   }
