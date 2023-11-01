@@ -13,6 +13,7 @@ const WishListBtn = (props) => {
 
   const onIconClick=()=>{
     console.log("Handling wishlist click for results for item " + props.item.itemId);
+    props.onWishListBtnClick(props.item);
   }
 
   return (

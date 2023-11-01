@@ -50,7 +50,7 @@ const Product = (props) => {
                   
                 </div>
                 <div className='col align-middle'>
-                  <WishListBtn item={props.item} />
+                  <WishListBtn item={props.item} onWishListBtnClick={props.onWishListBtnClick}/>
                 </div>
               </div>
             </div>

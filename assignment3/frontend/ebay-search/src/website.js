@@ -25,7 +25,7 @@ function WebSite() {
     wishlistBtn: false,
     itemComponent: {},
     showProductComponent: false,
-  }); 
+  });
 
   function UpdateItemsWishListState(item, data) {
     console.log("Updating items wishlist state");
@@ -252,12 +252,22 @@ function WebSite() {
     if (itemsAndWishlist.showProductComponent) {
       console.log("About to Rendering item page from website componenet");
       console.dir(itemsAndWishlist.itemComponent);
-      return <Product item={itemsAndWishlist.itemComponent} onGoBackToBtnClick={handleGoBackToListClick} />;
+      return (
+        <Product
+          item={itemsAndWishlist.itemComponent}
+          onGoBackToBtnClick={handleGoBackToListClick}
+          onWishListBtnClick={handleWishListClickforResulst}
+        />
+      );
     }
   }
   const renderDetailsBtn = () => {
-    if(itemsAndWishlist.showProductComponent==false && ((itemsAndWishlist.resultsBtn==true && itemsAndWishlist.allItems.length>0) || (itemsAndWishlist.wishlistBtn==true && itemsAndWishlist.wishListItems.length>0))  ){
-      return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      ((itemsAndWishlist.resultsBtn == true && itemsAndWishlist.allItems.length > 0) ||
+        (itemsAndWishlist.wishlistBtn == true && itemsAndWishlist.wishListItems.length > 0))
+    ) {
+      return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />;
     }
   };
 
