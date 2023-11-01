@@ -26,7 +26,7 @@ const WishListItem = (props) => {
   if (item) {
   
     return (
-      <div id={item.itemId} class='row' className='item-card-container-wishlist'>
+      <div id={item.itemId} class='row' className={item.itemId===props.selectedItemId?"selected-item item-card-container-wishlist":"item-card-container-wishlist"}>
         <div className='item-info '>{index+1}</div>
         <div className='item-info '>
           <a href={item.image} target='_blank' rel='noopener noreferrer'>

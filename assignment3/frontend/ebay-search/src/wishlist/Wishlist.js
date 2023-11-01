@@ -69,6 +69,7 @@ const WishList = (props) => {
         index={index}
         key={eachItem.itemId}
         onLinkClick={onItemLinkClick}
+        selectedItemId={itemsAndWishlist.selectedItemId}
       />
     ));
 
