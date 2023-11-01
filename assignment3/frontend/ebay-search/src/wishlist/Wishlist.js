@@ -31,7 +31,7 @@ const WishList = (props) => {
       total += parseFloat(item.price);
     });
     return (
-      <div key='total-shopping-component' class='total-container'>
+      <div key='total-shopping-component' class='item-card-container-wishlist total-container'>
         <div style={{ textAlign: "right" }}>Total Shopping:</div>
         <div>&nbsp;&nbsp;&nbsp;${total.toFixed(2)}</div>
       </div>
