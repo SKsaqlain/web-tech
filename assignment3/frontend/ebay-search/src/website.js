@@ -8,6 +8,7 @@ import Product from "./product/Product";
 import ProgressBar from "./progressbar/ProgressBar";
 import WishList from "./wishlist/Wishlist";
 import DetailsBtn from "./allitems/DetailsBtn";
+import NoRecords from "./norecords/NoRecords";
 
 import {
   GetWishlistItems,
@@ -47,8 +48,22 @@ function WebSite() {
   }
 
   function handleOnFormSubmit(items) {
-    console.log("Received All items after search, updating items with wishlist state " + items.length);
+    console.log("Received All items after search, updating items with wishlist state ");
+    console.dir(items);
     handleOnFormClear();
+    if (items == null) {
+      setItemsAndWishlist((prevState) => {
+        return {
+          ...prevState,
+          allItems: null,
+          wishListItems: [],
+          resultsBtn: true,
+          wishlistBtn: false,
+          showProductComponent: false,
+        };
+      });
+      return;
+    }
     const wishListData = GetAllWishlistItems();
     wishListData.then((wlistdata) => {
       if (wlistdata != null && wlistdata.length > 0) {
@@ -197,6 +212,13 @@ function WebSite() {
   function renderAllItems() {
     if (
       itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.resultsBtn &&
+      itemsAndWishlist.allItems == null
+    ) {
+      return <NoRecords />;
+    }
+    if (
+      itemsAndWishlist.showProductComponent == false &&
       itemsAndWishlist.allItems.length > 0 &&
       itemsAndWishlist.resultsBtn
     ) {
@@ -267,7 +289,8 @@ function WebSite() {
   const renderDetailsBtn = () => {
     if (
       itemsAndWishlist.showProductComponent == false &&
-      ((itemsAndWishlist.resultsBtn == true && itemsAndWishlist.allItems.length > 0) ||
+      ((itemsAndWishlist.resultsBtn == true &&
+        (itemsAndWishlist.allItems == null || itemsAndWishlist.allItems.length > 0)) ||
         (itemsAndWishlist.wishlistBtn == true && itemsAndWishlist.wishListItems.length > 0))
     ) {
       return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />;

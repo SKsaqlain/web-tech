@@ -161,12 +161,6 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     );
       data.then((data) => {
         console.log(
-          "received results from backend " +
-            data.length +
-            " for trackingId " +
-            trackingId
-        );
-        console.log(
           "sending data to parent component " + " for trackingId " + trackingId
         );
         onFormSubmit(data);

@@ -24,7 +24,7 @@ const dbOps={
 
         }catch (error){
             logger.error('dbOps.insertOne', error);
-            return null;
+            res.send(null);
         }
     },
     findOne: async (req,res)=>{
@@ -43,7 +43,7 @@ const dbOps={
 
         }catch (error){
             logger.error('dbOps.findOne', error);
-            return null;
+            res.send(null);
         }
     },
     findAllByItemIds: async (req,res)=> {
@@ -61,7 +61,7 @@ const dbOps={
 
         } catch (error) {
             logger.error('dbOps.findMany', error);
-            return null;
+            res.send(null);
         }
     },
     getAll: async (req, res) => {
@@ -81,7 +81,7 @@ const dbOps={
             res.send(result);
         } catch (error) {
             logger.error('Error fetching wishlist items', error);
-            return null;
+            res.send(null);
         }
     },
     deleteOne: async (req,res)=>{
@@ -101,7 +101,7 @@ const dbOps={
 
         }catch (error){
             logger.error('dbOps.deleteOne', error);
-            return null;
+            res.send(null);
         }
     }
 

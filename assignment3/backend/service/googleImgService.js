@@ -31,13 +31,13 @@ const googleImgService = {
                 res.send(response.data);
             } else {
                 logger.warn(`Warn find google images by keyword returned status code ${response.status}`);
-                res.send("Error");
+                res.send(null);
             }
 
         } catch (error) {
             logger.error('Error calling find google images by keyword', error)
             console.dir(error);
-            return null;
+            res.send(null);
         }
     }
 }

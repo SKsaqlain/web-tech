@@ -59,6 +59,7 @@ const ebay = {
             }
         } catch (error) {
             console.error('Error calling findAllItems', error);
+            res.send(null);
         }
     },
 
@@ -92,6 +93,7 @@ const ebay = {
             }
         } catch (error) {
             logger.error('Error calling findItem', error)
+            res.send(null);
         }
     },
 
@@ -124,7 +126,7 @@ const ebay = {
             }
         } catch (error) {
             logger.info('Error calling findItem', error)
-            res.send(`${error.toString()}`);
+            res.send(null);
         }
     }
 }

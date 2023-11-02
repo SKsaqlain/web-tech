@@ -68,12 +68,13 @@ export const fetchAllResults = async (
       params: params,
     });
     hideProgressBar();
-    console.log("received results from backend " + response.length);
+    console.log("received results from backend ");
+    console.dir(response);
     if (response.status == "200" && response.data.length > 0) {
       return response.data;
     } else {
       console.log(
-        `findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword}`
+        `findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword} returnging null`
       );
       return null;
     }

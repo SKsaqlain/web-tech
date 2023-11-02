@@ -1,0 +1,11 @@
+.no-records {
+  background-color: rgb(252, 242, 208);
+  color: rgb(152, 130, 78);
+  margin-top: 8rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
