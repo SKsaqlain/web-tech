@@ -74,7 +74,7 @@ export const GetAllWishlistItems = async () => {
     }
   } catch (error) {
     console.log(error);
-    return "";
+    return [];
   }
 };
 

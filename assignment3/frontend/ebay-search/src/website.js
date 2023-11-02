@@ -26,7 +26,7 @@ function WebSite() {
     wishlistBtn: false,
     itemComponent: {},
     showProductComponent: false,
-    selectedItemId: "",
+    selectedItemId: ""
   });
 
   function UpdateItemsWishListState(item, data) {
@@ -236,6 +236,13 @@ function WebSite() {
   function renderWishListItems() {
     if (
       itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.wishlistBtn &&
+      itemsAndWishlist.wishListItems.length == 0
+    ) {
+      return <NoRecords />;
+    }
+    if (
+      itemsAndWishlist.showProductComponent == false &&
       itemsAndWishlist.wishListItems.length > 0 &&
       itemsAndWishlist.wishlistBtn
     ) {
@@ -290,7 +297,7 @@ function WebSite() {
     if (
       itemsAndWishlist.showProductComponent == false &&
       ((itemsAndWishlist.resultsBtn == true &&
-        (itemsAndWishlist.allItems == null || itemsAndWishlist.allItems.length > 0)) ||
+        (itemsAndWishlist.allItems != null && itemsAndWishlist.allItems.length > 0)) ||
         (itemsAndWishlist.wishlistBtn == true && itemsAndWishlist.wishListItems.length > 0))
     ) {
       return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />;

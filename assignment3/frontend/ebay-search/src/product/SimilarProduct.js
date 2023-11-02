@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import "./SimilarProduct.css";
 import SimilarProductItem from "./SimilarProductItem";
 import { render } from "@testing-library/react";
+import NoRecords from "../norecords/NoRecords";
 
 const SimilarProduct = (props) => {
   const [similarProductState, setSimilarProductState] = useState({
