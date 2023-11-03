@@ -1,11 +1,14 @@
 'use strict';
 
+const healthController = require('../controllers/healthController');
 const zipController = require('../controllers/zipCodeController');
 const ebayController= require('../controllers/ebayController');
 const googleImgController= require('../controllers/googleImgController');
 const mongoDBController= require('../controllers/dbController');
 
 module.exports = (app) => {
+
+    app.route('/health').get(healthController.getHealth);
     //zipcode pai
     app.route('/zipcode').get(zipController.getZipCode);
 
