@@ -21,7 +21,7 @@ const ModalWithSlides = (props) => {
             </button>
           </div>
 
-          <MDBCarousel showControls pause={true}>
+          <MDBCarousel showControls pause={true} data-bs-interval={false}>
           {productImages.map((productImage, index) => {
             console.log("Rendering product image " + index);
               return (

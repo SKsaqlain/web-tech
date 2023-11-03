@@ -19,8 +19,12 @@ const WishListBtn = (props) => {
   return (
     <button
       type='button'
-      className='btn btn-secondary d-flex align-item-right'
-      style={{ backgroundColor: "white" }}
+      className='btn btn-secondary d-flex align-item-right '
+      style={{
+      height: '100%',
+      background: 'rgb(247,248 ,250)',
+      border: 'none',
+      marginLeft: '0px' }}
       onClick={() => onIconClick()}>
       {renderWishlistIcon()}
     </button>

@@ -3,6 +3,7 @@ const GoBackToListBtn = (props) => {
     <button
     
       class="btn btn-light go-back-btn-container"
+      style={{alignSelf: 'flex-end'}}
       onClick={(e) => {
         e.preventDefault();
         props.setProductState((prevState) => {
