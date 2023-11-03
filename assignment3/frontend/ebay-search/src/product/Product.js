@@ -46,7 +46,7 @@ const Product = (props) => {
             <div class='ml-auto' style={{ float: "right" }}>
               <div className='row'>
                 <div className='col'>
-                <div class="fb-share-button" data-href={props.item.viewItemURL} data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.ebay.com%2Fitm%2F194935793906%3F_trkparms%3Damclksrc%253DITM%2526mehot%253Dpp%2526itm%253D194935793906%2526pmt%253D1%2526noa%253D1%2526brand%253DApple%26_trksid%3Dp0&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><FacebookIcon style={{ color: "dodgerblue", fontSize:'3rem' }} /></a></div>
+                <div class="fb-share-button" data-href={props.item.viewItemURL} data-layout="" data-size=""><a target="_blank" href={"https://www.facebook.com/sharer/sharer.php?u="+props.item.viewItemURL+"&amp;src=sdkpreparse"} class="fb-xfbml-parse-ignore"><FacebookIcon style={{ color: "dodgerblue", fontSize:'3rem' }} /></a></div>
                   
                 </div>
                 <div className='col align-middle'>

@@ -3,12 +3,14 @@ import { async } from "q";
 import { v4 as uuidv4 } from "uuid";
 
 import { displayProgressBar, hideProgressBar } from "./ProgressBarHandler";
+import URL from "./URL";
 
-const INSERT_URL = "http://localhost:8080/mongodb/insertDoc";
-const DEL_URL = "http://localhost:8080/mongodb/deleteDoc";
-const GET_URL = "http://localhost:8080/mongodb/findDoc";
-const GET_ALL_URL = "http://localhost:8080/mongodb/getAll";
-const FIND_ALL_BY_ITEMIDS_URL = "http://localhost:8080/mongodb/findAllByItemIds";
+// const URL="http://localhost:8080";
+
+const INSERT_URL = URL+"/mongodb/insertDoc";
+const DEL_URL = URL+"/mongodb/deleteDoc";
+const GET_ALL_URL = URL+"/mongodb/getAll";
+const FIND_ALL_BY_ITEMIDS_URL = URL+"/mongodb/findAllByItemIds";
 
 export const AddItemToWishlist = async (item) => {
   try {

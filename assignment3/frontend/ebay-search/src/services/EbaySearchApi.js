@@ -2,9 +2,10 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import {displayProgressBar, hideProgressBar} from "./ProgressBarHandler";
+import URL from "./URL";
 // todo: fetch results and console log it for now.
 
-const URL = "http://localhost:8080";
+// const URL = "http://localhost:8080";
 
 const categoryOptions = {
   1: "All Categories",

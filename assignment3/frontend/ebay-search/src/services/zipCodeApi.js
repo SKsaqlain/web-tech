@@ -1,6 +1,8 @@
 import axios from "axios";
+import URL from "./URL";
 
-const baseURL = " http://localhost:8080/zipcode";
+// const URL="http://localhost:8080";
+const baseURL = URL+"/zipcode";
 const ipURL='https://ipinfo.io/json';
 const TOKEN='ef88210eb36381';
 

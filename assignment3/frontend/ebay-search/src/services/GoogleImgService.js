@@ -1,8 +1,8 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import {displayProgressBar, hideProgressBar} from "./ProgressBarHandler";
-
-const URL="http://localhost:8080/googleImg";
+import URL from "./URL";
+// const URL="http://localhost:8080/";
 
 export const fetchGoogleImages = async (title) => {
     try {
@@ -13,7 +13,7 @@ export const fetchGoogleImages = async (title) => {
         keyword: title,
       };
       displayProgressBar();
-      const response = await axios.get(URL , {
+      const response = await axios.get(URL+'/googleImg' , {
         params: params,
       });
       hideProgressBar();
