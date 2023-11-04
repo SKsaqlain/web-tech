@@ -1,24 +1,22 @@
-.modal-title{
-    color:black
+.modal-title {
+  color: black;
 }
-.close{
-    background-color: white;
-    border:none;
-    color:gray;
-    font-size: large;
-    font-weight: bold;
+.close {
+  background-color: white;
+  border: none;
+  color: gray;
+  font-size: large;
+  font-weight: bold;
 }
 
-.carousel-control-next{
-    /* padding-left: 4rem; */
-    padding-right: 4rem;
-    width: 5vw;
-    
+.carousel-control-next {
+  /* padding-left: 4rem; */
+  padding-right: 4rem;
+  width: 5vw;
 }
-.carousel-control-prev{
-    padding-left: 4rem;
-    width: 5vw;
-
+.carousel-control-prev {
+  padding-left: 4rem;
+  width: 5vw;
 }
 
 .carousel-control-prev-icon,
@@ -31,19 +29,45 @@
   background-color: black; /* Change the arrow color to white */
 }
 
-.carousel-inner{
-    margin: 0 auto ;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 0px;
-    padding-right: 0px;
+.carousel-inner {
+  margin: 0 auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 0px;
+  padding-right: 0px;
 }
-.carousel-item > img{
-    width: 28rem;
-    height: 30rem;
-    display: block;
-    margin: 0 auto;
-  border: 1rem solid black ;
-  border-radius : 0.5rem;
+.carousel-item > img {
+  height: 28rem;
+  display: block;
+  margin: 0 auto;
+  border: 1rem solid black;
+  border-radius: 0.5rem;
+}
+/* 
+.carousel-item {
+  transition: transform 5s ease-in-out;
+}
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  transition: opacity 0s 5s;
+}
+ */
+
+ .control-next{
+  padding-right: 4rem !important;
+ }
+ .control-prev{
+  padding-left: 4rem !important;
+ }
+.carousel .control-next.control-arrow:before {
+  border-left: 8px solid #0b0a0a !important;
+  
+}
+.carousel .control-prev.control-arrow:before {
+  border-right: 8px solid #0b0a0a !important;
 }
 
+
+.carousel.carousel-slider .control-arrow:hover {
+  background: none !important;
+}

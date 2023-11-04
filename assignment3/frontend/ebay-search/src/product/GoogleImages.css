@@ -10,3 +10,10 @@
 .google-image-row{
     margin-top:1rem;
 }
+
+
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+    .google-image-column{
+        padding-right: none;
+    }
+  }

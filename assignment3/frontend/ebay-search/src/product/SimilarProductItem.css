@@ -32,3 +32,13 @@ color:rgb(113, 149, 152	);
 .daysLeft{
 color: rgb(255,255,255);
 }
+
+
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+  .similarProductItemDetailsRow {
+    display: block;
+  }
+  .align-self-start{
+    margin-top:1rem;
+  }
+}

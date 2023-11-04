@@ -1,9 +1,31 @@
+/* .allItems-container {
+  background-color: black;
+  margin-top: 8rem;
+} */
 .allItems-container {
   background-color: black;
-  /* margin: 0 auto;
-    width: 80%; */
-  margin-top: 8rem;
+  /* margin: 0 auto; */
+  /* width: 80%;  */
+  margin-top: 4rem;
 }
+  /*Mobile view */
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+  .allItems-container {  
+    overflow-y: hidden;
+  }
+  .allItems-container-inner-div{
+    width: 50rem;    
+    overflow-y: hidden;
+  }
+
+}
+
+@media (min-width:1025px){
+  .allItems-container{
+    margin-top: 8rem;
+  }
+}
+
 
 .total-container {
   display: grid;

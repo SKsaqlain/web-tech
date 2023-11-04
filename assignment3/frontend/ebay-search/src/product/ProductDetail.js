@@ -5,6 +5,7 @@ import { fetchItemDetails } from "../services/EbaySearchApi";
 import "./ProductDetail.css";
 
 import ModalWithSlides from "./ModalWithSlides";
+import ModalCarousal from "./ModalCarousal";
 
 
 const ProductDetail = (props) => {
@@ -55,7 +56,8 @@ const ProductDetail = (props) => {
             class="col product-images-link"
           >
             <button type="button" class="btn product-image-btn" data-bs-toggle="modal" data-bs-target="#productDetailsModal" onClick={openModal}>View Product Images Here</button>
-      <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/>
+      {/* <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/> */}
+      <ModalCarousal isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/>
           </div>
         </div>
       );

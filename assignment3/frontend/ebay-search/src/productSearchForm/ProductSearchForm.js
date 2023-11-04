@@ -433,7 +433,7 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
               <Autocomplete showAutoComplete={productSearchState.showAutoComplete} zipCode={productSearchState.zipCode} onCodeClick={onCodeClick} />
             </div>
           </div>
-          <div className='button-grp m-3'>
+          <div className='button-grp mb-3 mr-3'>
             <SearchBtn onClick={productSearch} type='submit' />
             <ClearBtn onClick={clearSearch} type='button' />
           </div>

@@ -10,7 +10,7 @@
     padding: 0 1rem;
     box-sizing: border-box;
     
-    border-radius: 0.5rem;
+    border-radius: unset;
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
     background-color: black;
     color: white;
@@ -29,6 +29,12 @@
 
 .inner-container{
   /* margin: auto; */
-  width:60%;
+  width:95%;
 }
 
+
+@media (min-width:1025px){
+  .inner-container{
+    width:60%;
+  }
+}

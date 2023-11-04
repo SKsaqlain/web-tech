@@ -181,13 +181,13 @@ function AllItems(props) {
   return (
     <div>
       <div className='allItems-container' key='results-container'>
-        {titleBar}
-        {itemList}
-        {totalBar()}
+        <div className="allItems-container-inner-div">
+          {titleBar}
+          {itemList}
+          {totalBar()}
+          </div>
+          {navButton()}
         </div>
-    
-        {navButton()}
-      
     </div>
   );
 }
