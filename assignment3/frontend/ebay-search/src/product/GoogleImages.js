@@ -14,10 +14,20 @@ const GoogleImgaes = (props) => {
         <img
           src={link}
           class="w-100 shadow-1-strong mb-2 google-img"
-          alt="Boat on Calm Water"
+          alt="Google Image Photo"
           onClick={() => openImageInNewWindow(link)}
         />
       );
+    }
+    else{
+      return (
+        <img
+          
+          class="w-100 shadow-1-strong mb-2 google-img"
+          alt="Broken Image"
+          onClick={() => openImageInNewWindow(link)}
+        />
+      );      
     }
   };
 
