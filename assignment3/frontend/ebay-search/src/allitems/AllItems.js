@@ -19,49 +19,64 @@ function AllItems(props) {
 
   console.log("Displaying all items for itemType " + itemType);
   const [items, setItems] = useState(allItems);
-  const [itemsToDisplay, setItemsToDisplay] = useState(allItems.slice(0, 10)); //items to be displayed on the page
-  const [itemRange, setItemsRange] = useState([0, 10]); //range of items to be displayed [start,end
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [removeWishListItemAndRender, setRemoveWishListItemAndRender] = useState(false);
+  const [itemsToDisplay, setItemsToDisplay] = useState(allItems.slice(props.allItemsAndWList.itemRange[0], props.allItemsAndWList.itemRange[1])); //items to be displayed on the page
+  // const [itemRange, setItemsRange] = useState([0, 10]); //range of items to be displayed [start,end
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const [removeWishListItemAndRender, setRemoveWishListItemAndRender] = useState(false);
 
   const n = parseInt(items.length / 10);
   console.log("n is " + n);
   const handlePrevClick = () => {
     console.log(
       "Previous button clicked " +
-        currentIndex +
+        props.allItemsAndWList.currentIndex +
         " " +
         items.length +
         " " +
         itemsToDisplay.length +
         " " +
-        itemRange[0] +
+        props.allItemsAndWList.itemRange[0] +
         " " +
-        itemRange[1]
+        props.allItemsAndWList.itemRange[1]
     );
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setItemsToDisplay(items.slice(itemRange[0] - 10, itemRange[1] - 10));
-      setItemsRange([itemRange[0] - 10, itemRange[1] - 10]);
+    if (props.allItemsAndWList.currentIndex > 0) {
+      setItemsToDisplay(items.slice(props.allItemsAndWList.itemRange[0] - 10, props.allItemsAndWList.itemRange[1] - 10));
+      props.setItemsAndWishlist((prevState)=>{
+        return{
+          ...prevState,
+          currentIndex:props.allItemsAndWList.currentIndex-1,
+          itemRange:[props.allItemsAndWList.itemRange[0] - 10, props.allItemsAndWList.itemRange[1] - 10]
+        }
+      });
+
     }
   };
   const handleNextClick = () => {
     console.log(
       "Next button clicked " +
-        currentIndex +
+      props.allItemsAndWList.currentIndex +
         " " +
         items.length +
         " " +
         itemsToDisplay.length +
         " " +
-        itemRange[0] +
+        props.allItemsAndWList.itemRange[0] +
         " " +
-        itemRange[1]
+        props.allItemsAndWList.itemRange[1]
     );
-    if (currentIndex < n - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setItemsToDisplay(items.slice(itemRange[0] + 10, itemRange[1] + 10));
-      setItemsRange([itemRange[0] + 10, itemRange[1] + 10]);
+    if (props.allItemsAndWList.currentIndex < n - 1) {
+      setItemsToDisplay(items.slice(props.allItemsAndWList.itemRange[0] + 10, props.allItemsAndWList.itemRange[1] + 10));
+
+      props.setItemsAndWishlist((prevState)=>{
+        return{
+          ...prevState,
+          currentIndex:props.allItemsAndWList.currentIndex+1,
+          itemRange:[props.allItemsAndWList.itemRange[0] + 10, props.allItemsAndWList.itemRange[1] + 10]
+        }
+      });
+
+      // setCurrentIndex(currentIndex + 1);
+      // setItemsRange([itemRange[0] + 10, itemRange[1] + 10]);
     }
   };
 
@@ -88,9 +103,17 @@ function AllItems(props) {
           href='#'
           onClick={(e) => {
             e.preventDefault();
-            setCurrentIndex(i);
             setItemsToDisplay(items.slice(i * 10, i * 10 + 10));
-            setItemsRange([i * 10, i * 10 + 10]);
+            props.setItemsAndWishlist((prevState)=>{
+              return{
+                ...prevState,
+                currentIndex:i,
+                itemRange:[i * 10, i * 10 + 10]
+              }
+            }
+            );
+            // setCurrentIndex(i);            
+            // setItemsRange([i * 10, i * 10 + 10]);
           }}
         >
           {i + 1}
@@ -112,7 +135,7 @@ function AllItems(props) {
         <ul class='pagination'>
           <li class='page-item'>
             <a
-              className={'page-link previous-nav-btn'+(currentIndex == 0 || items.length == 0 ? " disabled" : "")}
+              className={'page-link previous-nav-btn'+(props.allItemsAndWList.currentIndex == 0 || items.length == 0 ? " disabled" : "")}
               href='#'
               tabindex='-1'
               onClick={(e) => {
@@ -125,7 +148,7 @@ function AllItems(props) {
           {pagination()}
           <li class='page-item'>
             <a
-              className={'page-link next-nav-btn'+(currentIndex == n - 1 || items.length == 0 ? " disabled" : "")}
+              className={'page-link next-nav-btn'+(props.allItemsAndWList.currentIndex == n - 1 || items.length == 0 ? " disabled" : "")}
               href='#'
               onClick={(e) => {
                 e.preventDefault();
@@ -163,20 +186,20 @@ function AllItems(props) {
     // );
   };
 
-  const totalBar = () => {
-    if (itemType == "wishList") {
-      let total = 0;
-      items.forEach((item) => {
-        total += parseFloat(item.price);
-      });
-      return (
-        <div key='total-shopping-component' class='total-container'>
-          <div style={{ textAlign: right }}>Total Shopping:</div>
-          <div>&nbsp;&nbsp;&nbsp;${total.toFixed(2)}</div>
-        </div>
-      );
-    }
-  };
+  // const totalBar = () => {
+  //   if (itemType == "wishList") {
+  //     let total = 0;
+  //     items.forEach((item) => {
+  //       total += parseFloat(item.price);
+  //     });
+  //     return (
+  //       <div key='total-shopping-component' class='total-container'>
+  //         <div style={{ textAlign: right }}>Total Shopping:</div>
+  //         <div>&nbsp;&nbsp;&nbsp;${total.toFixed(2)}</div>
+  //       </div>
+  //     );
+  //   }
+  // };
 
   return (
     <div>
@@ -184,10 +207,9 @@ function AllItems(props) {
         <div className="allItems-container-inner-div">
           {titleBar}
           {itemList}
-          {totalBar()}
+          </div>
           </div>
           {navButton()}
-        </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import WishListTitle from "./WishListTitle";
 import WishListItem from "./WishListItem";
+import NoRecords from "../norecords/NoRecords";
 
 import "./Wishlist.css";
 import { AddItemToWishlist, RemoveItemFromWishlist, GetAllWishlistItems } from "../services/MongoDbApi";
@@ -73,6 +74,9 @@ const WishList = (props) => {
       />
     ));
 
+    if(wishListItems.items.length==0){
+      return (<NoRecords/>)
+    }
   return (
     <div className='wishListItem-container' key='wishListItem-container'>
       {titleBar()}

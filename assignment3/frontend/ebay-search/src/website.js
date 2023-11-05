@@ -26,7 +26,9 @@ function WebSite() {
     wishlistBtn: false,
     itemComponent: {},
     showProductComponent: false,
-    selectedItemId: ""
+    selectedItemId: "",
+    currentIndex:0,
+    itemRange:[0,10]
   });
 
   function UpdateItemsWishListState(item, data) {
@@ -60,6 +62,8 @@ function WebSite() {
           resultsBtn: true,
           wishlistBtn: false,
           showProductComponent: false,
+          currentIndex:0,
+          itemRange:[0,10]
         };
       });
       return;
@@ -106,6 +110,8 @@ function WebSite() {
       itemComponent: {},
       showProductComponent: false,
       selectedItemId: "",
+      currentIndex:0,
+      itemRange:[0,10]
     });
   }
 
@@ -225,6 +231,7 @@ function WebSite() {
       return (
         <AllItems
           allItemsAndWList={itemsAndWishlist}
+          setItemsAndWishlist={setItemsAndWishlist}
           itemType='results'
           handleOnWishlistClick={handleOnWishlistClick}
           onItemLinkClick={handleOnItemLinkClick}
