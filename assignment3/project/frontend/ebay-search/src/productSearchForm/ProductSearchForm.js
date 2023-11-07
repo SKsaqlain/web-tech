@@ -43,7 +43,36 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
     },
     currentZip: "",
   });
-  
+  /*
+  //states to check for validation
+  const [isKeywordValid, setIsKeywordValid] = useState(true);
+  const [isZipCodeValid, setIsZipCodeValid] = useState(true);
+  //state to manage autocomplete feature
+  const [zipCode, setZipCode] = useState([]);
+  const [inputValues, setInputValues] = useState([]);
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+
+  //form states
+  const [postalCode, setPostalCode] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [category, setCategory] = useState("1");
+  const [condition, setCondition] = useState({
+    new: false,
+    used: false,
+    unspecified: false,
+  });
+  const [shipping, setShipping] = useState({
+    localPickup: false,
+    freeShipping: false,
+  });
+  const [distance, setDistance] = useState("10");
+  const [postalCodeRadio, setPostalCodeRadio] = useState({
+    currentLocation: true,
+    other: false,
+  });
+  const [currentZip, setCurrentZip] = useState("");
+  */
+
   //handle change functions.
   const handleConditionChange = (e) => {
     const { value, name } = e.target;
@@ -250,7 +279,34 @@ function ProductSearchForm({ onFormSubmit, onFormClear }) {
       };
     });
 
-    getCurrentPostalcode();
+    // //removing error messages
+    // setIsKeywordValid(true);
+    // setIsZipCodeValid(true);
+    // //clearing all form states
+    // setPostalCode("");
+    // setKeyword("");
+    // setCategory("1");
+    // setCondition({
+    //   new: false,
+    //   used: false,
+    //   unspecified: false,
+    // });
+    // setShipping({
+    //   localPickup: false,
+    //   freeShipping: false,
+    // });
+    // setDistance("10");
+    // setPostalCodeRadio({
+    //   currentLocation: true,
+    //   other: false,
+    // });
+    // setCurrentZip("");
+
+    // setZipCode([]);
+    // setInputValues([]);
+    // setShowAutoComplete(false);
+
+    // console.log("clearing all items from page");
     onFormClear();
   };
 
