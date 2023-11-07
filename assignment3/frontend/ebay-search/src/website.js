@@ -302,7 +302,7 @@ function WebSite() {
         <Product
           item={itemsAndWishlist.itemComponent}
           onGoBackToBtnClick={handleGoBackToListClick}
-          onWishListBtnClick={handleWishListClickforResulst}
+          onWishListBtnClick={itemsAndWishlist.resultsBtn? handleWishListClickforResulst:handleWishListClickForWishList}
         />
       );
     }
