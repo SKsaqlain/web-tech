@@ -79,9 +79,11 @@ const WishList = (props) => {
     }
   return (
     <div className='wishListItem-container' key='wishListItem-container'>
-      {titleBar()}
-      {itemList()}
-      {totalBar()}
+      <div className="wishlist-Items">
+        {titleBar()}
+        {itemList()}
+        {totalBar()}
+      </div>
     </div>
   );
 };

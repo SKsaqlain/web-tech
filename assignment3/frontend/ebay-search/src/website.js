@@ -147,6 +147,13 @@ function WebSite() {
     console.log("Handling wishlist click for results for item " + item.itemId);
     const newItems = [...itemsAndWishlist.allItems];
     const index = newItems.indexOf(item);
+    if(index==-1){
+      if(item.isWishListed){
+        console.log("Removing non search result item from DB and wishlist");
+        RemoveItemFromWishlist(item);  
+      }
+      return;
+    }
     newItems[index].isWishListed = !newItems[index].isWishListed;
     if (newItems[index].isWishListed) {
       console.log("Adding item to DB");
