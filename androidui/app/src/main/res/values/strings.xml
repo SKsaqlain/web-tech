@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">androidui</string>
+    <string name="hello_first_fragment">hello_first_fragment</string>
+    <string name="keywordLabel">keyword</string>
+    <string name="categoryLabel">category</string>
+    <string name="conditionLabel">condition</string>
+    <string name="formKeywordHint">Enter Keyword</string>
+    <string name="formCategoryNew">New</string>
+    <string name="formCategoryUsed">Used</string>
+    <string name="formCategoryUnspecified">Unspecified</string>
+
+
+</resources>
