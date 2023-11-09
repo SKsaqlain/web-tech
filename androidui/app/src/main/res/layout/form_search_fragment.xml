@@ -63,14 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category" />
 
-<!--    <RadioGroup-->
-<!--        android:id="@+id/checkBoxGroup"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
-
-<!--        -->
-<!--        -->
-<!--    </RadioGroup>-->
 
     <CheckBox
         android:id="@+id/checkBoxNew"
@@ -101,5 +93,80 @@
         android:text="@string/formCategoryUnspecified"
         app:layout_constraintStart_toEndOf="@+id/checkBox4"
         app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
+
+
+    <TextView
+        android:id="@+id/shippingOptionsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
+        android:text="@string/shippingOptionsLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
+
+    <CheckBox
+        android:id="@+id/checkBoxLocalPickup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/formShippingOptionsLocalPickup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shippingOptionsLabel" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFreeShipping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/formShippingOptionsFreeShipping"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxLocalPickup"
+        app:layout_constraintTop_toBottomOf="@+id/shippingOptionsLabel" />
+
+
+    <TextView
+        android:id="@+id/enableNearbySearchLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="@string/enableNearbySearchLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxLocalPickup" />
+
+    <CheckBox
+        android:id="@+id/enableNearbySearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="56dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/enableNearbySearchLabel"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxFreeShipping" />
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/searchBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />
+
+    <Button
+        android:id="@+id/clearBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/clearBtn"
+        app:layout_constraintStart_toEndOf="@+id/searchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

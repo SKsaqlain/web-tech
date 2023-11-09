@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">androidui</string>
     <string name="hello_first_fragment">hello_first_fragment</string>
+<!--    form string constants-->
     <string name="keywordLabel">keyword</string>
     <string name="categoryLabel">category</string>
     <string name="conditionLabel">condition</string>
@@ -8,6 +9,18 @@
     <string name="formCategoryNew">New</string>
     <string name="formCategoryUsed">Used</string>
     <string name="formCategoryUnspecified">Unspecified</string>
+    <string name="shippingOptionsLabel">Shipping Options</string>
+    <string name="formShippingOptionsLocalPickup">Local Pickup</string>
+    <string name="formShippingOptionsFreeShipping">Free Shipping</string>
+
+    <string name="enableNearbySearchLabel">Enable Nearby Search</string>
+
+    <string name="searchBtn">SEARCH</string>
+    <string name="clearBtn">CLEAR</string>
+
+
+
+
 
 
 </resources>
