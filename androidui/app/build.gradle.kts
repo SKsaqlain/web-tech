@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.webtech.androidui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.webtech.androidui"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -55,5 +55,12 @@ dependencies {
 
 //gson for type conversion from data source
     implementation("com.google.code.gson:gson:2.9.0")
+
+
+    //to use view Model
+    implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+
 
 }

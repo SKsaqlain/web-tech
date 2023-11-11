@@ -2,12 +2,14 @@ package com.webtech.androidui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.FragmentContainerView
+import com.webtech.androidui.allitems.AllItemsFragment
+import com.webtech.androidui.modal.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
 
 
 class MainActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+//    override fun passDataCom(editTextInput: String) {
+//        val bundle = Bundle()
+//        bundle.putString("message", editTextInput)
+//        val transaction = this.supportFragmentManager.beginTransaction()
+//        val frag2 = AllItemsFragment()
+//        frag2.arguments = bundle
+//        transaction.replace(R.id.productSearchFragment, frag2)
+//        transaction.commit()
+//    }
+
+//    override fun transferAllItemResponse(findAllItemResponse: String) {
+//        uiState.findAllItemResponse = findAllItemResponse
+//        val transaction = this.supportFragmentManager.beginTransaction()
+//        val frag2 = AllItemsFragment()
+//        transaction.replace(R.id.productSearchFragment, frag2)
+//        transaction.commit()
+//    }
 
 
 }

@@ -6,16 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import androidx.lifecycle.ViewModelProvider
 import com.webtech.androidui.R
+import com.webtech.androidui.allitems.AllItemsFragment
+import com.webtech.androidui.modal.UIState
 import com.webtech.androidui.services.ebay.EbayService
-
 import org.slf4j.LoggerFactory
 
 
@@ -23,6 +20,11 @@ class ProductSearchFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
     private val ebayService = EbayService()
     private val productSearchUtil = ProductSearchUtil()
+
+//    private lateinit var communicator: Communicator
+
+//    val uiState: UIState=ViewModelProvider(requireActivity()).get(UIState::class.java)
+
 
 
     companion object {
@@ -57,6 +59,15 @@ class ProductSearchFragment : Fragment() {
         spinner.adapter = adapter
     }
 
+    fun moveToAllItemsFragment(response: String) {
+        val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.setFindAllItemResponse(response)
+        val fragmentManager =parentFragmentManager
+        val transaction=fragmentManager.beginTransaction()
+        val allItemsFragment = AllItemsFragment()
+        transaction.replace(R.id.productSearchFragment, allItemsFragment)
+        transaction.commit()
+    }
 
     fun addOnSearchClick(view: View) {
         val searchButton: Button = view.findViewById(R.id.searchBtn)
@@ -72,7 +83,8 @@ class ProductSearchFragment : Fragment() {
                 formValues["condition"] as Map<String, Boolean>,
                 formValues["shipping"] as Map<String, Boolean>,
                 formValues["distance"].toString(),
-                formValues["postalCode"].toString()
+                formValues["postalCode"].toString(),
+                :: moveToAllItemsFragment
             )
         }
     }
@@ -82,9 +94,12 @@ class ProductSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         logger.info("ProductSearchFragment onViewCreated")
         ebayService.healthCheck(view)
-
         spinnerAdapter(view)
         addOnSearchClick(view)
+
+
+
+//        communicator=activity as Communicator
 
     }
 }

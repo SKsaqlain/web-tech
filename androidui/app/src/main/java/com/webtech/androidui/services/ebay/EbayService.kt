@@ -4,10 +4,10 @@ import android.view.View
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.webtech.androidui.modal.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
 import org.slf4j.LoggerFactory
 import java.util.UUID
-
 
 class EbayService {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
@@ -34,7 +34,8 @@ private val serverUrl = "http://10.0.2.2:8080"
         condition: Map<String, Boolean>,
         shipping: Map<String, Boolean>,
         distance: String,
-        postalCode: String
+        postalCode: String,
+        moveToAllItemsFragment: (response:String)->Unit
     ) {
         val trackingId = UUID.randomUUID().toString()
         logger.info("Making backend Find All Items API call with $trackingId")
@@ -52,6 +53,8 @@ private val serverUrl = "http://10.0.2.2:8080"
             Request.Method.GET, url,
             { response ->
                 logger.info("Response is: $response")
+                moveToAllItemsFragment(response)
+
             },
             { logger.info("That didn't work!") })
 
