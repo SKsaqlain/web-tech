@@ -4,6 +4,9 @@ import { fetchItemDetails } from "../services/EbaySearchApi";
 
 import "./ProductDetail.css";
 
+import ModalWithSlides from "./ModalWithSlides";
+import ModalCarousal from "./ModalCarousal";
+
 
 const ProductDetail = (props) => {
   const itemId = props.item.itemId;
@@ -28,6 +31,18 @@ const ProductDetail = (props) => {
     });
   }, []);
 
+  const openModal = () => {
+    setProductDetail((prevState) => {
+      return { ...prevState, isModalActive: true };
+    });
+  };
+
+  const closeModal = () => {
+    setProductDetail((prevState) => { 
+      return { ...prevState, isModalActive: false };
+    });
+  };
+
   const renderProductImage = () => {
     if (
       productDetail.details &&
@@ -39,11 +54,10 @@ const ProductDetail = (props) => {
           <div class="col">Product Images</div>
           <div
             class="col product-images-link"
-
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >View Product Images Here
+          >
+            <button type="button" class="btn product-image-btn" data-bs-toggle="modal" data-bs-target="#productDetailsModal" onClick={openModal}>View Product Images Here</button>
+      {/* <ModalWithSlides isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/> */}
+      <ModalCarousal isOpen={productDetail.isModalActive} onClose={closeModal} productImages={productDetail.details.productImages}/>
           </div>
         </div>
       );
@@ -104,8 +118,8 @@ const ProductDetail = (props) => {
     return (
       <div
         key={itemId + "_itemDetails"}
-        class="container item-details-container"
-      >
+        class="item-details-container"
+      >        
         {renderProductImage()}
         {renderPrice()}
         {renderLocation()}

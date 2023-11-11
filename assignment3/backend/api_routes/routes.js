@@ -1,11 +1,14 @@
 'use strict';
 
+const healthController = require('../controllers/healthController');
 const zipController = require('../controllers/zipCodeController');
 const ebayController= require('../controllers/ebayController');
 const googleImgController= require('../controllers/googleImgController');
 const mongoDBController= require('../controllers/dbController');
 
 module.exports = (app) => {
+
+    app.route('/health').get(healthController.getHealth);
     //zipcode pai
     app.route('/zipcode').get(zipController.getZipCode);
 
@@ -23,6 +26,5 @@ module.exports = (app) => {
     app.route('/mongodb/findAllByItemIds').get(mongoDBController.findAllByItemIds);
     app.route('/mongodb/deleteDoc').get(mongoDBController.deleteDoc);
     app.route('/mongodb/getAll').get(mongoDBController.getAll);
-
 
 }

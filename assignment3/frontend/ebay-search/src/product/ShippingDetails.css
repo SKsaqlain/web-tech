@@ -1,0 +1,43 @@
+.item-shipping-details-container {
+  /* padding:1rem; */
+  color: white;
+  background-color: black;
+  margin: 0 auto;
+  /* width: 80%; */
+  margin-top: 1rem;
+}
+
+.shippingFieldName {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.shippingDetailsRow {
+  height: 4rem;
+  display: grid;
+  /* grid-template-columns: 4fr 6fr; */
+  align-items: center;
+  border-bottom: 0.5px solid rgb(46, 48, 52);;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+
+/* Deskstop view */
+@media (min-width:1025px){
+  .shippingDetailsRow {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+  }
+}
+
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+  .shippingDetailsRow  {
+    padding-top: 1rem;
+    padding-bottom: 5rem;
+  }
+  .shippingDetailsRow  .col {
+    padding-bottom: 1.2rem;
+  }
+
+}

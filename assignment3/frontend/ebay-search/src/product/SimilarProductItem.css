@@ -1,0 +1,44 @@
+.similarProductItemDetailsRow {
+  color: white;
+  background-color: black;
+  margin: 0 auto;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 0.5fr 3fr;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.similarProductItemUrl{
+  all:unset;
+  cursor: pointer;
+}
+.productName{
+color:rgb(113, 149, 152	);
+}
+.productName:hover{
+  text-decoration: underline;
+  }
+
+.price{
+  color:rgb(172, 210, 157);
+}
+
+.shippingCost{
+  color:rgb(213,185,115);
+}
+
+.daysLeft{
+color: rgb(255,255,255);
+}
+
+
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+  .similarProductItemDetailsRow {
+    display: block;
+  }
+  .align-self-start{
+    margin-top:1rem;
+  }
+}

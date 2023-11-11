@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
 
     <CheckBox
-        android:id="@+id/checkBox4"
+        android:id="@+id/checkBoxUsed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -89,13 +89,13 @@
         app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/checkBoxUnspecified"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:text="@string/formCategoryUnspecified"
-        app:layout_constraintStart_toEndOf="@+id/checkBox4"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxUsed"
         app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
 
 

@@ -9,11 +9,9 @@ const dbOps={
     insertOne: async (req,res)=>{
         try{
             await dbClient.connect();
-
             // const doc = req.body;
             const doc=JSON.parse(req.query.body);
             const trackingId = req.query.trackingId || "0000-0000-000";
-
             logger.info('dbOps.insertOne', {trackingId});
             const myDB = dbClient.db(DB_NAME);
             const Collection = myDB.collection(COLLECTION_NAME);
@@ -26,7 +24,7 @@ const dbOps={
 
         }catch (error){
             logger.error('dbOps.insertOne', error);
-            return null;
+            res.send(null);
         }
     },
     findOne: async (req,res)=>{
@@ -45,7 +43,7 @@ const dbOps={
 
         }catch (error){
             logger.error('dbOps.findOne', error);
-            return null;
+            res.send(null);
         }
     },
     findAllByItemIds: async (req,res)=> {
@@ -63,7 +61,7 @@ const dbOps={
 
         } catch (error) {
             logger.error('dbOps.findMany', error);
-            return null;
+            res.send(null);
         }
     },
     getAll: async (req, res) => {
@@ -83,10 +81,9 @@ const dbOps={
             res.send(result);
         } catch (error) {
             logger.error('Error fetching wishlist items', error);
-            return null;
+            res.send(null);
         }
     },
-
     deleteOne: async (req,res)=>{
         try{
             await dbClient.connect();
@@ -100,12 +97,11 @@ const dbOps={
             logger.info(`dbOps.deleteOne for item ${itemId}`, {trackingId});
             await dbClient.close();
             logger.info(`response from dbOps.deleteOne for item ${itemId} ${result}`, {trackingId })
-
             res.send(result);
 
         }catch (error){
             logger.error('dbOps.deleteOne', error);
-            return null;
+            res.send(null);
         }
     }
 

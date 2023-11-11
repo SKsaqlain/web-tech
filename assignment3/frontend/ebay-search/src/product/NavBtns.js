@@ -1,6 +1,6 @@
 const NavBtns = (props) => {
   return (
-    <ul class="nav justify-content-end nav-tabs">
+    <ul class="nav justify-content-end nav-tabs" style={{paddingTop:'1rem'}}>
       <li class="nav-item">
         <a
           class={

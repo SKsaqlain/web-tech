@@ -8,7 +8,6 @@ const ENUM = {
 };
 const CATEGORY_CODE = {
     //todo: add categoryId for all categories
-
     'Art': "550",
     'Baby': "2984",
     'Books': "267",
@@ -63,6 +62,7 @@ function createXMLRequestPayload(
 
         if (condition && condition.length >= 1) {
             logger.info("Adding Condition tag", {trackingId});
+
             const conditionTag = createFilterTag(
                 root,
                 "Condition",
@@ -124,6 +124,7 @@ function parseFindAllItemResponse(response, trackingId) {
         itemData.itemId = items[i].itemId[0];
         itemData.title = items[i].title[0] || null;
         itemData.image = items[i].galleryURL[0] || null;
+        itemData.viewItemURL=items[i].viewItemURL[0]|| null;
         itemData.price = items[i].sellingStatus[0].currentPrice[0].__value__ || null;
         itemData.shipping = items[i].shippingInfo[0].shippingServiceCost[0].__value__ || 'N/A';
         if (itemData.shipping == '0.0') {

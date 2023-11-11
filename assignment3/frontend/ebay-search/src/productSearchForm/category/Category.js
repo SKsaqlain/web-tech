@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Category.css";
 function CategorySelect({ value, onChange }) {
   return (
     <div class="mb-3 row">
@@ -11,9 +11,9 @@ function CategorySelect({ value, onChange }) {
           id="category"
           name="category"
           value={value}
-          style={{ width: "7rem" }}
+          style={{ width: "100%" }}
           onChange={(e) => onChange(e)}
-          class='form-select'
+          class='form-select category-select'
         >
           <option value="1" defaultChecked>
             All Categories

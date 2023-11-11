@@ -13,12 +13,10 @@ function truncateText(text, maxLength) {
   const truncatedText = text.substr(0, maxLength);
   const lastSpaceIndex = truncatedText.lastIndexOf(" ");
 
-  return lastSpaceIndex === -1
-    ? `${truncatedText}...`
-    : `${truncatedText.substr(0, lastSpaceIndex)}...`;
+  return lastSpaceIndex === -1 ? `${truncatedText}...` : `${truncatedText.substr(0, lastSpaceIndex)}...`;
 }
 
-function Item({ item, onIconClick, itemType, onLinkClick }) {
+function Item({ item, onIconClick, itemType, onLinkClick, selectedItemId }) {
   function renderWishlistIcon() {
     if (itemType == "wishList") {
       return <RemoveShoppingCartIcon style={{ color: "burlywood" }} />;
@@ -36,7 +34,9 @@ function Item({ item, onIconClick, itemType, onLinkClick }) {
       return "item-card-container-wishlist";
     }
     if (itemType == "results") {
-      return "item-card-container-results";
+      return item.itemId === selectedItemId
+        ? "selected-item item-card-container-results"
+        : "item-card-container-results";
     }
   };
 
@@ -44,50 +44,35 @@ function Item({ item, onIconClick, itemType, onLinkClick }) {
     // console.log("Rendering item " + item.itemId);
     // console.dir(item);
     return (
-      <div id={item.itemId} class="row" className={className()}>
-        <div className="item-info ">{item.number}</div>
-        <div className="item-info ">
-          <a href={item.image} target="_blank" rel="noopener noreferrer">
-            <img
-              src={item.image}
-              alt=""
-              className="img-fluid allitem-item-img"
-            />
+      <div id={item.itemId} class='row' className={className()}>
+        <div className='item-info '>{item.number}</div>
+        <div className='item-info '>
+          <a href={item.image} target='_blank' rel='noopener noreferrer'>
+            <img src={item.image} alt='' className='img-fluid allitem-item-img' />
           </a>
         </div>
-        <div
-          className="item-info"
-          id={item.itemId + "_title"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <div className='item-info' id={item.itemId + "_title"} target='_blank' rel='noopener noreferrer'>
           <a
-            href="#"
+            href='#'
             data-tooltip-id={item.id + "_title"}
             data-tooltip-content={item.title}
             onClick={(e) => {
               e.preventDefault();
               onLinkClick(item);
-            }}
-          >
+            }}>
             {truncateText(item.title, 35)}
           </a>
           <Tooltip id={item.id + "_title"} />
         </div>
-        <div className="item-info ">{item.price}</div>
-        <div className="item-info ">{item.shipping}</div>
-        {itemType == "results" ? (
-          <div className="item-info ">{item.zip}</div>
-        ) : (
-          ""
-        )}
-        <div className="item-info ">
+        <div className='item-info '>{item.price}</div>
+        <div className='item-info '>{item.shipping}</div>
+        {itemType == "results" ? <div className='item-info '>{item.zip}</div> : ""}
+        <div className='item-info '>
           <button
-            type="button"
-            className="btn btn-secondary"
+            type='button'
+            className='btn btn-secondary'
             style={{ backgroundColor: "white" }}
-            onClick={() => onIconClick(item)}
-          >
+            onClick={() => onIconClick(item)}>
             {renderWishlistIcon()}
           </button>
         </div>

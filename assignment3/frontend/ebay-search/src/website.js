@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-
 import ProductSearchForm from "./productSearchForm/ProductSearchForm";
 import AllItems from "./allitems/AllItems";
 import ResultsWishlistBtn from "./rstwshbtn/ResultWishlistBtn";
 import Product from "./product/Product";
+import ProgressBar from "./progressbar/ProgressBar";
+import WishList from "./wishlist/Wishlist";
+import DetailsBtn from "./allitems/DetailsBtn";
+import NoRecords from "./norecords/NoRecords";
 
 import {
   GetWishlistItems,
@@ -22,16 +25,11 @@ function WebSite() {
     resultsBtn: true,
     wishlistBtn: false,
     itemComponent: {},
-    showProductComponent:false
-  }); //state to store all items and wishlist items
-
-  // const [itemDetail, setItemDetail] = useState({
-  //   product: {},
-  //   photos: [],
-  //   shipping: {},
-  //   seller: {},
-  //   similarProducts: [],
-  // });
+    showProductComponent: false,
+    selectedItemId: "",
+    currentIndex:0,
+    itemRange:[0,10]
+  });
 
   function UpdateItemsWishListState(item, data) {
     console.log("Updating items wishlist state");
@@ -52,10 +50,24 @@ function WebSite() {
   }
 
   function handleOnFormSubmit(items) {
-    console.log(
-      "Received All items after search, updating items with wishlist state " +
-        items.length
-    );
+    console.log("Received All items after search, updating items with wishlist state ");
+    console.dir(items);
+    handleOnFormClear();
+    if (items == null) {
+      setItemsAndWishlist((prevState) => {
+        return {
+          ...prevState,
+          allItems: null,
+          wishListItems: [],
+          resultsBtn: true,
+          wishlistBtn: false,
+          showProductComponent: false,
+          currentIndex:0,
+          itemRange:[0,10]
+        };
+      });
+      return;
+    }
     const wishListData = GetAllWishlistItems();
     wishListData.then((wlistdata) => {
       if (wlistdata != null && wlistdata.length > 0) {
@@ -63,23 +75,27 @@ function WebSite() {
         const itemsWithWList = UpdateItemsWishListState(items, wlistdata);
         console.log("Updated items with wishlist state itemsWithWList:");
         console.dir(itemsWithWList);
-        setItemsAndWishlist((prevState)=>{return {
-          ...prevState,
-          allItems: itemsWithWList,
-          wishListItems: wlistdata,
-          resultsBtn: true,
-          wishlistBtn: false,
-          showProductComponent:false
-        }});
+        setItemsAndWishlist((prevState) => {
+          return {
+            ...prevState,
+            allItems: itemsWithWList,
+            wishListItems: wlistdata,
+            resultsBtn: true,
+            wishlistBtn: false,
+            showProductComponent: false,
+          };
+        });
       } else {
-        setItemsAndWishlist((prevState) =>{ return {
-          ...prevState,
-          allItems: items,
-          wishListItems: [],
-          resultsBtn: true,
-          wishlistBtn: false,
-          showProductComponent:false
-        }});
+        setItemsAndWishlist((prevState) => {
+          return {
+            ...prevState,
+            allItems: items,
+            wishListItems: [],
+            resultsBtn: true,
+            wishlistBtn: false,
+            showProductComponent: false,
+          };
+        });
       }
     });
   }
@@ -88,38 +104,26 @@ function WebSite() {
     console.log("Clearing all items from page");
     setItemsAndWishlist({
       allItems: [],
-    wishListItems: [],
-    resultsBtn: true,
-    wishlistBtn: false,
-    itemComponent: {},
-    showProductComponent:false
+      wishListItems: [],
+      resultsBtn: true,
+      wishlistBtn: false,
+      itemComponent: {},
+      showProductComponent: false,
+      selectedItemId: "",
+      currentIndex:0,
+      itemRange:[0,10]
     });
   }
 
   function handleOnResultsBtnClick() {
     console.log("Results button clicked");
-    setItemsAndWishlist((prevState)=>{return {
-      ...prevState,
-      resultsBtn: true,
-      wishlistBtn: false,
-    }});
-  }
-
-  //todo: once all items have been fetched , use useEffect method and call the db apis tp update the wishlist state of all the items
-  // and then re-render the entire page. this will ensure that the wishlist icon is displayed correctly for all the items
-  //
-
-  function handleAddtoWishList(item) {
-    console.log("Adding item to wishlist " + item.itemId);
-    const trackingId = uuidv4();
-    //todo: add item to wish list here and update the states for just allItem
-  }
-
-  function handleRemoveFromWishList(item) {
-    console.log("Removing item from wishlist " + item.itemId);
-    const trackingId = uuidv4();
-    //todo: make db api call remove item from wishlist , if it is allItems just call the db and update the attribute for all items
-    //if it is wishlist items then call the db and update the attribute for wishlist items and if the item is present in the
+    setItemsAndWishlist((prevState) => {
+      return {
+        ...prevState,
+        resultsBtn: true,
+        wishlistBtn: false,
+      };
+    });
   }
 
   function handleOnWishlistBtnClick() {
@@ -133,7 +137,7 @@ function WebSite() {
           ...prevState,
           wishListItems: wlistdata,
           resultsBtn: false,
-          wishlistBtn: true,  
+          wishlistBtn: true,
         };
       });
     });
@@ -143,6 +147,13 @@ function WebSite() {
     console.log("Handling wishlist click for results for item " + item.itemId);
     const newItems = [...itemsAndWishlist.allItems];
     const index = newItems.indexOf(item);
+    if(index==-1){
+      if(item.isWishListed){
+        console.log("Removing non search result item from DB and wishlist");
+        RemoveItemFromWishlist(item);  
+      }
+      return;
+    }
     newItems[index].isWishListed = !newItems[index].isWishListed;
     if (newItems[index].isWishListed) {
       console.log("Adding item to DB");
@@ -151,9 +162,7 @@ function WebSite() {
       console.log("Removing item from DB");
       RemoveItemFromWishlist(newItems[index]);
     }
-    console.log(
-      "newItems[index].isWishListed is " + newItems[index].isWishListed
-    );
+    console.log("newItems[index].isWishListed is " + newItems[index].isWishListed);
     setItemsAndWishlist((prevState) => {
       return {
         ...prevState,
@@ -176,7 +185,7 @@ function WebSite() {
     RemoveItemFromWishlist(item);
     console.log("Removing item from wishlist items state");
 
-    const updatedWithlistItems=itemsAndWishlist.wishListItems.filter((i)=>i.itemId!=item.itemId);
+    const updatedWithlistItems = itemsAndWishlist.wishListItems.filter((i) => i.itemId != item.itemId);
     setItemsAndWishlist((prevState) => {
       return {
         ...prevState,
@@ -188,12 +197,7 @@ function WebSite() {
 
   const handleOnWishlistClick = (item) => {
     console.log("Wishlist button clicked for item " + item.isWishListed);
-    console.log(
-      "Wishlist button clicked for item " +
-        item.itemId +
-        "itemNumber " +
-        item.number
-    );
+    console.log("Wishlist button clicked for item " + item.itemId + "itemNumber " + item.number);
     if (itemsAndWishlist.resultsBtn) {
       handleWishListClickforResulst(item);
     } else if (itemsAndWishlist.wishlistBtn) {
@@ -203,14 +207,14 @@ function WebSite() {
 
   function renderBtns() {
     return (
-      <div class="d-flex justify-content-center mt-3">
+      <div class='d-flex justify-content-center mt-3'>
         <ResultsWishlistBtn
-          btnName="Results"
+          btnName='Results'
           isActive={itemsAndWishlist.resultsBtn}
           onClick={handleOnResultsBtnClick}
         />
         <ResultsWishlistBtn
-          btnName="WishList"
+          btnName='WishList'
           isActive={itemsAndWishlist.wishlistBtn}
           onClick={handleOnWishlistBtnClick}
         />
@@ -219,11 +223,23 @@ function WebSite() {
   }
 
   function renderAllItems() {
-    if (itemsAndWishlist.showProductComponent==false && itemsAndWishlist.allItems.length > 0 && itemsAndWishlist.resultsBtn) {
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.resultsBtn &&
+      itemsAndWishlist.allItems == null
+    ) {
+      return <NoRecords />;
+    }
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.allItems.length > 0 &&
+      itemsAndWishlist.resultsBtn
+    ) {
       return (
         <AllItems
           allItemsAndWList={itemsAndWishlist}
-          itemType="results"
+          setItemsAndWishlist={setItemsAndWishlist}
+          itemType='results'
           handleOnWishlistClick={handleOnWishlistClick}
           onItemLinkClick={handleOnItemLinkClick}
         />
@@ -232,14 +248,23 @@ function WebSite() {
   }
 
   function renderWishListItems() {
-    if (itemsAndWishlist.showProductComponent==false && itemsAndWishlist.wishListItems.length > 0 && itemsAndWishlist.wishlistBtn) {
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.wishlistBtn &&
+      itemsAndWishlist.wishListItems.length == 0
+    ) {
+      return <NoRecords />;
+    }
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      itemsAndWishlist.wishListItems.length > 0 &&
+      itemsAndWishlist.wishlistBtn
+    ) {
       return (
-        <AllItems
-          allItemsAndWList={itemsAndWishlist}
-          itemType="wishList"
-          handleOnWishlistClick={handleOnWishlistClick}
+        <WishList
+          itemsAndWishlist={itemsAndWishlist}
+          setItemsAndWishlist={setItemsAndWishlist}
           onItemLinkClick={handleOnItemLinkClick}
-          
         />
       );
     }
@@ -248,37 +273,57 @@ function WebSite() {
   function handleOnItemLinkClick(item) {
     console.log("Item link clicked for item " + item.itemId);
     // console.dir(item);
-    setItemsAndWishlist((prevState)=>{return {
-      ...prevState,
-      itemComponent:item,
-      showProductComponent:true
-    }});
+    setItemsAndWishlist((prevState) => {
+      return {
+        ...prevState,
+        itemComponent: item,
+        showProductComponent: true,
+        selectedItemId: item.itemId,
+      };
+    });
   }
 
-  function handleGoBackToListClick(){
+  function handleGoBackToListClick() {
     console.log("Go back to list clicked");
-    setItemsAndWishlist((prevState)=>{return {
-      ...prevState,
-      itemComponent:{},
-      showProductComponent:false
-    }});
+    setItemsAndWishlist((prevState) => {
+      return {
+        ...prevState,
+        // itemComponent: {},
+        showProductComponent: false,
+      };
+    });
   }
 
   function renderItemPage() {
-    if(itemsAndWishlist.showProductComponent){
+    if (itemsAndWishlist.showProductComponent) {
       console.log("About to Rendering item page from website componenet");
       console.dir(itemsAndWishlist.itemComponent);
-      return <Product item={itemsAndWishlist.itemComponent} onGoBackToBtnClick={handleGoBackToListClick}/>
+      return (
+        <Product
+          item={itemsAndWishlist.itemComponent}
+          onGoBackToBtnClick={handleGoBackToListClick}
+          onWishListBtnClick={itemsAndWishlist.resultsBtn? handleWishListClickforResulst:handleWishListClickForWishList}
+        />
+      );
     }
   }
+  const renderDetailsBtn = () => {
+    if (
+      itemsAndWishlist.showProductComponent == false &&
+      ((itemsAndWishlist.resultsBtn == true &&
+        (itemsAndWishlist.allItems != null && itemsAndWishlist.allItems.length > 0)) ||
+        (itemsAndWishlist.wishlistBtn == true && itemsAndWishlist.wishListItems.length > 0))
+    ) {
+      return <DetailsBtn itemsAndWishlist={itemsAndWishlist} setItemsAndWishlist={setItemsAndWishlist} />;
+    }
+  };
 
   return (
     <div>
-      <ProductSearchForm
-        onFormSubmit={handleOnFormSubmit}
-        onFormClear={handleOnFormClear}
-      />
+      <ProductSearchForm onFormSubmit={handleOnFormSubmit} onFormClear={handleOnFormClear} />
       {renderBtns()}
+      <ProgressBar />
+      {renderDetailsBtn()}
       {renderAllItems()}
       {renderWishListItems()}
       {renderItemPage()}

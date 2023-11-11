@@ -19,11 +19,12 @@ const ebay = {
     findAllItems: async (req, res) => {
         //trackingId, keyword, category, condition, shipping, distance, postalCode
         try {
+
             const trackingId = req.trackingId = req.query.trackingId || uuidv4();
             const keywords = req.query.keywords;
-            const category = req.query.category || [];
-            const condition = req.query.condition || [];
-            const shipping = req.query.shipping || [];
+            const category = req.query.category ;
+            const condition = eval(req.query.condition) || [];
+            const shipping = eval(req.query.shipping) || [];
             const distance = req.query.distance || 0;
             const postalCode = req.query.postalCode || "";
 
@@ -58,6 +59,7 @@ const ebay = {
             }
         } catch (error) {
             console.error('Error calling findAllItems', error);
+            res.send(null);
         }
     },
 
@@ -91,6 +93,7 @@ const ebay = {
             }
         } catch (error) {
             logger.error('Error calling findItem', error)
+            res.send(null);
         }
     },
 
@@ -123,7 +126,7 @@ const ebay = {
             }
         } catch (error) {
             logger.info('Error calling findItem', error)
-            res.send(`${error.toString()}`);
+            res.send(null);
         }
     }
 }

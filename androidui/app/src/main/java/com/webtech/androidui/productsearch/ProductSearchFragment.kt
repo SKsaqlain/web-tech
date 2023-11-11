@@ -14,12 +14,16 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.webtech.androidui.R
+import com.webtech.androidui.services.ebay.EbayService
 
 import org.slf4j.LoggerFactory
 
 
 class ProductSearchFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
+    private val ebayService = EbayService()
+    private val productSearchUtil = ProductSearchUtil()
+
 
     companion object {
         fun newInstance(): ProductSearchFragment {
@@ -34,94 +38,50 @@ class ProductSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-                R.layout.form_search_fragment,
-                container,
-                false)
+            R.layout.form_search_fragment,
+            container,
+            false
+        )
 
     }
 
 
-    fun spinnerAdapter( view: View) {
+    fun spinnerAdapter(view: View) {
         val spinner: Spinner = view.findViewById(R.id.category)
-        val adapter = ArrayAdapter.createFromResource(
+        val adapter = ArrayAdapter(
             spinner.context,
-            R.array.categories,
-            android.R.layout.simple_spinner_item
+            android.R.layout.simple_spinner_item,
+            ProductSearchConstants.categoryMap.keys.toList()
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
 
-    fun extractFormValues(view:View): Map<String, Any> {
-        val values = mutableMapOf<String, Any>()
 
-        // Extract values from EditText
-        val keywordEditText: EditText = view.findViewById(R.id.keyword)
-        val keywordValue = keywordEditText.text.toString()
-        values["keyword"] = keywordValue
-
-        // Extract values from Spinner
-        val categorySpinner: Spinner = view.findViewById(R.id.category)
-        val categoryValue = categorySpinner.selectedItem.toString()
-        values["category"] = categoryValue
-
-        // Extract values from CheckBoxes
-        val checkBoxNew: CheckBox = view.findViewById(R.id.checkBoxNew)
-        val checkBoxUsed: CheckBox = view.findViewById(R.id.checkBox4)
-        val checkBoxUnspecified: CheckBox = view.findViewById(R.id.checkBox3)
-
-        val checkBoxNewValue = checkBoxNew.isChecked
-        val checkBoxUsedValue = checkBoxUsed.isChecked
-        val checkBoxUnspecifiedValue = checkBoxUnspecified.isChecked
-
-        values["checkBoxNew"] = checkBoxNewValue
-        values["checkBoxUsed"] = checkBoxUsedValue
-        values["checkBoxUnspecified"] = checkBoxUnspecifiedValue
-
-        // Extract values from other CheckBoxes
-        val checkBoxLocalPickup: CheckBox = view.findViewById(R.id.checkBoxLocalPickup)
-        val checkBoxFreeShipping: CheckBox = view.findViewById(R.id.checkBoxFreeShipping)
-        val checkBoxLocalPickupValue = checkBoxLocalPickup.isChecked
-        val checkBoxFreeShippingValue = checkBoxFreeShipping.isChecked
-        values["checkBoxLocalPickup"] = checkBoxLocalPickupValue
-        values["checkBoxFreeShipping"] = checkBoxFreeShippingValue
-
-        // Extract values from enableNearbySearch CheckBox
-        val enableNearbySearch: CheckBox = view.findViewById(R.id.enableNearbySearch)
-        val enableNearbySearchValue = enableNearbySearch.isChecked
-        values["enableNearbySearch"] = enableNearbySearchValue
-
-        return values
-    }
-
-    fun healthCheck(view: View){
-
-        logger.info("Backend Health check")
-        val url="https://sms-wt-assgn3.uw.r.appspot.com/health"
-        val requestQueue = Volley.newRequestQueue(view.context)
-        val stringRequest = StringRequest(
-            Request.Method.GET, url,
-            { response ->
-                logger.info("Response is: $response")
-            },
-            { logger.info("That didn't work!") })
-        requestQueue.add(stringRequest)
-    }
-    fun addOnSearchClick(view: View){
+    fun addOnSearchClick(view: View) {
         val searchButton: Button = view.findViewById(R.id.searchBtn)
         searchButton.setOnClickListener {
             logger.info("Search button clicked")
-            val formValues= extractFormValues(view)
+            val formValues = productSearchUtil.extractFormValues(view)
             logger.info("formValues: $formValues")
-            healthCheck(view)
+//            ebayService.healthCheck(view)
+            ebayService.findAllItems(
+                view,
+                formValues["keyword"].toString(),
+                formValues["category"].toString(),
+                formValues["condition"] as Map<String, Boolean>,
+                formValues["shipping"] as Map<String, Boolean>,
+                formValues["distance"].toString(),
+                formValues["postalCode"].toString()
+            )
         }
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logger.info("ProductSearchFragment onViewCreated")
+        ebayService.healthCheck(view)
 
         spinnerAdapter(view)
         addOnSearchClick(view)
