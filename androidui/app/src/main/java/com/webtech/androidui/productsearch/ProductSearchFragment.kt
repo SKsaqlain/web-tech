@@ -10,9 +10,13 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.webtech.androidui.R
 
 import org.slf4j.LoggerFactory
+
 
 class ProductSearchFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
@@ -89,13 +93,27 @@ class ProductSearchFragment : Fragment() {
 
         return values
     }
-    fun addOnSearchClink(view: View){
+
+    fun healthCheck(view: View){
+
+        logger.info("Backend Health check")
+        val url="https://sms-wt-assgn3.uw.r.appspot.com/health"
+        val requestQueue = Volley.newRequestQueue(view.context)
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            { response ->
+                logger.info("Response is: $response")
+            },
+            { logger.info("That didn't work!") })
+        requestQueue.add(stringRequest)
+    }
+    fun addOnSearchClick(view: View){
         val searchButton: Button = view.findViewById(R.id.searchBtn)
         searchButton.setOnClickListener {
             logger.info("Search button clicked")
             val formValues= extractFormValues(view)
             logger.info("formValues: $formValues")
-
+            healthCheck(view)
         }
     }
 
@@ -106,7 +124,7 @@ class ProductSearchFragment : Fragment() {
         logger.info("ProductSearchFragment onViewCreated")
 
         spinnerAdapter(view)
-        addOnSearchClink(view)
+        addOnSearchClick(view)
 
     }
 }

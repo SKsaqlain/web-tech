@@ -47,4 +47,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //http client libs
+//    implementation("io.ktor:ktor-client-core:2.3.6")
+//    implementation("io.ktor:ktor-client-cio:2.3.6")
+    //volley for api calls
+    implementation("com.android.volley:volley:1.2.1")
+
+//gson for type conversion from data source
+    implementation("com.google.code.gson:gson:2.9.0")
+
 }
