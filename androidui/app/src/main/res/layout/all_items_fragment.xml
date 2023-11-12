@@ -4,36 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".allitems.AllItemsFragment">
+    tools:context=".MainActivity">
 
-    <!-- Text View for showing Fragment2 text -->
-    <TextView
+    <!-- android:numColumns=2 is the number of columns for Grid View
+        android:horizontalSpacing is the space between horizontal grid items -->
+    <GridView
+        android:id="@+id/allItemsGridView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fragment 2"
-        android:textSize="40sp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"/>
-
-    <!-- Frame Layout which will replaced by data from Fragment1 -->
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/displayMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Text"
-            android:textSize="30sp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_marginTop="300dp"
-            android:textColor="@color/black"/>
-
-    </FrameLayout>
-
+        android:layout_height="match_parent"
+        android:horizontalSpacing="6dp"
+        android:numColumns="2"
+        android:verticalSpacing="6dp" />
 </RelativeLayout>

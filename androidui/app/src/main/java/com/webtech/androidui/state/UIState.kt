@@ -1,4 +1,4 @@
-package com.webtech.androidui.modal
+package com.webtech.androidui.state
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.webtech.androidui.R
 import com.webtech.androidui.allitems.AllItemsFragment
-import com.webtech.androidui.modal.UIState
+import com.webtech.androidui.state.UIState
 import com.webtech.androidui.services.ebay.EbayService
 import org.slf4j.LoggerFactory
 

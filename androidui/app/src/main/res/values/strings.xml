@@ -19,6 +19,15 @@
     <string name="clearBtn">CLEAR</string>
 
 
+<!--    card_item_constant-->
+    <string name="cardItemTitle">Title</string>
+    <string name="cardItemZipCode">Zipcode</string>
+    <string name="cardItemShipping">shipping</string>
+    <string name="cardItemCondition">condition</string>
+    <string name="cardItemPrice">price</string>
+
+
+
 
 
 

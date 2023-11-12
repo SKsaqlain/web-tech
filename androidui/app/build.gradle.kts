@@ -62,5 +62,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
 
+    //to download image
+    implementation("com.squareup.picasso:picasso:2.71828")
+
 
 }

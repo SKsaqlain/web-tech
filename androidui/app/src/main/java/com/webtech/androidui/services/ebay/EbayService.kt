@@ -4,7 +4,6 @@ import android.view.View
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.webtech.androidui.modal.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
 import org.slf4j.LoggerFactory
 import java.util.UUID

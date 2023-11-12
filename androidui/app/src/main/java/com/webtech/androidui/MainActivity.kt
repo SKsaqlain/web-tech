@@ -2,10 +2,7 @@ package com.webtech.androidui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.fragment.app.FragmentContainerView
-import com.webtech.androidui.allitems.AllItemsFragment
-import com.webtech.androidui.modal.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
 
 
