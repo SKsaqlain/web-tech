@@ -96,6 +96,35 @@ class ProductSearchFragment : Fragment() {
         }
     }
 
+    private fun addOnClearClick(view: View) {
+        val clearButton: Button = view.findViewById(R.id.clearBtn)
+        clearButton.setOnClickListener {
+            logger.info("Clear button clicked")
+            val keywordEditText = view.findViewById<android.widget.EditText>(R.id.keyword)
+            keywordEditText.setText("")
+            val categorySpinner = view.findViewById<android.widget.Spinner>(R.id.category)
+            categorySpinner.setSelection(0)
+            val checkBoxNew = view.findViewById<android.widget.CheckBox>(R.id.checkBoxNew)
+            checkBoxNew.isChecked = false
+            val checkBoxUsed = view.findViewById<android.widget.CheckBox>(R.id.checkBoxUsed)
+            checkBoxUsed.isChecked = false
+            val checkBoxFreeShipping =
+                view.findViewById<android.widget.CheckBox>(R.id.checkBoxFreeShipping)
+            checkBoxFreeShipping.isChecked = false
+            val checkBoxLocalPickup =
+                view.findViewById<android.widget.CheckBox>(R.id.checkBoxLocalPickup)
+            checkBoxLocalPickup.isChecked = false
+
+            val checkBoxEnableNearbySearch =
+                view.findViewById<android.widget.CheckBox>(R.id.enableNearbySearch)
+            checkBoxEnableNearbySearch.isChecked = false
+//            val distanceEditText = view.findViewById<android.widget.EditText>(R.id.distance)
+//            distanceEditText.setText("10")
+//            val postalCodeEditText = view.findViewById<android.widget.EditText>(R.id.postalCode)
+//            postalCodeEditText.setText("")
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,9 +132,10 @@ class ProductSearchFragment : Fragment() {
         ebayService.healthCheck(view)
         spinnerAdapter(view)
         addOnSearchClick(view)
+        addOnClearClick(view)
 
-
-//        communicator=activity as Communicator
 
     }
+
+
 }

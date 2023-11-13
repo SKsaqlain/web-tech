@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.squareup.picasso.Picasso
 import com.webtech.androidui.R
 
@@ -61,6 +62,19 @@ class FindAllItemAdaptor: BaseAdapter {
         price.text = item.price
 
         cardItemView.tag=item.itemId
+
+        cardItemView.setOnClickListener(){
+            val itemId=cardItemView.tag.toString()
+            val pos=position
+            Toast.makeText(context, "Item  $pos $itemId is clicked", Toast.LENGTH_SHORT).show()
+        }
+
+
+        cartIcon.setOnClickListener() {
+            val itemId=cardItemView.tag.toString()
+            val pos=position
+            Toast.makeText(context, "Item  $pos $itemId is added to cart", Toast.LENGTH_SHORT).show()
+        }
 
         return cardItemView
     }

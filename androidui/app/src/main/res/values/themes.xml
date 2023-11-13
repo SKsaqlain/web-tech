@@ -3,7 +3,14 @@
     <style name="Base.Theme.Androidui" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="backgroundColor">@color/white</item>
     </style>
 
     <style name="Theme.Androidui" parent="Base.Theme.Androidui" />
+
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/launcherBackgroundClr</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Androidui</item>
+    </style>
 </resources>
