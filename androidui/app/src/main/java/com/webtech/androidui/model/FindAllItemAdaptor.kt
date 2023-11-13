@@ -48,7 +48,13 @@ class FindAllItemAdaptor: BaseAdapter {
         // Set values based on the item
         if(item.image!=null)
             Picasso.get().load(item.image).into(itemImage)
-        title.text = item.title
+
+        var truncatedTitle: String=item.title
+        if (item.title.length > 30) {
+            truncatedTitle = item.title.substring(0, 30) + "..."
+        }
+
+        title.text = truncatedTitle
         zipcode.text = item.zip
         condition.text = item.condition
         shipping.text = item.shipping
