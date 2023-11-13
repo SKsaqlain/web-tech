@@ -4,9 +4,12 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import com.webtech.androidui.R
+import org.slf4j.LoggerFactory
 
 class ProductSearchUtil {
+    private val logger = LoggerFactory.getLogger(ProductSearchUtil::class.java)
     fun extractFormValues(view: View): Map<String, Any> {
         val values = mutableMapOf<String, Any>()
 
@@ -45,4 +48,20 @@ class ProductSearchUtil {
 
         return values
     }
+
+    fun validateForm(formValues: Map<String, Any>, view: View): Boolean {
+        val keywordErrorMessage=view.findViewById<TextView>(R.id.keywordErrorMessage)
+
+        if(formValues["keyword"].toString().isEmpty()){
+            logger.info("keyword is Empty displaying error message")
+            keywordErrorMessage.visibility=View.VISIBLE
+            return false
+        }
+        else if (formValues["keyword"].toString().isNotEmpty()){
+            logger.info("keyword is not Empty")
+            keywordErrorMessage.visibility=View.GONE
+        }
+        return true
+    }
+
 }

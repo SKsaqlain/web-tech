@@ -63,7 +63,7 @@ class ProductSearchFragment : Fragment() {
 
     fun moveToAllItemsFragment(response: String) {
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        val listType=object : TypeToken<List<FindAllItemResponse>>() {}.type
+        val listType = object : TypeToken<List<FindAllItemResponse>>() {}.type
         val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(response, listType)
         uiState.setFindAllItemResponse(findAllItemResponse)
         val fragmentManager = parentFragmentManager
@@ -81,18 +81,22 @@ class ProductSearchFragment : Fragment() {
         searchButton.setOnClickListener {
             logger.info("Search button clicked")
             val formValues = productSearchUtil.extractFormValues(view)
-            logger.info("formValues: $formValues")
+            var formItemValid: Boolean = productSearchUtil.validateForm(formValues, view)
+            if (formItemValid) {
+
+                logger.info("formValues: $formValues")
 //            ebayService.healthCheck(view)
-            ebayService.findAllItems(
-                view,
-                formValues["keyword"].toString(),
-                formValues["category"].toString(),
-                formValues["condition"] as Map<String, Boolean>,
-                formValues["shipping"] as Map<String, Boolean>,
-                formValues["distance"].toString(),
-                formValues["postalCode"].toString(),
-                ::moveToAllItemsFragment
-            )
+                ebayService.findAllItems(
+                    view,
+                    formValues["keyword"].toString(),
+                    formValues["category"].toString(),
+                    formValues["condition"] as Map<String, Boolean>,
+                    formValues["shipping"] as Map<String, Boolean>,
+                    formValues["distance"].toString(),
+                    formValues["postalCode"].toString(),
+                    ::moveToAllItemsFragment
+                )
+            }
         }
     }
 
