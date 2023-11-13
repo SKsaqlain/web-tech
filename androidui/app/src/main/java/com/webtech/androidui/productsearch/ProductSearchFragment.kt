@@ -9,8 +9,11 @@ import android.widget.Button
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.webtech.androidui.R
 import com.webtech.androidui.allitems.AllItemsFragment
+import com.webtech.androidui.model.FindAllItemResponse
 import com.webtech.androidui.state.UIState
 import com.webtech.androidui.services.ebay.EbayService
 import org.slf4j.LoggerFactory
@@ -60,7 +63,9 @@ class ProductSearchFragment : Fragment() {
 
     fun moveToAllItemsFragment(response: String) {
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        uiState.setFindAllItemResponse(response)
+        val listType=object : TypeToken<List<FindAllItemResponse>>() {}.type
+        val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(response, listType)
+        uiState.setFindAllItemResponse(findAllItemResponse)
         val fragmentManager = parentFragmentManager
         val allItemsFragment = AllItemsFragment()
         val transaction = fragmentManager.beginTransaction()

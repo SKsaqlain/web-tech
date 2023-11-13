@@ -47,12 +47,12 @@ class AllItemsFragment : Fragment(){
 
             logger.info("Response is: $it")
 
-            val listType=object : TypeToken<List<FindAllItemResponse>>() {}.type
-            val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(it, listType)
+//            val listType=object : TypeToken<List<FindAllItemResponse>>() {}.type
+//            val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(it, listType)
 
-            logger.info("Response is: $findAllItemResponse")
+            logger.info("Response is: $it")
 
-            val adapter= FindAllItemAdaptor(findAllItemResponse, requireContext())
+            val adapter= FindAllItemAdaptor(it, requireContext())
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             gridView.adapter = adapter
         }
