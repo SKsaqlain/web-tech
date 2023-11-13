@@ -26,7 +26,6 @@ class ProductSearchFragment : Fragment() {
 //    val uiState: UIState=ViewModelProvider(requireActivity()).get(UIState::class.java)
 
 
-
     companion object {
         fun newInstance(): ProductSearchFragment {
             return ProductSearchFragment()
@@ -62,11 +61,13 @@ class ProductSearchFragment : Fragment() {
     fun moveToAllItemsFragment(response: String) {
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         uiState.setFindAllItemResponse(response)
-        val fragmentManager =parentFragmentManager
-        val transaction=fragmentManager.beginTransaction()
+        val fragmentManager = parentFragmentManager
         val allItemsFragment = AllItemsFragment()
+        val transaction = fragmentManager.beginTransaction()
+
 //        transaction.replace(R.id.productSearchFragment, allItemsFragment)
-        transaction.replace(R.id.productSearchPage, allItemsFragment)
+        transaction.replace(R.id.productSearchPage, allItemsFragment).setReorderingAllowed(true)
+            .addToBackStack("backStack")
         transaction.commit()
     }
 
@@ -85,7 +86,7 @@ class ProductSearchFragment : Fragment() {
                 formValues["shipping"] as Map<String, Boolean>,
                 formValues["distance"].toString(),
                 formValues["postalCode"].toString(),
-                :: moveToAllItemsFragment
+                ::moveToAllItemsFragment
             )
         }
     }
@@ -97,7 +98,6 @@ class ProductSearchFragment : Fragment() {
         ebayService.healthCheck(view)
         spinnerAdapter(view)
         addOnSearchClick(view)
-
 
 
 //        communicator=activity as Communicator

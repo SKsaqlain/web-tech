@@ -4,15 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <!-- android:numColumns=2 is the number of columns for Grid View
-        android:horizontalSpacing is the space between horizontal grid items -->
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#5A00E6"
+        android:padding="16dp">
+
+        <!-- Make sure to use your own back arrow drawable -->
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/backArrow"
+            android:text="Search Results"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
     <GridView
         android:id="@+id/allItemsGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/titleBar"
+        android:layout_marginTop="-1dp"
+        android:clipToPadding="false"
         android:horizontalSpacing="6dp"
         android:numColumns="2"
+        android:padding="4dp"
+        android:scrollbarStyle="outsideOverlay"
         android:verticalSpacing="6dp" />
+
 </RelativeLayout>

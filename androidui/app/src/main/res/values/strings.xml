@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">androidui</string>
     <string name="hello_first_fragment">hello_first_fragment</string>
-<!--    form string constants-->
+    <!--    form string constants-->
     <string name="productSearch">Product Search</string>
     <string name="keywordLabel">keyword</string>
     <string name="categoryLabel">category</string>
@@ -20,17 +20,14 @@
     <string name="clearBtn">CLEAR</string>
 
 
-<!--    card_item_constant-->
+    <!--    card_item_constant-->
     <string name="cardItemTitle">Title</string>
     <string name="cardItemZipCode">Zipcode</string>
     <string name="cardItemShipping">shipping</string>
     <string name="cardItemCondition">condition</string>
     <string name="cardItemPrice">price</string>
-
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
