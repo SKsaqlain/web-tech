@@ -54,6 +54,8 @@ class FindAllItemAdaptor: BaseAdapter {
         shipping.text = item.shipping
         price.text = item.price
 
+        cardItemView.tag=item.itemId
+
         return cardItemView
     }
 }

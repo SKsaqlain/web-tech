@@ -65,7 +65,8 @@ class ProductSearchFragment : Fragment() {
         val fragmentManager =parentFragmentManager
         val transaction=fragmentManager.beginTransaction()
         val allItemsFragment = AllItemsFragment()
-        transaction.replace(R.id.productSearchFragment, allItemsFragment)
+//        transaction.replace(R.id.productSearchFragment, allItemsFragment)
+        transaction.replace(R.id.productSearchPage, allItemsFragment)
         transaction.commit()
     }
 

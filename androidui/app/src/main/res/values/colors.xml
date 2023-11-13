@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="searchBtnClr">#7C220E</color>
+    <color name="clearBtnClr">#7C220E</color>
+    <color name="productSearchBtnTxtClr">#F0E0E0</color>
+
+
 </resources>
