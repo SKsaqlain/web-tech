@@ -17,7 +17,7 @@
         <!-- Make sure to use your own back arrow drawable -->
 
         <ImageView
-            android:id="@+id/backArrow"
+            android:id="@+id/allItemsBackArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/back_arrow" />

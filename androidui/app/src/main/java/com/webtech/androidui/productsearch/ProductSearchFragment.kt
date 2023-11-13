@@ -67,7 +67,7 @@ class ProductSearchFragment : Fragment() {
 
 //        transaction.replace(R.id.productSearchFragment, allItemsFragment)
         transaction.replace(R.id.productSearchPage, allItemsFragment).setReorderingAllowed(true)
-            .addToBackStack("backStack")
+            .addToBackStack(null)
         transaction.commit()
     }
 

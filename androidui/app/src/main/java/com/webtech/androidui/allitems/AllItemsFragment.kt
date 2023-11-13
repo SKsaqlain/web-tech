@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,6 +55,11 @@ class AllItemsFragment : Fragment(){
             val adapter= FindAllItemAdaptor(findAllItemResponse, requireContext())
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             gridView.adapter = adapter
+        }
+        val goBackBtn : ImageView= view.findViewById(R.id.allItemsBackArrow)
+        goBackBtn.setOnClickListener(){
+            logger.info("Go back button clicked on all items fragment")
+            parentFragmentManager.popBackStack()
         }
     }
 }
