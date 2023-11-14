@@ -14,7 +14,7 @@
             android:id="@+id/keywordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:text="@string/keywordLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -25,7 +25,7 @@
             android:id="@+id/keyword"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:autofillHints=""
             android:hint="@string/formKeywordHint"
             android:inputType="text"
@@ -40,9 +40,8 @@
             android:id="@+id/keywordErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="Please enter mandatory field"
+            android:layout_marginTop="2dp"
+            android:text="@string/keywordErrorMessage"
             android:textColor="#FF0000"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +51,7 @@
             android:id="@+id/categoryLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="24dp"
             android:text="@string/categoryLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -63,8 +62,7 @@
             android:id="@+id/category"
             android:layout_width="409dp"
             android:layout_height="50dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -75,7 +73,7 @@
             android:id="@+id/conditionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="@string/conditionLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.002"
@@ -87,8 +85,7 @@
             android:id="@+id/checkBoxNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:text="@string/formCategoryNew"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
@@ -97,8 +94,8 @@
             android:id="@+id/checkBoxUsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/formCategoryUsed"
             app:layout_constraintStart_toEndOf="@+id/checkBoxNew"
             app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
@@ -107,8 +104,8 @@
             android:id="@+id/checkBoxUnspecified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/formCategoryUnspecified"
             app:layout_constraintStart_toEndOf="@+id/checkBoxUsed"
             app:layout_constraintTop_toBottomOf="@+id/conditionLabel" />
@@ -117,7 +114,7 @@
             android:id="@+id/shippingOptionsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/shippingOptionsLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -129,8 +126,7 @@
             android:id="@+id/checkBoxLocalPickup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:text="@string/formShippingOptionsLocalPickup"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shippingOptionsLabel" />
@@ -139,8 +135,8 @@
             android:id="@+id/checkBoxFreeShipping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/formShippingOptionsFreeShipping"
             app:layout_constraintStart_toEndOf="@+id/checkBoxLocalPickup"
             app:layout_constraintTop_toBottomOf="@+id/shippingOptionsLabel" />
@@ -156,42 +152,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxLocalPickup" />
 
+
         <CheckBox
             android:id="@+id/enableNearbySearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
             android:text=""
             app:layout_constraintStart_toEndOf="@+id/enableNearbySearchLabel"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxFreeShipping" />
 
-<!--        <Button-->
-<!--            android:id="@+id/searchBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="36dp"-->
-<!--            android:layout_marginTop="44dp"-->
-<!--            android:text="@string/searchBtn"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/clearBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="56dp"-->
-<!--            android:layout_marginTop="44dp"-->
-<!--            android:text="@string/clearBtn"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/searchBtn"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />-->
-
+        <LinearLayout
+            android:id="@+id/zipcodeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />
 
         <Button
             android:id="@+id/searchBtn"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@android:color/holo_orange_dark"
             android:letterSpacing="0.2"
             android:text="SEARCH"
@@ -201,13 +186,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.17"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/zipcodeLayout" />
 
         <Button
             android:id="@+id/clearBtn"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="68dp"
             android:backgroundTint="@android:color/holo_orange_dark"
             android:letterSpacing="0.2"
@@ -218,7 +203,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/searchBtn"
-            app:layout_constraintTop_toBottomOf="@+id/enableNearbySearchLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/zipcodeLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

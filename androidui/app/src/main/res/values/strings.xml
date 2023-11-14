@@ -4,6 +4,7 @@
     <!--    form string constants-->
     <string name="productSearch">Product Search</string>
     <string name="keywordLabel">keyword</string>
+    <string name="keywordErrorMessage">Please enter mandatory field</string>
     <string name="categoryLabel">category</string>
     <string name="conditionLabel">condition</string>
     <string name="formKeywordHint">Enter Keyword</string>

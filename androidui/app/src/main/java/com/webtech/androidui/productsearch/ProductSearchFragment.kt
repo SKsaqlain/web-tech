@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -130,6 +131,28 @@ class ProductSearchFragment : Fragment() {
     }
 
 
+    private fun addOnEnableNearbySearchClick(view: View) {
+        val enableNearbySearchCheck: CheckBox = view.findViewById(R.id.enableNearbySearch)
+        enableNearbySearchCheck.setOnClickListener {
+            if (enableNearbySearchCheck.isChecked) {
+                logger.info("enableNearbySearchCheck is enabled")
+                val fragmentManager = parentFragmentManager
+                val zipCodeFragment = ZipCodeFragment()
+                val transaction = fragmentManager.beginTransaction()
+
+                transaction.replace(R.id.zipcodeLayout, zipCodeFragment).setReorderingAllowed(false)
+                    .addToBackStack(null)
+                transaction.commit()
+            } else {
+                logger.info("enableNearbySearchCheck is disabled")
+                val fragmentManager = parentFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.remove(ZipCodeFragment())
+                transaction.commit()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         logger.info("ProductSearchFragment onViewCreated")
@@ -137,6 +160,7 @@ class ProductSearchFragment : Fragment() {
         spinnerAdapter(view)
         addOnSearchClick(view)
         addOnClearClick(view)
+        addOnEnableNearbySearchClick(view)
 
 
     }
