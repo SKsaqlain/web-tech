@@ -147,7 +147,7 @@ class ProductSearchFragment : Fragment() {
                 logger.info("enableNearbySearchCheck is disabled")
                 val fragmentManager = parentFragmentManager
                 val transaction = fragmentManager.beginTransaction()
-                transaction.remove(ZipCodeFragment())
+                transaction.remove(fragmentManager.findFragmentById(R.id.zipcodeLayout)!!)
                 transaction.commit()
             }
         }
