@@ -4,7 +4,7 @@ import URL from "./URL";
 // const URL="http://localhost:8080";
 const baseURL = URL+"/zipcode";
 const ipURL='https://ipinfo.io/json';
-const TOKEN='ef88210eb36381';
+const TOKEN='ef88210eb36381'; 
 
 export const getZipCode = async (zipCode,trackingId) => {
   try {

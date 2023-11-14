@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.webtech.androidui.R
+import com.webtech.androidui.model.currentzipcode.CurrentZipCode
+import com.webtech.androidui.services.zipcode.ZipCodeService
 import org.slf4j.LoggerFactory
+
+import com.google.gson.Gson
+import com.webtech.androidui.state.UIState
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +23,7 @@ import org.slf4j.LoggerFactory
  */
 class ZipCodeFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ZipCodeFragment::class.java)
+    private val zipCodeService = ZipCodeService()
 
 
     override fun onCreateView(
@@ -52,6 +58,14 @@ class ZipCodeFragment : Fragment() {
 
     }
 
+    private fun updateCurrentZipCodeState(response: String){
+        logger.info("updateCurrentZipCodeState")
+        val gson=Gson()
+        val currentZipCode= gson.fromJson(response, CurrentZipCode::class.java)
+        val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.currentZipCode.postValue(currentZipCode.postal)
+    }
+
     private fun addOnCurrentLocationClickListener(view: View) {
         val currentLocationButton: RadioButton = view.findViewById(R.id.currentLocationBtn)
         currentLocationButton.setOnClickListener {
@@ -63,6 +77,7 @@ class ZipCodeFragment : Fragment() {
                 val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
                 zipcodeEditText.text = ""
                 zipcodeEditText.isEnabled = false
+            zipCodeService.getCurrentZipCode(view,:: updateCurrentZipCodeState)
         }
     }
 
