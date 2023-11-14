@@ -84,6 +84,8 @@ class ZipCodeFragment : Fragment() {
             val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
             zipcodeEditText.text = ""
             zipcodeEditText.isEnabled = false
+            val zipCodeErrorMessage=view.findViewById<TextView>(R.id.enteredZipCodeErrorMessage)
+            zipCodeErrorMessage.visibility=View.GONE
             zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
         }
     }

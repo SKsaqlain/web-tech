@@ -87,6 +87,26 @@ class ProductSearchUtil {
             logger.info("keyword is not Empty")
             keywordErrorMessage.visibility=View.GONE
         }
+
+        val nearbySearch= view.findViewById<CheckBox?>(R.id.enableNearbySearch).isChecked
+        if(nearbySearch){
+            val zipCodeBtn=view.findViewById<RadioButton>(R.id.zipCodeBtn).isChecked
+            if(zipCodeBtn){
+                val zipCodeErrorMessage=view.findViewById<TextView>(R.id.enteredZipCodeErrorMessage)
+                val enteredZipCode=view.findViewById<EditText>(R.id.enteredZipCode).text.toString()
+                if(enteredZipCode.isEmpty()){
+                    logger.info("zipCode is Empty displaying error message")
+                    zipCodeErrorMessage.visibility=View.VISIBLE
+                    return false
+                }
+                else if (enteredZipCode.isNotEmpty()){
+                    logger.info("zipCode is not Empty")
+                    zipCodeErrorMessage.visibility=View.GONE
+                }
+            }
+
+
+        }
         return true
     }
 
