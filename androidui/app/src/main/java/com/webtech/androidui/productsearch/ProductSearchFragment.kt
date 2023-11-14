@@ -123,6 +123,12 @@ class ProductSearchFragment : Fragment() {
             val checkBoxEnableNearbySearch =
                 view.findViewById<android.widget.CheckBox>(R.id.enableNearbySearch)
             checkBoxEnableNearbySearch.isChecked = false
+
+            val fragmentManager = parentFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.remove(fragmentManager.findFragmentById(R.id.zipcodeLayout)!!)
+            transaction.commit()
+
 //            val distanceEditText = view.findViewById<android.widget.EditText>(R.id.distance)
 //            distanceEditText.setText("10")
 //            val postalCodeEditText = view.findViewById<android.widget.EditText>(R.id.postalCode)
