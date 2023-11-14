@@ -15,8 +15,10 @@ import com.google.gson.reflect.TypeToken
 import com.webtech.androidui.R
 import com.webtech.androidui.allitems.AllItemsFragment
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.model.currentzipcode.CurrentZipCode
 import com.webtech.androidui.state.UIState
 import com.webtech.androidui.services.ebay.EbayService
+import com.webtech.androidui.services.zipcode.ZipCodeService
 import org.slf4j.LoggerFactory
 
 
@@ -24,6 +26,7 @@ class ProductSearchFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
     private val ebayService = EbayService()
     private val productSearchUtil = ProductSearchUtil()
+    private val zipCodeService = ZipCodeService()
 
 //    private lateinit var communicator: Communicator
 
@@ -71,17 +74,25 @@ class ProductSearchFragment : Fragment() {
         val allItemsFragment = AllItemsFragment()
         val transaction = fragmentManager.beginTransaction()
 
-//        transaction.replace(R.id.productSearchFragment, allItemsFragment)
         transaction.replace(R.id.productSearchPage, allItemsFragment).setReorderingAllowed(true)
             .addToBackStack(null)
         transaction.commit()
+    }
+
+    private fun updateCurrentZipCodeState(response: String) {
+        logger.info("updateCurrentZipCodeState")
+        val gson = Gson()
+        val currentZipCode = gson.fromJson(response, CurrentZipCode::class.java)
+        val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.setCurrentZipCode(currentZipCode.postal)
     }
 
     fun addOnSearchClick(view: View) {
         val searchButton: Button = view.findViewById(R.id.searchBtn)
         searchButton.setOnClickListener {
             logger.info("Search button clicked")
-            val formValues = productSearchUtil.extractFormValues(view)
+            val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+            val formValues = productSearchUtil.extractFormValues(view,uiState)
             var formItemValid: Boolean = productSearchUtil.validateForm(formValues, view)
             if (formItemValid) {
 
@@ -128,6 +139,7 @@ class ProductSearchFragment : Fragment() {
             val transaction = fragmentManager.beginTransaction()
             transaction.remove(fragmentManager.findFragmentById(R.id.zipcodeLayout)!!)
             transaction.commit()
+            zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
 
 //            val distanceEditText = view.findViewById<android.widget.EditText>(R.id.distance)
 //            distanceEditText.setText("10")
@@ -167,6 +179,7 @@ class ProductSearchFragment : Fragment() {
         addOnSearchClick(view)
         addOnClearClick(view)
         addOnEnableNearbySearchClick(view)
+        zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
 
 
     }

@@ -3,14 +3,17 @@ package com.webtech.androidui.productsearch
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import com.webtech.androidui.R
+import com.webtech.androidui.state.UIState
 import org.slf4j.LoggerFactory
 
 class ProductSearchUtil {
     private val logger = LoggerFactory.getLogger(ProductSearchUtil::class.java)
-    fun extractFormValues(view: View): Map<String, Any> {
+    fun extractFormValues(view: View, uiState: UIState): Map<String, Any> {
         val values = mutableMapOf<String, Any>()
 
         // Extract values from EditText
@@ -38,12 +41,35 @@ class ProductSearchUtil {
         values["shipping"]=shipping
 
 
+        val nearbySearch= view.findViewById<CheckBox?>(R.id.enableNearbySearch).isChecked
+        if(nearbySearch==false){
+            values["distance"]=10
+            values["postalCode"]=uiState.currentZipCode.value.toString()
+        }
+        else{
+            values["distance"]=view.findViewById<EditText?>(R.id.distance).text.toString()
+            if(values["distance"].toString().isEmpty())
+                values["distance"]=10
+            else if(values["distance"].toString().isNotEmpty() && view.findViewById<EditText?>(R.id.distance).text.toString().toInt()<10)
+                values["distance"]=10
+            else
+                values["distance"]=view.findViewById<EditText?>(R.id.distance).text.toString()
 
-        //todo: add logic for distance calculation
-        values["distance"]=10
-
-        //todo: add logic for postal code
-        values["postalCode"]="90007"
+            val currentLocation= view.findViewById<RadioButton>(R.id.currentLocationBtn).isChecked
+            if(currentLocation==true)
+                values["postalCode"]=uiState.currentZipCode.value.toString()
+            else{
+                values["postalCode"]=view.findViewById<EditText?>(R.id.enteredZipCode).text.toString()
+            }
+        }
+//
+//        //todo: add logic for distance calculation
+//
+//        values["distance"]=10
+//
+//        //todo: add logic for postal code
+//
+//        values["postalCode"]=uiState.currentZipCode
 
 
         return values

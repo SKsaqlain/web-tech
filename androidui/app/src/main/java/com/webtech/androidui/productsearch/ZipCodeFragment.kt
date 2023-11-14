@@ -40,6 +40,13 @@ class ZipCodeFragment : Fragment() {
         logger.info("onViewCreated for zipcode fragment")
         addOnCurrentLocationClickListener(view)
         addOnZipCodeClickListener(view)
+        defaultBehaviour(view)
+    }
+
+    private fun defaultBehaviour(view: View) {
+        logger.info("defaultBehaviour onload for zipcode fragment")
+        val currentLocationButton: RadioButton = view.findViewById(R.id.currentLocationBtn)
+        currentLocationButton.performClick()
 
     }
 
@@ -58,12 +65,12 @@ class ZipCodeFragment : Fragment() {
 
     }
 
-    private fun updateCurrentZipCodeState(response: String){
+    private fun updateCurrentZipCodeState(response: String) {
         logger.info("updateCurrentZipCodeState")
-        val gson=Gson()
-        val currentZipCode= gson.fromJson(response, CurrentZipCode::class.java)
+        val gson = Gson()
+        val currentZipCode = gson.fromJson(response, CurrentZipCode::class.java)
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        uiState.currentZipCode.postValue(currentZipCode.postal)
+        uiState.setCurrentZipCode(currentZipCode.postal)
     }
 
     private fun addOnCurrentLocationClickListener(view: View) {
@@ -72,12 +79,12 @@ class ZipCodeFragment : Fragment() {
             logger.info("Current Location button clicked")
 //            currentLocationButton.isChecked = true
             currentLocationButton.toggle()
-                val zipCodeRadioButton: RadioButton = view.findViewById(R.id.zipCodeBtn)
-                zipCodeRadioButton.isChecked = false
-                val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
-                zipcodeEditText.text = ""
-                zipcodeEditText.isEnabled = false
-            zipCodeService.getCurrentZipCode(view,:: updateCurrentZipCodeState)
+            val zipCodeRadioButton: RadioButton = view.findViewById(R.id.zipCodeBtn)
+            zipCodeRadioButton.isChecked = false
+            val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
+            zipcodeEditText.text = ""
+            zipcodeEditText.isEnabled = false
+            zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
         }
     }
 
