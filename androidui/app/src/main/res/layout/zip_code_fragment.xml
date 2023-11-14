@@ -30,53 +30,61 @@
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/distanceLabel" />
+        
 
-        <TextView
-            android:id="@+id/fromLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="From"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/distance" />
-
-        <RadioGroup
-            android:id="@+id/locationBtn"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fromLabel">
+            app:layout_constraintTop_toBottomOf="@+id/distance">
 
-            <RadioButton
-                android:id="@+id/currentLocationBtn"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/fromLabel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Location"
-                android:textSize="12sp" />
+                android:layout_marginTop="8dp"
+                android:text="From" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
 
                 <RadioButton
-                    android:id="@+id/zipCodeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/enteredZipCode"
+                    android:id="@+id/currentLocationBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="zipcode"
-                    android:inputType="number" />
+                    android:text="Current Location"
+                    android:textSize="12sp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/zipCodeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/enteredZipCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="zipcode"
+                        android:inputType="number" />
+
+                </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
-        </RadioGroup>
+        <!--        </RadioGroup>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

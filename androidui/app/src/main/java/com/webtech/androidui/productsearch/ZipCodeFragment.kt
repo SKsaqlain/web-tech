@@ -41,7 +41,8 @@ class ZipCodeFragment : Fragment() {
         val zipCodeButton: RadioButton = view.findViewById(R.id.zipCodeBtn)
         zipCodeButton.setOnClickListener {
             logger.info("ZipCode button clicked")
-            zipCodeButton.isChecked = true
+//            zipCodeButton.isChecked = true
+            zipCodeButton.toggle()
             val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
             zipcodeEditText.isEnabled = true
             val currentLocationButton: RadioButton = view.findViewById(R.id.currentLocationBtn)
@@ -55,7 +56,8 @@ class ZipCodeFragment : Fragment() {
         val currentLocationButton: RadioButton = view.findViewById(R.id.currentLocationBtn)
         currentLocationButton.setOnClickListener {
             logger.info("Current Location button clicked")
-            currentLocationButton.isChecked = true
+//            currentLocationButton.isChecked = true
+            currentLocationButton.toggle()
                 val zipCodeRadioButton: RadioButton = view.findViewById(R.id.zipCodeBtn)
                 zipCodeRadioButton.isChecked = false
                 val zipcodeEditText: TextView = view.findViewById(R.id.enteredZipCode)
