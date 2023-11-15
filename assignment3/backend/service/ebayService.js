@@ -23,8 +23,8 @@ const ebay = {
             const trackingId = req.trackingId = req.query.trackingId || uuidv4();
             const keywords = req.query.keywords;
             const category = req.query.category ;
-            const condition = eval(req.query.condition) || [];
-            const shipping = eval(req.query.shipping) || [];
+            const condition = JSON.parse(req.query.condition.replace(/(\w+)/g, '"$1"')) || [];
+            const shipping = JSON.parse(req.query.shipping.replace(/(\w+)/g, '"$1"')) || [];
             const distance = req.query.distance || 0;
             const postalCode = req.query.postalCode || "";
 

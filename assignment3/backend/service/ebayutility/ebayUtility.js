@@ -126,6 +126,7 @@ function parseFindAllItemResponse(response, trackingId) {
         itemData.image = items[i].galleryURL[0] || null;
         itemData.viewItemURL=items[i].viewItemURL[0]|| null;
         itemData.price = items[i].sellingStatus[0].currentPrice[0].__value__ || null;
+        itemData.condition=items[i].condition[0].conditionDisplayName[0]||null;
         itemData.shipping = items[i].shippingInfo[0].shippingServiceCost[0].__value__ || 'N/A';
         if (itemData.shipping == '0.0') {
             itemData.shipping = 'Free Shipping';
