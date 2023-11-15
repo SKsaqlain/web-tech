@@ -93,7 +93,7 @@ class ProductSearchFragment : Fragment() {
             logger.info("Search button clicked")
             val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
             val formValues = productSearchUtil.extractFormValues(view,uiState)
-            var formItemValid: Boolean = productSearchUtil.validateForm(formValues, view)
+            var formItemValid: Boolean = productSearchUtil.validateForm(formValues, view,context)
             if (formItemValid) {
 
                 logger.info("formValues: $formValues")

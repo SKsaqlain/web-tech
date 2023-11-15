@@ -1,12 +1,13 @@
 package com.webtech.androidui.productsearch
 
+import android.content.Context
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
+import android.widget.Toast
 import com.webtech.androidui.R
 import com.webtech.androidui.state.UIState
 import org.slf4j.LoggerFactory
@@ -75,11 +76,12 @@ class ProductSearchUtil {
         return values
     }
 
-    fun validateForm(formValues: Map<String, Any>, view: View): Boolean {
+    fun validateForm(formValues: Map<String, Any>, view: View, context: Context?): Boolean {
         val keywordErrorMessage=view.findViewById<TextView>(R.id.keywordErrorMessage)
 
         if(formValues["keyword"].toString().isEmpty()){
             logger.info("keyword is Empty displaying error message")
+            Toast.makeText(context, "Please fix all fields with errors", Toast.LENGTH_SHORT).show()
             keywordErrorMessage.visibility=View.VISIBLE
             return false
         }
@@ -97,6 +99,7 @@ class ProductSearchUtil {
                 if(enteredZipCode.isEmpty()){
                     logger.info("zipCode is Empty displaying error message")
                     zipCodeErrorMessage.visibility=View.VISIBLE
+                    Toast.makeText(context, "Please fix all fields with errors", Toast.LENGTH_SHORT).show()
                     return false
                 }
                 else if (enteredZipCode.isNotEmpty()){
