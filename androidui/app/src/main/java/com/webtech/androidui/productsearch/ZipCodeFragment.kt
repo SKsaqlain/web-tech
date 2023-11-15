@@ -1,9 +1,11 @@
 package com.webtech.androidui.productsearch
 
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -40,8 +42,46 @@ class ZipCodeFragment : Fragment() {
         logger.info("onViewCreated for zipcode fragment")
         addOnCurrentLocationClickListener(view)
         addOnZipCodeClickListener(view)
+        addOnZipCodeTextEditListener(view)
         defaultBehaviour(view)
     }
+
+    private fun addOnZipCodeTextEditListener(view: View) {
+        val zipcodeEditText: EditText = view.findViewById(R.id.enteredZipCode)
+        zipcodeEditText.addTextChangedListener(ZipCodeTextWatcher(view))
+        }
+
+    private fun updateNearbyZipCodeState(response: String) {
+        logger.info("updateNearbyZipCodeState")
+        val gson = Gson()
+        val nearbyZipCode = gson.fromJson(response, Array<String>::class.java)
+        val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.setNearByZipCodes(nearbyZipCode)
+    }
+    private fun ZipCodeTextWatcher(view: View): TextWatcher? {
+        return object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val zipcodeEditText=view.findViewById<EditText>(R.id.enteredZipCode).text
+                logger.info("onTextChanged for zipcode fragment ${zipcodeEditText}")
+                if(zipcodeEditText.length>0){
+                    zipCodeService.getNearbyZipCode(view, zipcodeEditText.toString())
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
+                logger.info("beforeTextChanged for zipcode fragment")
+            }
+
+            override fun afterTextChanged(s: android.text.Editable) {
+                logger.info("afterTextChanged for zipcode fragment")
+            }
+
+    }
+
+}
 
     private fun defaultBehaviour(view: View) {
         logger.info("defaultBehaviour onload for zipcode fragment")
