@@ -18,10 +18,13 @@ class UIState: ViewModel() {
 
     //product search state
     val findAllItemResponse = MutableLiveData<List<FindAllItemResponse>>()
-
-
+    val allItemProgressBar=MutableLiveData<Boolean>(true)
     fun setFindAllItemResponse(findAllItemResponse: List<FindAllItemResponse>) {
         this.findAllItemResponse.value = findAllItemResponse
+    }
+
+    fun setAllItemProgressBar(allItemProgressBar: Boolean) {
+        this.allItemProgressBar.value = allItemProgressBar
     }
 
 

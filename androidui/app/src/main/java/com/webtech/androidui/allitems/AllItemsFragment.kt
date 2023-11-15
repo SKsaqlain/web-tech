@@ -8,8 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,7 +26,7 @@ import com.webtech.androidui.state.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
 import org.slf4j.LoggerFactory
 
-class AllItemsFragment : Fragment(){
+class AllItemsFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
 
     override fun onCreateView(
@@ -29,7 +34,7 @@ class AllItemsFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view=inflater.inflate(
+        val view = inflater.inflate(
             R.layout.all_items_fragment,
             container,
             false
@@ -40,26 +45,46 @@ class AllItemsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uiState: UIState=ViewModelProvider(requireActivity()).get(UIState::class.java)
-        uiState.findAllItemResponse.observe(viewLifecycleOwner) {
-            if(it==null)
+
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val progressBarFragment = view.findViewById<LinearLayout>(R.id.allItemsProgressBarLayout)
+        val gridView: GridView = view.findViewById(R.id.allItemsGridView)
+
+        uiState.allItemProgressBar.observe(viewLifecycleOwner) { progressBar ->
+            val progressBarFragment = view.findViewById<LinearLayout>(R.id.allItemsProgressBarLayout)
+            val gridView: GridView = view.findViewById(R.id.allItemsGridView)
+            if (progressBar) {
+                progressBarFragment.visibility = View.VISIBLE
+                gridView.visibility = View.INVISIBLE
+            } else {
+                progressBarFragment.visibility = View.INVISIBLE
+                gridView.visibility = View.VISIBLE
+            }
+        }
+
+        uiState.findAllItemResponse.observe(viewLifecycleOwner) { response ->
+//            progressBarFragment.visibility = View.INVISIBLE
+            if (response == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "No items found",
+                    Toast.LENGTH_LONG
+                ).show()
                 return@observe
+            }
 
-            logger.info("Response is: $it")
-
-//            val listType=object : TypeToken<List<FindAllItemResponse>>() {}.type
-//            val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(it, listType)
-
-            logger.info("Response is: $it")
-
-            val adapter= FindAllItemAdaptor(it, requireContext())
+            logger.info("Response is: $response")
+            gridView.visibility = View.VISIBLE
+            val adapter = FindAllItemAdaptor(response, requireContext())
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             gridView.adapter = adapter
         }
-        val goBackBtn : ImageView= view.findViewById(R.id.allItemsBackArrow)
-        goBackBtn.setOnClickListener(){
+        val goBackBtn: ImageView = view.findViewById(R.id.allItemsBackArrow)
+        goBackBtn.setOnClickListener() {
             logger.info("Go back button clicked on all items fragment")
             parentFragmentManager.popBackStack()
+            uiState.setAllItemProgressBar(true)
+            uiState.setFindAllItemResponse(emptyList())
         }
     }
 }

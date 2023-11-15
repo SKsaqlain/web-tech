@@ -35,7 +35,7 @@ class EbayService {
         shipping: Map<String, Boolean>,
         distance: String,
         postalCode: String,
-        moveToAllItemsFragment: (response:String)->Unit
+        updateAllItemResponseState: (response:String)->Unit
     ) {
         val trackingId = UUID.randomUUID().toString()
         logger.info("Making backend Find All Items API call with $trackingId")
@@ -53,7 +53,7 @@ class EbayService {
             Request.Method.GET, url,
             { response ->
                 logger.info("Response is: $response")
-                moveToAllItemsFragment(response)
+                updateAllItemResponseState(response)
 
             },
             { logger.info("That didn't work!") })

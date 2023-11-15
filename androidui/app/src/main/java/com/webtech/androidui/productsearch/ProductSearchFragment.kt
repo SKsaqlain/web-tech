@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -66,19 +65,27 @@ class ProductSearchFragment : Fragment() {
         spinner.adapter = adapter
     }
 
-    fun moveToAllItemsFragment(response: String) {
+    fun updateFindAllItemState(response: String) {
+        logger.info("updateFindAllItemState")
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val listType = object : TypeToken<List<FindAllItemResponse>>() {}.type
         val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(response, listType)
+        uiState.setAllItemProgressBar(false)
         uiState.setFindAllItemResponse(findAllItemResponse)
+
+    }
+    fun moveToAllItemsFragment() {
+
         val fragmentManager = parentFragmentManager
         val allItemsFragment = AllItemsFragment()
         val transaction = fragmentManager.beginTransaction()
 
-        transaction.replace(R.id.productSearchPage, allItemsFragment).setReorderingAllowed(true)
+        transaction.replace(R.id.productSearchPage, allItemsFragment).setReorderingAllowed(false)
             .addToBackStack(null)
         transaction.commit()
     }
+
+
 
     private fun updateCurrentZipCodeState(response: String) {
         logger.info("updateCurrentZipCodeState")
@@ -96,9 +103,9 @@ class ProductSearchFragment : Fragment() {
             val formValues = productSearchUtil.extractFormValues(view,uiState)
             var formItemValid: Boolean = productSearchUtil.validateForm(formValues, view,context)
             if (formItemValid) {
-
                 logger.info("formValues: $formValues")
 //            ebayService.healthCheck(view)
+                moveToAllItemsFragment()
                 ebayService.findAllItems(
                     view,
                     formValues["keyword"].toString(),
@@ -107,7 +114,7 @@ class ProductSearchFragment : Fragment() {
                     formValues["shipping"] as Map<String, Boolean>,
                     formValues["distance"].toString(),
                     formValues["postalCode"].toString(),
-                    ::moveToAllItemsFragment
+                    ::updateFindAllItemState
                 )
             }
         }
@@ -183,12 +190,9 @@ class ProductSearchFragment : Fragment() {
         addOnClearClick(view)
         addOnEnableNearbySearchClick(view)
         zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
-
-//        val searchBtn=view.findViewById<Button>(R.id.searchBtn)
-//        searchBtn.setBackgroundColor(ContextCompat.getColor(view.context,R.color.productSearchBtnClr))
-//        val clearBtn=view.findViewById<Button>(R.id.clearBtn)
-//        clearBtn.setBackgroundColor(ContextCompat.getColor(view.context,R.color.productSearchBtnClr))
-
+        val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.setAllItemProgressBar(true)
+        uiState.setFindAllItemResponse(emptyList())
 
     }
 
