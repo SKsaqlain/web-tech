@@ -133,12 +133,14 @@ class ProductSearchFragment : Fragment() {
 
             val checkBoxEnableNearbySearch =
                 view.findViewById<android.widget.CheckBox>(R.id.enableNearbySearch)
-            checkBoxEnableNearbySearch.isChecked = false
 
-            val fragmentManager = parentFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.remove(fragmentManager.findFragmentById(R.id.zipcodeLayout)!!)
-            transaction.commit()
+            if(checkBoxEnableNearbySearch.isChecked==true) {
+                val fragmentManager = parentFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                transaction.remove(fragmentManager.findFragmentById(R.id.zipcodeLayout)!!)
+                transaction.commit()
+            }
+            checkBoxEnableNearbySearch.isChecked = false
             zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
 
 //            val distanceEditText = view.findViewById<android.widget.EditText>(R.id.distance)
