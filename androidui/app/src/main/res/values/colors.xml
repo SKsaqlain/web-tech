@@ -7,5 +7,7 @@
     <color name="clearBtnClr">#7C220E</color>
     <color name="productSearchBtnTxtClr">#F0E0E0</color>
 
+    <color name="productSearchBtnClr">@color/searchBtnClr</color>
+
 
 </resources>

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -182,6 +183,11 @@ class ProductSearchFragment : Fragment() {
         addOnClearClick(view)
         addOnEnableNearbySearchClick(view)
         zipCodeService.getCurrentZipCode(view, ::updateCurrentZipCodeState)
+
+//        val searchBtn=view.findViewById<Button>(R.id.searchBtn)
+//        searchBtn.setBackgroundColor(ContextCompat.getColor(view.context,R.color.productSearchBtnClr))
+//        val clearBtn=view.findViewById<Button>(R.id.clearBtn)
+//        clearBtn.setBackgroundColor(ContextCompat.getColor(view.context,R.color.productSearchBtnClr))
 
 
     }
