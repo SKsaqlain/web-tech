@@ -29,7 +29,7 @@
             android:id="@+id/productSearchTitle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#5A00E6"
+            android:background="@color/launcherBackgroundClr"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/productSearch"
@@ -43,6 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/productSearchTitle"
+            android:background="@color/launcherBackgroundClr"
+            app:tabTextColor="@color/white"
             app:tabGravity="fill"
             app:tabMode="fixed" />
 

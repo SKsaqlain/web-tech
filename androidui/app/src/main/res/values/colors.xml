@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="launcherBackgroundClr">#4F32A2</color>
+    <color name="launcherBackgroundClr">#6750a4</color>
+    <color name="titleBarColor">#303f9f</color>
+
     <color name="white">#FFFFFFFF</color>
     <color name="searchBtnClr">#7C220E</color>
     <color name="clearBtnClr">#7C220E</color>
