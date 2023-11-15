@@ -5,6 +5,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
@@ -44,6 +46,19 @@ class ZipCodeFragment : Fragment() {
         addOnZipCodeClickListener(view)
         addOnZipCodeTextEditListener(view)
         defaultBehaviour(view)
+        val uiState: UIState=ViewModelProvider(requireActivity()).get(UIState::class.java)
+        uiState.nearByZipCodes.observe(viewLifecycleOwner) {
+            if (it == null || it.isEmpty())
+                return@observe
+            logger.info("Nearby ZipCodes are: $it")
+            val nearbyZipCodeTextView: AutoCompleteTextView = view.findViewById(R.id.enteredZipCode)
+            val adapter = ArrayAdapter<String>(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                it
+            )
+            nearbyZipCodeTextView.setAdapter(adapter)
+        }
     }
 
     private fun addOnZipCodeTextEditListener(view: View) {
@@ -64,7 +79,7 @@ class ZipCodeFragment : Fragment() {
                 val zipcodeEditText=view.findViewById<EditText>(R.id.enteredZipCode).text
                 logger.info("onTextChanged for zipcode fragment ${zipcodeEditText}")
                 if(zipcodeEditText.length>0){
-                    zipCodeService.getNearbyZipCode(view, zipcodeEditText.toString())
+                    zipCodeService.getNearbyZipCode(view, zipcodeEditText.toString(), ::updateNearbyZipCodeState)
                 }
             }
 

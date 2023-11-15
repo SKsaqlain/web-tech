@@ -34,7 +34,7 @@ class ZipCodeService {
         requestQueue.add(stringRequest)
     }
 
-    fun getNearbyZipCode(view: View, postalCode: String) {
+    fun getNearbyZipCode(view: View, postalCode: String, updateCurrentZipCodeState: (String) -> Unit) {
         val trackingId = UUID.randomUUID().toString()
         logger.info("Making Get Nearby Zip Code API call with $trackingId")
         val url = "${URL.BackendUrl.url}/zipcode?zipcode=$postalCode&trackingId=$trackingId"
@@ -43,7 +43,7 @@ class ZipCodeService {
             Request.Method.GET, url,
             { response ->
                 logger.info("Nearby ZipCode Response is: $response")
-//                updateNearbyZipCodeState(response)
+                updateCurrentZipCodeState(response)
             },
             { error ->
 
