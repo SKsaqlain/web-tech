@@ -10,12 +10,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.squareup.picasso.Picasso
 import com.webtech.androidui.R
 import com.webtech.androidui.allitems.AllItemsFragment
 import com.webtech.androidui.details.ProductFragment
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.state.UIState
 
 class FindAllItemAdaptor: BaseAdapter {
 

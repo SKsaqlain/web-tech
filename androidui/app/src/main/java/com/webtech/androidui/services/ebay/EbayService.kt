@@ -63,4 +63,31 @@ class EbayService {
 
     }
 
+    fun findItemDetails(
+        view:View,
+        itemId:String,
+        updateItemDetailsResponseState: (response:String)->Unit
+    ){
+        val trackingId = UUID.randomUUID().toString()
+        logger.info("Making backend Find Item Details API call with $trackingId")
+
+        val url =
+            "${URL.BackendUrl.url}/ebay/findItem?trackingId=$trackingId&itemId=$itemId"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            { response ->
+                logger.info("Find Item Details Response with trackingId $trackingId is: $response")
+                updateItemDetailsResponseState(response)
+
+            },
+            { error ->
+                logger.error("Error occurred with trackingId $trackingId: ${error.message}")
+            }
+        )
+
+        val requestQueue = Volley.newRequestQueue(view.context)
+        requestQueue.add(stringRequest)
+    }
+
 }

@@ -3,6 +3,7 @@ package com.webtech.androidui.state
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.model.finditemdetails.ProductDetailsResponse
 
 class UIState: ViewModel() {
     //form state
@@ -25,6 +26,21 @@ class UIState: ViewModel() {
 
     fun setAllItemProgressBar(allItemProgressBar: Boolean) {
         this.allItemProgressBar.value = allItemProgressBar
+    }
+
+
+    //product details state
+    val productDetails=MutableLiveData<FindAllItemResponse>()
+    val productDetailsItemId=MutableLiveData<String>()
+    val productDetailsResponse=MutableLiveData<ProductDetailsResponse>()
+    fun setProductDetails(productDetails: FindAllItemResponse) {
+        this.productDetails.value = productDetails
+    }
+    fun setProductDetailsItemId(productDetailsItemId: String) {
+        this.productDetailsItemId.value = productDetailsItemId
+    }
+    fun setProductDetailsResponse(productDetailsResponse: ProductDetailsResponse) {
+        this.productDetailsResponse.value = productDetailsResponse
     }
 
 

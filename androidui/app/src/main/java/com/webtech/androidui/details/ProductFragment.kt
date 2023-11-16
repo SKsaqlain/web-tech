@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.webtech.androidui.R
+import com.webtech.androidui.state.UIState
 import com.webtech.androidui.tabs.ProductDetailsTabAdaptor
 import org.slf4j.LoggerFactory
 
@@ -22,14 +26,32 @@ class ProductFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    fun extItemDetailsForItemIdAndSetState(itemId: String) {
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val allItems = uiState.findAllItemResponse.value
+        val itemDetails = allItems?.filter { item -> item.itemId == itemId }
+        uiState.setProductDetails(itemDetails!![0])
+        uiState.setProductDetailsItemId(itemId!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val arguments = requireArguments()
+        val itemId= arguments.getString("itemId")
+        logger.info("Item click with Item id: $itemId")
+        extItemDetailsForItemIdAndSetState(itemId!!)
         return inflater.inflate(R.layout.product_fragment, container, false)
     }
 
+    fun trimTitle(title: String): String {
+        var trimmedTitle = title
+        if (title.length > 31) {
+            trimmedTitle = title.substring(0, 31) + "..."
+        }
+        return trimmedTitle
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewPager = view.findViewById<ViewPager2>(R.id.productDetailsPager)
@@ -85,5 +107,12 @@ class ProductFragment : Fragment() {
             logger.info("Go back button clicked on all items fragment")
             parentFragmentManager.popBackStack()
         }
+
+        val productTitle=view.findViewById<TextView>(R.id.productDetailsTitle)
+        val title=ViewModelProvider(requireActivity()).get(UIState::class.java).productDetails.value?.title
+        if(title!=null)
+            productTitle.text=trimTitle(title)
+        else
+            productTitle.text="Product Title"
     }
 }
