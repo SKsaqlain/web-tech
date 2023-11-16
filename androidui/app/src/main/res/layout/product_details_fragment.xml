@@ -6,8 +6,83 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/productTitleInDetails"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ProductDetails" />
+        android:text="productTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/priceAndShipping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="priceAndShipping"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productTitleInDetails" />
+
+    <LinearLayout
+        android:id="@+id/highlightsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/priceAndShipping">
+
+        <TextView
+            android:id="@+id/productDetailsHighlights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Highlights" />
+
+        <LinearLayout
+            android:id="@+id/highlightsLayoutRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Price" />
+
+            <TextView
+                android:id="@+id/productPriceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="$" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/highlightsLayoutRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/highlightsLayout"
+            tools:layout_editor_absoluteX="-3dp">
+
+            <TextView
+                android:id="@+id/productBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Brand" />
+
+            <TextView
+                android:id="@+id/productBrandName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BrandName" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

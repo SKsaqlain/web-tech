@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -59,5 +60,20 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         fetchProductDetails(uiState.productDetailsItemId.value!!)
+        uiState.productDetailsResponse.observe(viewLifecycleOwner){
+            if(it==null)
+                return@observe
+            logger.info("Product details response is: $it")
+            view?.findViewById<TextView>(R.id.productTitleInDetails)?.text=uiState.productDetails.value?.title
+            view?.findViewById<TextView>(R.id.priceAndShipping)?.text= it.price.toString()+" with "+uiState.productDetails.value?.shipping
+
+            view?.findViewById<TextView>(R.id.productPriceValue)?.text=it.price.toString()
+
+            val brandName = uiState.productDetailsResponse.value?.itemSpecifics?.firstOrNull { it.name == "Brand" }?.value ?: "N/A"
+            view?.findViewById<TextView>(R.id.productBrandName)?.text = brandName
+
+
+
+        }
     }
 }
