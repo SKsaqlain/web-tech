@@ -57,9 +57,9 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/productDetailsPager"
             android:layout_width="match_parent"
-            android:layout_height="632dp"
+            android:layout_height="616dp"
             android:layout_below="@+id/titleBar"
-            android:layout_marginTop="39dp" />
+            android:layout_marginTop="55dp" />
 
 
     </RelativeLayout>

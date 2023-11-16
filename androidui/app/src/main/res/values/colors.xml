@@ -15,4 +15,9 @@
     <color name="productSearchBtnClr">@color/searchBtnClr</color>
 
 
+<!--    product-->
+    <color name="selectedTabColor">@color/white</color>
+    <color name="unselectedTabColor">#e8b5b5</color>
+
+
 </resources>
