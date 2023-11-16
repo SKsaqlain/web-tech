@@ -1,20 +1,12 @@
 package com.webtech.androidui
 
 import TabAdaptor
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.FragmentContainerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.webtech.androidui.productsearch.ProductSearchFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
-        val tabLayout=findViewById<TabLayout>(R.id.tabLayout)
+        val tabLayout=findViewById<TabLayout>(R.id.productTabLayout)
         val adapter= TabAdaptor(this)
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

@@ -21,25 +21,3 @@ class TabAdaptor(activity: AppCompatActivity): FragmentStateAdapter(activity) {
     }
 }
 
-//class TabAdapter(fm: FragmentManager) : FragmentStateAdapter(activity) {
-//
-//    override fun getItem(position: Int): Fragment {
-//        return when (position) {
-//            0 -> ProductSearchFragment()
-//            1 -> WishlistFragment()  // Create a WishlistFragment class
-//            else -> throw IllegalArgumentException("Invalid position: $position")
-//        }
-//    }
-//
-//    override fun getCount(): Int {
-//        return 2  // Number of tabs
-//    }
-//
-//    override fun getPageTitle(position: Int): CharSequence? {
-//        return when (position) {
-//            0 -> "SEARCH"
-//            1 -> "WISH LIST"
-//            else -> null
-//        }
-//    }
-//}

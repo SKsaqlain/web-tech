@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/allItemsPage"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,13 +20,13 @@
         <!-- Make sure to use your own back arrow drawable -->
 
         <ImageView
-            android:id="@+id/allItemsBackArrow"
+            android:id="@+id/productDetailsGoBackBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/back_arrow" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/productTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

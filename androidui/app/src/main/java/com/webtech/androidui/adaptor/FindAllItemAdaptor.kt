@@ -1,6 +1,7 @@
-package com.webtech.androidui.model
+package com.webtech.androidui.adaptor
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,24 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.squareup.picasso.Picasso
 import com.webtech.androidui.R
+import com.webtech.androidui.allitems.AllItemsFragment
+import com.webtech.androidui.details.ProductFragment
+import com.webtech.androidui.model.FindAllItemResponse
 
 class FindAllItemAdaptor: BaseAdapter {
 
     private var findAllItemResponse= listOf<FindAllItemResponse>()
     private var context: Context?=null
+    private var fragmentManager: FragmentManager ?=null
 
-    constructor(findAllItemResponse: List<FindAllItemResponse>, context: Context?) : super() {
+    constructor(findAllItemResponse: List<FindAllItemResponse>, context: Context?, fragmentManager: FragmentManager?) : super() {
         this.findAllItemResponse = findAllItemResponse
         this.context = context
+        this.fragmentManager = fragmentManager
     }
 
     override fun getCount(): Int {
@@ -39,7 +47,7 @@ class FindAllItemAdaptor: BaseAdapter {
         var cardItemView=inflator.inflate(R.layout.card_item, null)
 
         val itemImage = cardItemView.findViewById<ImageView>(R.id.item_image)
-        val title = cardItemView.findViewById<TextView>(R.id.title)
+        val title = cardItemView.findViewById<TextView>(R.id.productTitle)
         val zipcode = cardItemView.findViewById<TextView>(R.id.zipcode)
         val condition = cardItemView.findViewById<TextView>(R.id.condition)
         val shipping = cardItemView.findViewById<TextView>(R.id.shipping)
@@ -70,10 +78,18 @@ class FindAllItemAdaptor: BaseAdapter {
         }
 
 
-        cartIcon.setOnClickListener() {
+        itemImage.setOnClickListener() {
             val itemId=cardItemView.tag.toString()
             val pos=position
             Toast.makeText(context, "Item  $pos $itemId is added to cart", Toast.LENGTH_SHORT).show()
+            val productFragment= ProductFragment()
+            val bundle = Bundle()
+            bundle.putString("itemId", itemId)
+            productFragment.arguments = bundle
+            val transaction = this.fragmentManager?.beginTransaction()
+            transaction?.replace(R.id.allItemsPage,productFragment)?.setReorderingAllowed(false)
+                ?.addToBackStack(null)
+            transaction?.commit()
         }
 
         return cardItemView
