@@ -72,6 +72,14 @@ class ProductDetailsFragment : Fragment() {
             val brandName = uiState.productDetailsResponse.value?.itemSpecifics?.firstOrNull { it.name == "Brand" }?.value ?: "N/A"
             view?.findViewById<TextView>(R.id.productBrandName)?.text = brandName
 
+            val bulletPoint="• "
+            val stringBuilder=StringBuilder()
+            uiState.productDetailsResponse.value?.itemSpecifics?.forEach {
+                if(it.name!="Brand")
+                    stringBuilder.append(bulletPoint+it.value+"\n")
+            }
+            view?.findViewById<TextView>(R.id.productSpecificationValue)?.text=stringBuilder.toString()
+
 
 
         }
