@@ -68,7 +68,7 @@ class AllItemsFragment : Fragment() {
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             gridView.adapter = adapter
         }
-        val goBackBtn: ImageView = view.findViewById(R.id.productDetailsGoBackBtn)
+        val goBackBtn: ImageView = view.findViewById(R.id.allItemsBackArrow)
         goBackBtn.setOnClickListener() {
             logger.info("Go back button clicked on all items fragment")
             parentFragmentManager.popBackStack()
