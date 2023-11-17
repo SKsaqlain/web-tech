@@ -5,41 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/productDetailsGalleryView"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"/>
+
+
     <TextView
         android:id="@+id/productTitleInDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="productTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/priceAndShipping"
+        app:layout_constraintTop_toBottomOf="@id/productDetailsGalleryView" />
 
     <TextView
         android:id="@+id/priceAndShipping"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="priceAndShipping"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/highlightsLayout"
         app:layout_constraintTop_toBottomOf="@+id/productTitleInDetails" />
-
-    <LinearLayout
-        android:id="@+id/productDetailsSpecificationLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/highlightsLayout">
-
-        <TextView
-            android:id="@+id/productSpecification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Specifications" />
-
-        <TextView
-            android:id="@+id/productSpecificationValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/highlightsLayout"
@@ -47,7 +38,7 @@
         android:layout_height="63dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/productDetailsSpecificationLayout"
         app:layout_constraintTop_toBottomOf="@+id/priceAndShipping">
 
         <TextView
@@ -103,6 +94,28 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/productDetailsSpecificationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/highlightsLayout"
+        >
+
+        <TextView
+            android:id="@+id/productSpecification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Specifications" />
+
+        <TextView
+            android:id="@+id/productSpecificationValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

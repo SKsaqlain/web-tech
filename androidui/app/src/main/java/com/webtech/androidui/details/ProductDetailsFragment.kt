@@ -1,5 +1,6 @@
 package com.webtech.androidui.details
 
+import GalleryViewAdaptor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.webtech.androidui.R
@@ -27,14 +29,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class ProductDetailsFragment : Fragment() {
 
-    private val logger= LoggerFactory.getLogger(ProductDetailsFragment::class.java)
-    private val ebayService=EbayService()
+    private val logger = LoggerFactory.getLogger(ProductDetailsFragment::class.java)
+    private val ebayService = EbayService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    fun updateProductDetailsState(response:String){
+    fun updateProductDetailsState(response: String) {
         logger.info("updating product details state")
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val gson = Gson()
@@ -43,9 +45,10 @@ class ProductDetailsFragment : Fragment() {
         uiState.setProductDetailsResponse(productDetailsResponse)
 
     }
+
     fun fetchProductDetails(itemId: String) {
         logger.info("Fetching product details for item id: $itemId")
-        view?.let { ebayService.findItemDetails(it,itemId,::updateProductDetailsState) }
+        view?.let { ebayService.findItemDetails(it, itemId, ::updateProductDetailsState) }
     }
 
     override fun onCreateView(
@@ -60,26 +63,35 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         fetchProductDetails(uiState.productDetailsItemId.value!!)
-        uiState.productDetailsResponse.observe(viewLifecycleOwner){
-            if(it==null)
+        uiState.productDetailsResponse.observe(viewLifecycleOwner) {
+            if (it == null)
                 return@observe
             logger.info("Product details response is: $it")
-            view?.findViewById<TextView>(R.id.productTitleInDetails)?.text=uiState.productDetails.value?.title
-            view?.findViewById<TextView>(R.id.priceAndShipping)?.text= it.price.toString()+" with "+uiState.productDetails.value?.shipping
+            view?.findViewById<TextView>(R.id.productTitleInDetails)?.text =
+                uiState.productDetails.value?.title
+            view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
+                it.price.toString() + " with " + uiState.productDetails.value?.shipping
 
-            view?.findViewById<TextView>(R.id.productPriceValue)?.text=it.price.toString()
+            view?.findViewById<TextView>(R.id.productPriceValue)?.text = it.price.toString()
 
-            val brandName = uiState.productDetailsResponse.value?.itemSpecifics?.firstOrNull { it.name == "Brand" }?.value ?: "N/A"
+            val brandName =
+                uiState.productDetailsResponse.value?.itemSpecifics?.firstOrNull { it.name == "Brand" }?.value
+                    ?: "N/A"
             view?.findViewById<TextView>(R.id.productBrandName)?.text = brandName
 
-            val bulletPoint="• "
-            val stringBuilder=StringBuilder()
+            val bulletPoint = "• "
+            val stringBuilder = StringBuilder()
             uiState.productDetailsResponse.value?.itemSpecifics?.forEach {
-                if(it.name!="Brand")
-                    stringBuilder.append(bulletPoint+it.value+"\n")
+                if (it.name != "Brand")
+                    stringBuilder.append(bulletPoint + it.value + "\n")
             }
-            view?.findViewById<TextView>(R.id.productSpecificationValue)?.text=stringBuilder.toString()
+            view?.findViewById<TextView>(R.id.productSpecificationValue)?.text =
+                stringBuilder.toString()
 
+
+            val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsGalleryView)
+            viewPager?.adapter =
+                GalleryViewAdaptor(uiState.productDetailsResponse.value?.productImages!!)
 
 
         }
