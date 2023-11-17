@@ -58,6 +58,7 @@ class ProductFragment : Fragment() {
         val tabLayout=view.findViewById<TabLayout>(R.id.productTabLayout)
         val adapter= ProductDetailsTabAdaptor(this)
         viewPager.adapter = adapter
+        viewPager.isUserInputEnabled = false
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "PRODUCT"

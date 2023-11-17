@@ -89,10 +89,10 @@ class ProductDetailsFragment : Fragment() {
                 stringBuilder.toString()
 
 
+            logger.info("Product images are: ${uiState.productDetailsResponse.value?.productImages}")
             val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsGalleryView)
             viewPager?.adapter =
                 GalleryViewAdaptor(uiState.productDetailsResponse.value?.productImages!!)
-
 
         }
     }
