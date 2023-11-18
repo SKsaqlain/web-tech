@@ -1,14 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".details.ProductShippingFragment">
+    android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/shippingDetailsSoldByDetailsLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/shippingSplittingHor1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/soldByTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/logoSoldBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/soldbytruck" />
+
+            <TextView
+                android:id="@+id/titleSoldBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sold By"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingStoreNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingStoreNameField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Store Name" />
+
+            <TextView
+                android:id="@+id/shippingStoreNameValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Store ebay URL" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingFeedbackScoreLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingFeedbackScoreField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Feedback Score" />
+
+            <TextView
+                android:id="@+id/shippingFeedbackScoreValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="feedback score" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingPopularityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingPopularityField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Popularity" />
+
+            <TextView
+                android:id="@+id/shippingPopularityValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="popularity icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingFeedbackStarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingFeedbackStarField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Feedback Star" />
+
+            <TextView
+                android:id="@+id/shippingFeedbackStarValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="feedback star" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/shippingSplittingHor1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="shipping_fragment" />
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/shippingInfoTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shippingDetailsSoldByDetailsLayout" />
 
-</FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/shippingInfoTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/shippingSplittingHor2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shippingSplittingHor1">
+
+        <LinearLayout
+            android:id="@+id/shippingInfoTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/logoShippingInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shippinginfo" />
+
+            <TextView
+                android:id="@+id/titleShippingInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipping Info"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingCostLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingCostField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Shipping Cost" />
+
+            <TextView
+                android:id="@+id/shippingCostValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="shipping" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingGlobalShippingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingGlobalShippingField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Global Shipping" />
+
+            <TextView
+                android:id="@+id/shippingGlobalShippingValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="yes/no?" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shippingHandlingTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shippingHandlingTimeField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Handling Time" />
+
+            <TextView
+                android:id="@+id/shippingHandlingTimeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="number" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/shippingSplittingHor2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/shippingReturnPolicyLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shippingInfoTitle" />
+
+    <LinearLayout
+        android:id="@+id/shippingReturnPolicyLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shippingSplittingHor2">
+
+        <LinearLayout
+            android:id="@+id/returnPolicyTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/returnPolicyLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/returnpolicytruck"/>
+
+            <TextView
+                android:id="@+id/returnPolicyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Return Policy"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/returnPolicyPolicyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/returnPolicyPolicyField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Policy" />
+
+            <TextView
+                android:id="@+id/returnPolicyPolicyValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/returnPolicyWithinLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/returnPolicyWithinField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Returns Within" />
+
+            <TextView
+                android:id="@+id/returnPolicyWithinValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/returnPolicyRefundLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/returnPolicyRefundField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Refund Mode" />
+
+            <TextView
+                android:id="@+id/returnPolicyRefundValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/returnPolicyShippingByLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/returnPolicyShippingByField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Shipped By" />
+
+            <TextView
+                android:id="@+id/returnPolicyShippingByValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="value" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
