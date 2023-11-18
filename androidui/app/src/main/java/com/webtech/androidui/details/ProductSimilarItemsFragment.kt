@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +48,22 @@ class ProductSimilarItemsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val spinnerSortMethod: Spinner = view.findViewById(R.id.spinnerSortMethod)
+        val spinnerSortOrder: Spinner = view.findViewById(R.id.spinnerSortOrder)
+
+// Example data for Spinners
+        val sortMethods = arrayOf("Default", "Name", "Price","Days")
+        val sortOrders = arrayOf("Ascending", "Descending")
+
+// Adapters for Spinners
+        val adapterSortMethods = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortMethods)
+        adapterSortMethods.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSortMethod.adapter = adapterSortMethods
+
+        val adapterSortOrders = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOrders)
+        adapterSortOrders.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSortOrder.adapter = adapterSortOrders
+
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val itemId = uiState.productDetails.value?.itemId
         if (itemId != null) {

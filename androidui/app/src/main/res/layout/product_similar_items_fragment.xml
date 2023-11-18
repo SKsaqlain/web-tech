@@ -5,17 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".details.ProductSimilarItemsFragment">
+
+    <!-- First Dropdown (Spinner) -->
+    <Spinner
+        android:id="@+id/spinnerSortMethod"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerSortOrder"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <!-- Second Dropdown (Spinner) -->
+    <Spinner
+        android:id="@+id/spinnerSortOrder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerSortMethod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/similarProductView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSortMethod"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
-<!--    <androidx.viewpager2.widget.ViewPager2-->
-<!--        android:id="@+id/similarProductView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
