@@ -19,10 +19,10 @@ data class FindAllItemResponse(
 data class ShippingDetails(
     val shippingCost: String,
     val shippingLocation: String,
-    val handlingTime: Boolean,
-    val expeditedShipping: Boolean,
-    val oneDayShipping: Boolean,
-    val returnsAccepted: String
+    val handlingTime: String,
+    val expeditedShipping: String,
+    val oneDayShipping: String,
+    val returnsAccepted: String,
 )
 
 data class SellerDetails(
@@ -30,6 +30,6 @@ data class SellerDetails(
     val popularity: String,
     val feedbackRatingStar: String,
     val topRated: String,
-    val storeName: Boolean,
+    val storeName: String,
     val buyProductAt: String
 )
