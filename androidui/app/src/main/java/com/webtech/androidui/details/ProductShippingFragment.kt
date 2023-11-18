@@ -1,6 +1,8 @@
 package com.webtech.androidui.details
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.URLSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,30 +19,52 @@ class ProductShippingFragment : Fragment() {
 
     fun updateShippingFragmentWithValues() {
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        val productDetails=uiState.productDetails.value
-        val productDetailsResponse=uiState.productDetailsResponse.value
-        val shipping=productDetails?.shippingDetails
-        val sellerDetails=productDetails?.sellerDetails
+        val productDetails = uiState.productDetails.value
+        val productDetailsResponse = uiState.productDetailsResponse.value
+        val shipping = productDetails?.shippingDetails
+        val sellerDetails = productDetails?.sellerDetails
         //sold by details
-        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.text= sellerDetails?.storeName.toString()
-        view?.findViewById<TextView>(R.id.shippingFeedbackScoreValue)?.text= sellerDetails?.feedBackScore.toString()
-        view?.findViewById<TextView>(R.id.shippingPopularityValue)?.text= sellerDetails?.popularity.toString()
-        view?.findViewById<TextView>(R.id.shippingFeedbackStarValue)?.text= sellerDetails?.feedbackRatingStar.toString()
+        // Create a SpannableString with the text you want to display
+        val spannableString = SpannableString(sellerDetails?.storeName)
+        val urlSpan = URLSpan(productDetails?.viewItemURL.toString())
+        spannableString.setSpan(
+            urlSpan,
+            0,
+            spannableString.length,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.text = spannableString
+        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.movementMethod =
+            android.text.method.LinkMovementMethod.getInstance()
+        view?.findViewById<TextView>(R.id.shippingFeedbackScoreValue)?.text =
+            sellerDetails?.feedBackScore.toString()
+        view?.findViewById<TextView>(R.id.shippingPopularityValue)?.text =
+            sellerDetails?.popularity.toString()
+        view?.findViewById<TextView>(R.id.shippingFeedbackStarValue)?.text =
+            sellerDetails?.feedbackRatingStar.toString()
 
         //shipping info
-        view?.findViewById<TextView>(R.id.shippingCostValue)?.text= shipping?.shippingCost.toString()
-        view?.findViewById<TextView>(R.id.shippingGlobalShippingValue)?.text= shipping?.shippingLocation.toString()
-        view?.findViewById<TextView>(R.id.shippingHandlingTimeValue)?.text= shipping?.handlingTime.toString()
+        view?.findViewById<TextView>(R.id.shippingCostValue)?.text =
+            shipping?.shippingCost.toString()
+        view?.findViewById<TextView>(R.id.shippingGlobalShippingValue)?.text =
+            shipping?.shippingLocation.toString()
+        view?.findViewById<TextView>(R.id.shippingHandlingTimeValue)?.text =
+            shipping?.handlingTime.toString()
 
 
         //return policy
-        view?.findViewById<TextView>(R.id.returnPolicyPolicyValue)?.text= productDetailsResponse?.returnPolicy?.policy.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyWithinValue)?.text= productDetailsResponse?.returnPolicy?.returnsWithin.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyRefundValue)?.text= productDetailsResponse?.returnPolicy?.refundMode.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyShippingByValue)?.text= productDetailsResponse?.returnPolicy?.shippingCostPaidBy.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyPolicyValue)?.text =
+            productDetailsResponse?.returnPolicy?.policy.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyWithinValue)?.text =
+            productDetailsResponse?.returnPolicy?.returnsWithin.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyRefundValue)?.text =
+            productDetailsResponse?.returnPolicy?.refundMode.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyShippingByValue)?.text =
+            productDetailsResponse?.returnPolicy?.shippingCostPaidBy.toString()
 
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
