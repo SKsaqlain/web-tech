@@ -1,15 +1,24 @@
 package com.webtech.androidui.details
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableString
 import android.text.style.URLSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.webtech.androidui.R
+import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.model.SellerDetails
+import com.webtech.androidui.model.ShippingDetails
+import com.webtech.androidui.model.finditemdetails.ProductDetailsResponse
 import com.webtech.androidui.state.UIState
 
 class ProductShippingFragment : Fragment() {
@@ -17,14 +26,12 @@ class ProductShippingFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    fun updateShippingFragmentWithValues() {
-        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        val productDetails = uiState.productDetails.value
-        val productDetailsResponse = uiState.productDetailsResponse.value
-        val shipping = productDetails?.shippingDetails
-        val sellerDetails = productDetails?.sellerDetails
-        //sold by details
-        // Create a SpannableString with the text you want to display
+    fun addLinkProperty(
+        productDetails: FindAllItemResponse?,
+        productDetailsResponse: ProductDetailsResponse?,
+        sellerDetails: SellerDetails?,
+        shipping: ShippingDetails?
+    ) {
         val spannableString = SpannableString(sellerDetails?.storeName)
         val urlSpan = URLSpan(productDetails?.viewItemURL.toString())
         spannableString.setSpan(
@@ -34,12 +41,61 @@ class ProductShippingFragment : Fragment() {
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.text = spannableString
+
         view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.movementMethod =
             android.text.method.LinkMovementMethod.getInstance()
+    }
+//    fun addScrollPropertyOnStoreName(){
+//
+//        val scrollView = view?.findViewById<HorizontalScrollView>(R.id.shippingStoreNameValueScroll)
+//        val autoScroller= AutoScroller(scrollView!!)
+//        var scrollHandler = Handler(Looper.getMainLooper())
+//        val scrollRunnable = object : Runnable {
+//            override fun run() {
+//                scrollView?.smoothScrollBy(1, 0) // Scroll right by 1 pixel
+//                scrollHandler.postDelayed(this, 10) // Repeat every 10 milliseconds
+//            }
+//        }
+//
+//        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.setOnHoverListener { v, event ->
+//            when (event.action) {
+//                MotionEvent.ACTION_HOVER_ENTER -> {
+//                    // Start auto-scrolling
+//                    autoScroller.startAutoScrolling()
+//                    true
+//                }
+//                MotionEvent.ACTION_HOVER_EXIT -> {
+//                    // Stop auto-scrolling
+//                    autoScroller.stopAutoScrolling()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//    }
+
+    // TODO: fix horizontal scroll
+
+    fun updateShippingFragmentWithValues() {
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val productDetails = uiState.productDetails.value
+        val productDetailsResponse = uiState.productDetailsResponse.value
+        val shipping = productDetails?.shippingDetails
+        val sellerDetails = productDetails?.sellerDetails
+        //sold by details
+
+        addLinkProperty(productDetails, productDetailsResponse, sellerDetails, shipping)
+//        addScrollPropertyOnStoreName()
+
         view?.findViewById<TextView>(R.id.shippingFeedbackScoreValue)?.text =
             sellerDetails?.feedBackScore.toString()
+
+        view?.findViewById<ProgressBar>(R.id.shippingPopularityProgressBar)?.progress =
+            sellerDetails?.popularity?.toFloat()?.toInt() ?: 0
         view?.findViewById<TextView>(R.id.shippingPopularityValue)?.text =
-            sellerDetails?.popularity.toString()
+            sellerDetails?.popularity.toString()+"%"
+
+
         view?.findViewById<TextView>(R.id.shippingFeedbackStarValue)?.text =
             sellerDetails?.feedbackRatingStar.toString()
 

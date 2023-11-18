@@ -19,5 +19,7 @@
     <color name="selectedTabColor">@color/white</color>
     <color name="unselectedTabColor">#e8b5b5</color>
 
+<!--    circular bar color-->
+    <color name="circularBarRed">#FF0000</color>
 
 </resources>

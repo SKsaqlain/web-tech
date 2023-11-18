@@ -49,12 +49,22 @@
                 android:layout_weight="1"
                 android:text="Store Name" />
 
+            <HorizontalScrollView
+                android:id="@+id/shippingStoreNameValueScroll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
             <TextView
                 android:id="@+id/shippingStoreNameValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:text="Store ebay URL" />
+            </HorizontalScrollView>
         </LinearLayout>
 
         <LinearLayout
@@ -91,12 +101,40 @@
                 android:layout_weight="1"
                 android:text="Popularity" />
 
-            <TextView
-                android:id="@+id/shippingPopularityValue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="popularity icon" />
+            <RelativeLayout
+                android:id="@+id/progress_layout"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <!--progress bar implementation-->
+                <ProgressBar
+                    android:id="@+id/shippingPopularityProgressBar"
+                    style="@style/CircularDeterminateProgressBar"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:progress="60" />
+
+                <!--Text implementation in center of the progress bar-->
+                <TextView
+                    android:id="@+id/shippingPopularityValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="---"
+                    android:textSize="10dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+
         </LinearLayout>
 
         <LinearLayout
