@@ -1,5 +1,7 @@
 package com.webtech.androidui.details
 
+import android.graphics.Color
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +25,22 @@ import com.webtech.androidui.model.finditemdetails.ProductDetailsResponse
 import com.webtech.androidui.state.UIState
 
 class ProductShippingFragment : Fragment() {
+    private val colorHexValues = mapOf(
+        "None" to "#000000", // Black
+        "Yellow" to "#FFFF00",
+        "Blue" to "#0000FF",
+        "Turquoise" to "#40E0D0",
+        "Purple" to "#800080",
+        "Red" to "#FF0000",
+        "Green" to "#008000",
+        "YellowShooting" to "#FFD700",
+        "TurquoiseShooting" to "#00BFFF",
+        "PurpleShooting" to "#A020F0",
+        "RedShooting" to "#DC143C",
+        "GreenShooting" to "#008000",
+        "SilverShooting" to "#C0C0C0" // Silver
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -96,8 +115,8 @@ class ProductShippingFragment : Fragment() {
             sellerDetails?.popularity.toString()+"%"
 
 
-        view?.findViewById<TextView>(R.id.shippingFeedbackStarValue)?.text =
-            sellerDetails?.feedbackRatingStar.toString()
+        view?.findViewById<ImageView>(R.id.shippingFeedbackStarImg)?.setColorFilter(Color.parseColor(colorHexValues.get(sellerDetails?.feedbackRatingStar.toString())))
+
 
         //shipping info
         view?.findViewById<TextView>(R.id.shippingCostValue)?.text =
