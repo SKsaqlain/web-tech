@@ -260,14 +260,12 @@
                 android:id="@+id/returnPolicyLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/returnpolicytruck"/>
+                android:src="@drawable/returnpolicytruck" />
 
             <TextView
                 android:id="@+id/returnPolicyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Return Policy"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
