@@ -66,7 +66,7 @@ class ProductPhotosFragment : Fragment() {
             val image7 = view.findViewById<ImageView>(R.id.googlePhoto7)
             val image8 = view.findViewById<ImageView>(R.id.googlePhoto8)
             val images = listOf(image1, image2, image3, image4, image5, image6, image7, image8)
-            if (it.items.size == 0) {
+            if (it.items!=null && it.items.size == 0) {
                 return@observe
             }
             for (i in 0..7) {

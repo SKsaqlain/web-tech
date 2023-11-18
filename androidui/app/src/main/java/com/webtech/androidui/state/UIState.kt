@@ -3,6 +3,7 @@ package com.webtech.androidui.state
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.model.SimilarProductResponse
 import com.webtech.androidui.model.finditemdetails.ProductDetailsResponse
 import com.webtech.androidui.model.google.GoogleImageResponse
 
@@ -49,6 +50,13 @@ class UIState: ViewModel() {
     val googleImagesResponse=MutableLiveData<GoogleImageResponse>()
     fun setGoogleImagesResponse(googleImagesResponse: GoogleImageResponse) {
         this.googleImagesResponse.value = googleImagesResponse
+    }
+
+
+    //similar products state
+    val similarProductsResponse=MutableLiveData<List<SimilarProductResponse>>()
+    fun setSimilarProductsResponse(similarProductsResponse: List<SimilarProductResponse>) {
+        this.similarProductsResponse.value = similarProductsResponse
     }
 
 

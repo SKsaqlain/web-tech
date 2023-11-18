@@ -90,4 +90,31 @@ class EbayService {
         requestQueue.add(stringRequest)
     }
 
+    fun findSimilarItems(
+        view:View,
+        itemId:String,
+        updateSimilarItemsResponseState: (response:String)->Unit
+    ){
+        val trackingId = UUID.randomUUID().toString()
+        logger.info("Making backend Find Similar Items API call with $trackingId and itemId $itemId")
+
+        val url =
+            "${URL.BackendUrl.url}/ebay/getSimilarItems?trackingId=$trackingId&itemId=$itemId"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            { response ->
+                logger.info("Find Similar Items Response with trackingId $trackingId is: $response")
+                updateSimilarItemsResponseState(response)
+
+            },
+            { error ->
+                logger.error("Error occurred with trackingId $trackingId: ${error.message}")
+            }
+        )
+
+        val requestQueue = Volley.newRequestQueue(view.context)
+        requestQueue.add(stringRequest)
+    }
+
 }
