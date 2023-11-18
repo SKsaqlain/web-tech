@@ -34,10 +34,10 @@ class ProductShippingFragment : Fragment() {
 
 
         //return policy
-        view?.findViewById<TextView>(R.id.returnPolicyPolicyValue)?.text= productDetailsResponse?.returnPolicy.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyWithinValue)?.text= shipping?.returnsAccepted.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyRefundValue)?.text= shipping?.returnsAccepted.toString()
-        view?.findViewById<TextView>(R.id.returnPolicyShippingByValue)?.text= shipping?.returnsAccepted.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyPolicyValue)?.text= productDetailsResponse?.returnPolicy?.policy.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyWithinValue)?.text= productDetailsResponse?.returnPolicy?.returnsWithin.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyRefundValue)?.text= productDetailsResponse?.returnPolicy?.refundMode.toString()
+        view?.findViewById<TextView>(R.id.returnPolicyShippingByValue)?.text= productDetailsResponse?.returnPolicy?.shippingCostPaidBy.toString()
 
 
     }

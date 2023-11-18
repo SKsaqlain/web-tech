@@ -220,7 +220,7 @@ function parseFindItemResponse(data, trackingId) {
         'productImages': null,
         'price': null,
         'location': null,
-        'returnPolicy': null,
+        'returnPolicy': {},
         itemSpecifics: [],
     };
     if (data.Item.PictureURL && data.Item.PictureURL.length > 0) {
@@ -233,11 +233,13 @@ function parseFindItemResponse(data, trackingId) {
         itemData.location = data.Item.Location;
     }
     if (data.Item.ReturnPolicy) {
-        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted;
+        itemData.returnPolicy.policy= data.Item.ReturnPolicy.ReturnsAccepted;
+        itemData.returnPolicy.refundMode = data.Item.ReturnPolicy.Refund;
+        itemData.returnPolicy.returnsWithin = data.Item.ReturnPolicy.ReturnsWithin;
+        itemData.returnPolicy.shippingCostPaidBy = data.Item.ReturnPolicy.ShippingCostPaidBy;
     }
-    if (data.Item.ReturnPolicy && data.Item.ReturnPolicy.ReturnsAccepted && data.Item.ReturnPolicy.ReturnsWithin) {
-        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted + " within " + data.Item.ReturnPolicy.ReturnsWithin;
-    }
+    logger.info(`Parsed return policy ${itemData.returnPolicy}`, {trackingId})
+
     if(data.Item.viewItemURLForNaturalSearch){
         itemData.viewItemURL = data.Item.viewItemURLForNaturalSearch;
     }
