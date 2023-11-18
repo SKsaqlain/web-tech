@@ -122,7 +122,7 @@ class ProductShippingFragment : Fragment() {
         view?.findViewById<TextView>(R.id.shippingCostValue)?.text =
             shipping?.shippingCost.toString()
         view?.findViewById<TextView>(R.id.shippingGlobalShippingValue)?.text =
-            shipping?.shippingLocation.toString()
+            if(shipping?.shippingLocation.toString()=="Worldwide")  "Yes" else "No"
         view?.findViewById<TextView>(R.id.shippingHandlingTimeValue)?.text =
             shipping?.handlingTime.toString()
 

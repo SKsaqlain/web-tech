@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.webtech.androidui.model.FindAllItemResponse
 import com.webtech.androidui.model.finditemdetails.ProductDetailsResponse
+import com.webtech.androidui.model.google.GoogleImageResponse
 
 class UIState: ViewModel() {
     //form state
@@ -41,6 +42,13 @@ class UIState: ViewModel() {
     }
     fun setProductDetailsResponse(productDetailsResponse: ProductDetailsResponse) {
         this.productDetailsResponse.value = productDetailsResponse
+    }
+
+
+    //google images state
+    val googleImagesResponse=MutableLiveData<GoogleImageResponse>()
+    fun setGoogleImagesResponse(googleImagesResponse: GoogleImageResponse) {
+        this.googleImagesResponse.value = googleImagesResponse
     }
 
 
