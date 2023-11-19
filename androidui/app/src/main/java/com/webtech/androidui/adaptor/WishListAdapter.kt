@@ -62,16 +62,10 @@ class WishListAdapter(
             else -> text // If there are already two or more, do nothing
         }
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val wishList = wishListItems[position]
         var truncatedTitle: String=adjustTextToThreeLines(wishList.title)
-//        if (wishList.title.length > 30) {
-//            truncatedTitle = wishList.title.substring(0, 30) + "..."
-//        }
-//        else{
-//            truncatedTitle = truncatedTitle+"\n"
-//        }
-
 
 
         holder.itemTitle.text = truncatedTitle

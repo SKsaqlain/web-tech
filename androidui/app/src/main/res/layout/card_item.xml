@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><!-- XML implementation of Card Layout -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- XML implementation of Card Layout -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
-    >
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -29,81 +29,89 @@
                 android:id="@+id/productTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textColor="@color/cardTitleClr"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textAlignment="center"
+                android:ellipsize="end"
                 android:maxLines="2"
                 android:minLines="2"
-                android:ellipsize="end"/>
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textColor="@color/cardTitleClr"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/zipcode"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/cardTitleClr"
-                        android:textSize="18dp"
-                        android:text="@string/cardItemZipCode" />
+                        android:layout_weight="2"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/condition"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/cardTitleClr"
-                        android:textSize="18dp"
-                        android:text="@string/cardItemCondition" />
+                        <TextView
+                            android:id="@+id/zipcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cardItemZipCode"
+                            android:textColor="@color/cardTitleClr"
+                            android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/shipping"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/cardTitleClr"
-                        android:textSize="18dp"
-                        android:paddingTop="10dp"
-                        android:text="@string/cardItemShipping" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/shipping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cardItemShipping"
+                            android:textColor="@color/cardTitleClr"
+                            android:textSize="18sp" />
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/cartIcon"
-                        android:layout_width="25dp"
+                        android:layout_width="0dp"
                         android:layout_height="25dp"
-                        android:baselineAlignBottom="false"
-                        android:layout_gravity="end"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:src="@drawable/cart_icon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/condition"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingTop="10dp"
+                        android:text="@string/cardItemCondition"
+                        android:textColor="@color/cardTitleClr"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/price"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:gravity="bottom|end"
-                        android:paddingTop="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
                         android:text="@string/cardItemPrice"
                         android:textAlignment="textEnd"
+                        
                         android:textColor="@color/progressBarTxtClr"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
-
