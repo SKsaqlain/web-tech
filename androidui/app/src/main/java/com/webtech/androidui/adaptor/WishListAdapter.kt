@@ -70,7 +70,14 @@ class WishListAdapter(
 
         holder.itemTitle.text = truncatedTitle
         holder.zipCode.text = "Zip:"+wishList.zip
-        holder.condition.text = wishList.condition
+        val conditionParts = wishList.condition.split("-")
+        if (conditionParts.isNotEmpty()) {
+            holder.condition.text = conditionParts[0].trim() // Trim to remove any leading or trailing spaces
+        } else {
+            holder.condition.text = wishList.condition // Fallback to the original string if split fails
+        }
+//        holder.condition.text = wishList.condition
+
         holder.shipping.text = wishList.shipping
         holder.price.text = wishList.price
         val imageUrl = wishList.image

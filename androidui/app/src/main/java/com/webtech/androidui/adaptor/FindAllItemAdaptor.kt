@@ -83,7 +83,13 @@ class FindAllItemAdaptor: BaseAdapter {
 
         title.text = truncatedTitle
         zipcode.text = "Zip:"+item.zip
-        condition.text = item.condition
+//        condition.text = item.condition
+        val conditionParts = item.condition.split("-")
+        if (conditionParts.isNotEmpty()) {
+            condition.text= conditionParts[0].trim() // Trim to remove any leading or trailing spaces
+        } else {
+            condition.text = item.condition // Fallback to the original string if split fails
+        }
         shipping.text = item.shipping
         price.text = item.price
 
