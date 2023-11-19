@@ -8,10 +8,12 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.webtech.androidui.R
 import com.webtech.androidui.adaptor.FindAllItemAdaptor
+import com.webtech.androidui.adaptor.WishListAdapter
 import com.webtech.androidui.model.FindAllItemResponse
 import com.webtech.androidui.services.mongodb.MongoDbService
 import com.webtech.androidui.state.UIState
@@ -38,7 +40,6 @@ class WishlistFragment : Fragment() {
 
     private fun updateWishListState(response: String) {
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        val wishList = uiState.wishListResponse.value
         val type=object : TypeToken<List<FindAllItemResponse>>() {}.type
         val wishListResponse: List<FindAllItemResponse> = Gson().fromJson(response, type)
         uiState.setWishListResponse(wishListResponse)
@@ -47,7 +48,7 @@ class WishlistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         mongoDbService.getAllWishListItems(view,::updateWishListState)
-        val gridView: GridView = view.findViewById(R.id.wishListGridView)
+        val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
 
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
             if (response == null) {
@@ -61,8 +62,11 @@ class WishlistFragment : Fragment() {
             }
             logger.info("Items found")
 
-            val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
-            gridView.adapter = adapter
+//            val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
+//            gridView.adapter = adapter
+            val wishListAdapter = WishListAdapter(response)
+            recycleView.layoutManager  = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
+            recycleView.adapter = wishListAdapter
 
         }
     }
