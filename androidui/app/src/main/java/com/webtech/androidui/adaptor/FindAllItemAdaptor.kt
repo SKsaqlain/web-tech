@@ -49,6 +49,14 @@ class FindAllItemAdaptor: BaseAdapter {
         return position.toLong()
     }
 
+    private fun adjustTextToThreeLines(text: String): String {
+        val newline = "\n"
+        return when (text.count { it == '\n' }) {
+            0 -> text + newline.repeat(1) // Add two newlines if no newline exists
+            else -> text // If there are already two or more, do nothing
+        }
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val item=this.findAllItemResponse[position]
         var inflator= context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -66,13 +74,15 @@ class FindAllItemAdaptor: BaseAdapter {
         if(item.image!=null)
             Picasso.get().load(item.image).into(itemImage)
 
-        var truncatedTitle: String=item.title
-        if (item.title.length > 30) {
-            truncatedTitle = item.title.substring(0, 30) + "..."
-        }
+        var truncatedTitle: String=adjustTextToThreeLines(item.title)
+//        if (item.title.length > 30) {
+//            truncatedTitle = item.title.substring(0, 30) + "..."
+//        }else{
+//            truncatedTitle = item.title+"\n"
+//        }
 
         title.text = truncatedTitle
-        zipcode.text = item.zip
+        zipcode.text = "Zip:"+item.zip
         condition.text = item.condition
         shipping.text = item.shipping
         price.text = item.price

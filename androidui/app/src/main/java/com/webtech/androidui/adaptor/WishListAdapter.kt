@@ -54,14 +54,28 @@ class WishListAdapter(
         return wishListItems.size
     }
 
+    // Function to adjust text to occupy exactly three lines
+    private fun adjustTextToThreeLines(text: String): String {
+        val newline = "\n"
+        return when (text.count { it == '\n' }) {
+            0 -> text + newline.repeat(1) // Add two newlines if no newline exists
+            else -> text // If there are already two or more, do nothing
+        }
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val wishList = wishListItems[position]
-        var truncatedTitle: String=wishList.title
-        if (wishList.title.length > 30) {
-            truncatedTitle = wishList.title.substring(0, 30) + "..."
-        }
+        var truncatedTitle: String=adjustTextToThreeLines(wishList.title)
+//        if (wishList.title.length > 30) {
+//            truncatedTitle = wishList.title.substring(0, 30) + "..."
+//        }
+//        else{
+//            truncatedTitle = truncatedTitle+"\n"
+//        }
+
+
+
         holder.itemTitle.text = truncatedTitle
-        holder.zipCode.text = wishList.zip
+        holder.zipCode.text = "Zip:"+wishList.zip
         holder.condition.text = wishList.condition
         holder.shipping.text = wishList.shipping
         holder.price.text = wishList.price
