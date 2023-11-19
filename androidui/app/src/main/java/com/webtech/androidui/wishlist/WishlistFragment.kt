@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory
 class WishlistFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(WishlistFragment::class.java)
     private val mongoDbService = MongoDbService()
+    private var view:View?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,23 +32,32 @@ class WishlistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(
+        view =inflater.inflate(
             R.layout.wishlist_fragment,
             container,
             false
         )
+        return view
     }
 
     private fun updateWishListState(response: String) {
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        val type=object : TypeToken<List<FindAllItemResponse>>() {}.type
+        val type = object : TypeToken<List<FindAllItemResponse>>() {}.type
         val wishListResponse: List<FindAllItemResponse> = Gson().fromJson(response, type)
         uiState.setWishListResponse(wishListResponse)
+        uiState.wishListResponse.postValue(wishListResponse)
+
+//        val recycleView: RecyclerView? = view?.findViewById(R.id.wishListRecycleView)
+//        val wishListAdapter = WishListAdapter(wishListResponse,uiState)
+//        recycleView?.layoutManager  = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
+//        recycleView.adapter = wishListAdapter
+
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        mongoDbService.getAllWishListItems(view,::updateWishListState)
+//        mongoDbService.getAllWishListItems(view, ::updateWishListState)
         val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
 
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
@@ -64,11 +74,22 @@ class WishlistFragment : Fragment() {
 
 //            val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
 //            gridView.adapter = adapter
-            val wishListAdapter = WishListAdapter(response)
-            recycleView.layoutManager  = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
+            val wishListAdapter = WishListAdapter(response, uiState)
+            recycleView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+                requireContext(),
+                2,
+                androidx.recyclerview.widget.GridLayoutManager.VERTICAL,
+                false
+            )
             recycleView.adapter = wishListAdapter
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
+
     }
 
 }

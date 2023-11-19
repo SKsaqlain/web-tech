@@ -9,13 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.webtech.androidui.R
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.services.mongodb.MongoDbService
+import com.webtech.androidui.state.UIState
 import com.webtech.androidui.wishlist.WishlistFragment
 import org.slf4j.LoggerFactory
 import org.w3c.dom.Text
 
-class WishListAdapter(private val wishListItems: List<FindAllItemResponse>) :
+class WishListAdapter(
+    private val wishListItems: List<FindAllItemResponse>,
+    private val uiState: UIState
+) :
     RecyclerView.Adapter<WishListAdapter.ViewHolder>() {
     private val logger = LoggerFactory.getLogger(WishListAdapter::class.java)
+    private val mongoDbService = MongoDbService()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView
@@ -49,7 +55,7 @@ class WishListAdapter(private val wishListItems: List<FindAllItemResponse>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-     val wishList= wishListItems[position]
+        val wishList = wishListItems[position]
         holder.itemTitle.text = wishList.title
         holder.zipCode.text = wishList.zip
         holder.condition.text = wishList.condition
@@ -59,6 +65,23 @@ class WishListAdapter(private val wishListItems: List<FindAllItemResponse>) :
         Glide.with(holder.imageView.context)
             .load(imageUrl)
             .into(holder.imageView)
+
+        holder.cartIcon.setOnClickListener {
+            logger.info("Remove from wish list clicked on wishlist for itemId ${wishList.itemId}")
+            val itemResponse = uiState.findAllItemResponse.value
+            for (item in itemResponse!!) {
+                if (item.itemId == wishList.itemId) {
+                    item.isWishListed = false
+                    break
+                }
+            }
+            uiState.findAllItemResponse.postValue(itemResponse)
+            val filteredWishlist = wishListItems.filter { item -> item.itemId != wishList.itemId }
+            uiState.wishListResponse.postValue(filteredWishlist)
+            mongoDbService.removeFromWishList(holder.cartIcon, wishList.itemId)
+
+
+        }
 
     }
 }

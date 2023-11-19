@@ -4,13 +4,29 @@ import TabAdaptor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.services.mongodb.MongoDbService
+import com.webtech.androidui.state.UIState
+import org.slf4j.LoggerFactory
 
 
 class MainActivity : AppCompatActivity() {
+    private val logger= LoggerFactory.getLogger(MainActivity::class.java)
+    private val mongoDbService = MongoDbService()
 
+    private fun updateWishListState(response: String) {
+        val gson= Gson()
+        val type=object : TypeToken<List<FindAllItemResponse>>() {}.type
+        val wishListResponse: List<FindAllItemResponse> = gson.fromJson(response, type)
+        val uiState: UIState = ViewModelProvider(this).get(UIState::class.java)
+        uiState.wishListResponse.postValue(wishListResponse)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Thread.sleep(1000)
@@ -29,35 +45,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.attach()
 
-
-
-//        if (findViewById<FragmentContainerView>(R.id.productSearchFragment) != null) {
-//            if (savedInstanceState == null) {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.productSearchFragment, ProductSearchFragment())
-//                    .commit()
-//            }
-//        }
     }
-
-
-//    override fun passDataCom(editTextInput: String) {
-//        val bundle = Bundle()
-//        bundle.putString("message", editTextInput)
-//        val transaction = this.supportFragmentManager.beginTransaction()
-//        val frag2 = AllItemsFragment()
-//        frag2.arguments = bundle
-//        transaction.replace(R.id.productSearchFragment, frag2)
-//        transaction.commit()
-//    }
-
-//    override fun transferAllItemResponse(findAllItemResponse: String) {
-//        uiState.findAllItemResponse = findAllItemResponse
-//        val transaction = this.supportFragmentManager.beginTransaction()
-//        val frag2 = AllItemsFragment()
-//        transaction.replace(R.id.productSearchFragment, frag2)
-//        transaction.commit()
-//    }
 
 
 }
