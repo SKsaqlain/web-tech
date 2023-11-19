@@ -97,6 +97,7 @@ class WishListAdapter(
             }
             uiState.findAllItemResponse.postValue(itemResponse)
             val filteredWishlist = wishListItems.filter { item -> item.itemId != wishList.itemId }
+            uiState.setWishListResponse(filteredWishlist)
             uiState.wishListResponse.postValue(filteredWishlist)
             mongoDbService.removeFromWishList(holder.cartIcon, wishList.itemId)
 

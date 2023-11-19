@@ -9,10 +9,11 @@
     android:clickable="true">
 
     <RelativeLayout
-        tools:context=".MainActivity"
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:context=".MainActivity">
 
 
         <RelativeLayout
@@ -46,20 +47,44 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/productTabLayout"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:background="@color/launcherBackgroundClr" />
+            android:background="@color/launcherBackgroundClr"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/white" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/productDetailsPager"
             android:layout_width="match_parent"
             android:layout_height="632dp"
             android:layout_below="@+id/productTabLayout" />
-
-
     </RelativeLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/roundCardView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="290dp"
+        android:layout_marginTop="650dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/floatingWishListColor"
+        android:elevation="0dp"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/cart_icon" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

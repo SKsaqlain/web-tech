@@ -18,6 +18,7 @@
 <!--    product-->
     <color name="selectedTabColor">@color/white</color>
     <color name="unselectedTabColor">#e8b5b5</color>
+    <color name="floatingWishListColor">#d45617</color>
 
 <!--    circular bar color-->
     <color name="circularBarRed">#FF0000</color>
