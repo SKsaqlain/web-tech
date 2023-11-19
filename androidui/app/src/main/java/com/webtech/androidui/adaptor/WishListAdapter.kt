@@ -58,8 +58,8 @@ class WishListAdapter(
     private fun adjustTextToThreeLines(text: String): String {
         val newline = "\n"
         return when (text.count { it == '\n' }) {
-            0 -> text + newline.repeat(1) // Add two newlines if no newline exists
-            else -> text // If there are already two or more, do nothing
+            0 -> text + newline.repeat(1)
+            else -> text
         }
     }
 
@@ -76,7 +76,6 @@ class WishListAdapter(
         } else {
             holder.condition.text = wishList.condition // Fallback to the original string if split fails
         }
-//        holder.condition.text = wishList.condition
 
         holder.shipping.text = wishList.shipping
         holder.price.text = wishList.price

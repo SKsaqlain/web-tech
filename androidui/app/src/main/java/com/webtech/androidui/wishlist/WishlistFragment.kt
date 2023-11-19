@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -61,7 +62,6 @@ class WishlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-//        mongoDbService.getAllWishListItems(view, ::updateWishListState)
         val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
 
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
@@ -76,8 +76,6 @@ class WishlistFragment : Fragment() {
             }
             logger.info("Items found")
 
-//            val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
-//            gridView.adapter = adapter
             val wishListAdapter = WishListAdapter(response, uiState)
             recycleView.layoutManager = GridLayoutManager(
                 requireContext(),
@@ -98,11 +96,14 @@ class WishlistFragment : Fragment() {
             }
             val totalPriceTextView: TextView =view.findViewById(R.id.wishlistTotal)
             totalPriceTextView.text="$${totalPrice}"
+            view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility=View.VISIBLE
         }
+
     }
 
     override fun onResume() {
         super.onResume()
+        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility=View.INVISIBLE
         view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
 
     }

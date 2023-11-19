@@ -52,8 +52,8 @@ class FindAllItemAdaptor: BaseAdapter {
     private fun adjustTextToThreeLines(text: String): String {
         val newline = "\n"
         return when (text.count { it == '\n' }) {
-            0 -> text + newline.repeat(1) // Add two newlines if no newline exists
-            else -> text // If there are already two or more, do nothing
+            0 -> text + newline.repeat(1)
+            else -> text
         }
     }
 
@@ -70,25 +70,20 @@ class FindAllItemAdaptor: BaseAdapter {
         val cartIcon =  cardItemView.findViewById<ImageView>(R.id.cartIcon)
         val price = cardItemView.findViewById<TextView>(R.id.price)
 
-        // Set values based on the item
+
         if(item.image!=null)
             Picasso.get().load(item.image).into(itemImage)
 
         var truncatedTitle: String=adjustTextToThreeLines(item.title)
-//        if (item.title.length > 30) {
-//            truncatedTitle = item.title.substring(0, 30) + "..."
-//        }else{
-//            truncatedTitle = item.title+"\n"
-//        }
+
 
         title.text = truncatedTitle
         zipcode.text = "Zip:"+item.zip
-//        condition.text = item.condition
         val conditionParts = item.condition.split("-")
         if (conditionParts.isNotEmpty()) {
-            condition.text= conditionParts[0].trim() // Trim to remove any leading or trailing spaces
+            condition.text= conditionParts[0].trim()
         } else {
-            condition.text = item.condition // Fallback to the original string if split fails
+            condition.text = item.condition
         }
         shipping.text = item.shipping
         price.text = item.price
