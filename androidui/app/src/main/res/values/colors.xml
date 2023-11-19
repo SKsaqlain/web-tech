@@ -22,4 +22,8 @@
 <!--    circular bar color-->
     <color name="circularBarRed">#FF0000</color>
 
+<!--    similar items dropdown -->
+    <color name="similarItemsDropdownClr">#fafafa</color>
+    <color name="similarItemsDropdownTxtClr">#000000</color>
+
 </resources>
