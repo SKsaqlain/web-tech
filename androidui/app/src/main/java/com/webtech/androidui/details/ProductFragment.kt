@@ -14,13 +14,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import com.webtech.androidui.R
+import com.webtech.androidui.services.mongodb.MongoDbService
 import com.webtech.androidui.state.UIState
 import com.webtech.androidui.tabs.ProductDetailsTabAdaptor
 import org.slf4j.LoggerFactory
 
 class ProductFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductFragment::class.java)
+    private val mongoDbService = MongoDbService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,5 +118,46 @@ class ProductFragment : Fragment() {
             productTitle.text=trimTitle(title)
         else
             productTitle.text="Product Title"
+
+
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val wishListBtn=view.findViewById<ImageView>(R.id.productDetailsWishListBtn)
+        if(uiState.productDetails.value?.isWishListed==true){
+            wishListBtn.setImageResource(R.drawable.cart_remove_icon)
+        }else{
+            wishListBtn.setImageResource(R.drawable.cart_icon)
+        }
+        wishListBtn.setOnClickListener(){
+            logger.info("WishList button clicked on product details fragment")
+            val itemId=uiState.productDetailsItemId.value
+            val item=uiState.productDetails.value
+            if(uiState.productDetails.value?.isWishListed==true){
+                if(itemId!=null && item!=null){
+                    item.isWishListed=false
+                    mongoDbService.removeFromWishList(view,itemId)
+                    logger.info("Item removed from wishList with itemId: $itemId")
+                }
+                updateWishListState(uiState,itemId!!,false)
+                wishListBtn.setImageResource(R.drawable.cart_icon)
+            }else{
+                if(itemId!=null && item!=null){
+                    item.isWishListed=true
+                    val gson= Gson()
+                    val payload:String =gson.toJson(item)
+                    mongoDbService.addToWishList(view,payload)
+                    logger.info("Item added to wishList with itemId: $itemId")
+                }
+                updateWishListState(uiState,itemId!!,true)
+                wishListBtn.setImageResource(R.drawable.cart_remove_icon)
+            }
+            uiState.setProductDetails(item!!)
+        }
+
+    }
+
+    private fun updateWishListState(uiState: UIState, itemId: String,wishListState:Boolean) {
+        val findAllItemResponse = uiState.findAllItemResponse.value
+        val itemDetails = findAllItemResponse?.map { item -> if (item.itemId == itemId) item.copy(isWishListed = wishListState) else item }
+        uiState.findAllItemResponse.postValue(itemDetails!!)
     }
 }

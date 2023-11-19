@@ -81,6 +81,7 @@
         app:layout_constraintTop_toTopOf="@+id/relativeLayout">
 
         <ImageView
+            android:id="@+id/productDetailsWishListBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

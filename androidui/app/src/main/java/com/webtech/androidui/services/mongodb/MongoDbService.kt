@@ -29,7 +29,7 @@ class MongoDbService {
 
     fun removeFromWishList(view: View, itemId:String) {
         val trackingId = UUID.randomUUID().toString()
-        logger.info("Making backend Delete from Wish List API call with $trackingId")
+        logger.info("Making backend Delete from Wish List API call with $trackingId for itemId $itemId")
         val url = "${URL.BackendUrl.url}/mongodb/deleteDoc?itemId=$itemId&trackingId=$trackingId"
 
         val stringRequest = StringRequest(
