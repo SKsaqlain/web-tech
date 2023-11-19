@@ -59,10 +59,8 @@ class ProductSimilarItemsFragment : Fragment() {
                 "Days" -> compareValuesBy(o1, o2, { it.daysLeft.toInt() })
                 else -> 0
             }
-        })
-
-        if (sortOrder == "Descending") {
-            sortedList?.reversed()
+        })?.let { list ->
+            if (sortOrder == "Descending") list.reversed() else list
         }
 
         uiState.similarProductsResponse.postValue(sortedList)
@@ -91,6 +89,7 @@ class ProductSimilarItemsFragment : Fragment() {
 
         spinnerSortMethod.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                logger.info("Sort Method Selected: ${spinnerSortMethod.selectedItem}")
                 sortData(spinnerSortMethod, spinnerSortOrder)
             }
 
@@ -99,6 +98,7 @@ class ProductSimilarItemsFragment : Fragment() {
 
         spinnerSortOrder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                logger.info("Sort Order Selected: ${spinnerSortOrder.selectedItem}")
                 sortData(spinnerSortMethod, spinnerSortOrder)
             }
 
