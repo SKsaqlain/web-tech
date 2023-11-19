@@ -60,4 +60,11 @@ class UIState: ViewModel() {
     }
 
 
+    //wishList state
+    val wishListResponse=MutableLiveData<List<FindAllItemResponse>>()
+    fun setWishListResponse(wishListResponse: List<FindAllItemResponse>) {
+        this.wishListResponse.value = wishListResponse
+    }
+
+
 }

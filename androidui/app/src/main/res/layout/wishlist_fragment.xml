@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <GridView
+        android:id="@+id/wishListGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:clipToPadding="false"
+        android:horizontalSpacing="6dp"
+        android:numColumns="2"
+        android:padding="4dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:verticalSpacing="6dp"
+         >
+
+    </GridView>
+</androidx.constraintlayout.widget.ConstraintLayout>
