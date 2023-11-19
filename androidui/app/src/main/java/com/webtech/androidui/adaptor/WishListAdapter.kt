@@ -66,6 +66,8 @@ class WishListAdapter(
             .load(imageUrl)
             .into(holder.imageView)
 
+        holder.cartIcon.setImageResource(R.drawable.cart_remove_icon)
+
         holder.cartIcon.setOnClickListener {
             logger.info("Remove from wish list clicked on wishlist for itemId ${wishList.itemId}")
             val itemResponse = uiState.findAllItemResponse.value

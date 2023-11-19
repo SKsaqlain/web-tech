@@ -10,14 +10,19 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.webtech.androidui.R
 import com.webtech.androidui.adaptor.FindAllItemAdaptor
+import com.webtech.androidui.model.FindAllItemResponse
 import com.webtech.androidui.state.UIState
 import com.webtech.androidui.productsearch.ProductSearchFragment
+import com.webtech.androidui.services.mongodb.MongoDbService
 import org.slf4j.LoggerFactory
 
 class AllItemsFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
+    private val mongoDbService = MongoDbService()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +38,13 @@ class AllItemsFragment : Fragment() {
         return view
     }
 
+    fun updateWishListState(response: String) {
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val type = object : TypeToken<List<FindAllItemResponse>>() {}.type
+        val wishListResponse: List<FindAllItemResponse> = Gson().fromJson(response, type)
+        uiState.setWishListResponse(wishListResponse)
+        uiState.wishListResponse.postValue(wishListResponse)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -68,6 +80,30 @@ class AllItemsFragment : Fragment() {
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             gridView.adapter = adapter
         }
+        mongoDbService.getAllWishListItems(view, ::updateWishListState)
+        uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
+            if (response == null || response.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "No wish list items found",
+                    Toast.LENGTH_LONG
+                ).show()
+                return@observe
+            }
+
+            logger.info("Response is: $response")
+            val allItemResponse=uiState.findAllItemResponse.value
+            for (item in allItemResponse!!) {
+                for (wishListItem in response) {
+                    if (item.itemId == wishListItem.itemId) {
+                        item.isWishListed = true
+                    }
+                }
+            }
+            uiState.findAllItemResponse.postValue(allItemResponse)
+
+        }
+
         val goBackBtn: ImageView = view.findViewById(R.id.allItemsBackArrow)
         goBackBtn.setOnClickListener() {
             logger.info("Go back button clicked on all items fragment")
