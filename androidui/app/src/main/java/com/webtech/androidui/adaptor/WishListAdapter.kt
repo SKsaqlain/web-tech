@@ -56,7 +56,11 @@ class WishListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val wishList = wishListItems[position]
-        holder.itemTitle.text = wishList.title
+        var truncatedTitle: String=wishList.title
+        if (wishList.title.length > 30) {
+            truncatedTitle = wishList.title.substring(0, 30) + "..."
+        }
+        holder.itemTitle.text = truncatedTitle
         holder.zipCode.text = wishList.zip
         holder.condition.text = wishList.condition
         holder.shipping.text = wishList.shipping

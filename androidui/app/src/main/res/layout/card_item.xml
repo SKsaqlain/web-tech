@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
     >
 
     <RelativeLayout
@@ -28,6 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
+                android:textColor="@color/cardTitleClr"
+                android:textStyle="bold"
+                android:textSize="20dp"
                 android:textAlignment="center" />
 
             <LinearLayout
@@ -45,18 +50,25 @@
                         android:id="@+id/zipcode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/cardTitleClr"
+                        android:textSize="18dp"
                         android:text="@string/cardItemZipCode" />
 
                     <TextView
                         android:id="@+id/condition"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/cardTitleClr"
+                        android:textSize="18dp"
                         android:text="@string/cardItemCondition" />
 
                     <TextView
                         android:id="@+id/shipping"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/cardTitleClr"
+                        android:textSize="18dp"
+                        android:paddingTop="10dp"
                         android:text="@string/cardItemShipping" />
                 </LinearLayout>
 
@@ -68,16 +80,23 @@
 
                     <ImageView
                         android:id="@+id/cartIcon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:baselineAlignBottom="false"
+                        android:layout_gravity="end"
                         android:src="@drawable/cart_icon" />
 
                     <TextView
                         android:id="@+id/price"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cardItemPrice" />
+                        android:layout_height="56dp"
+                        android:gravity="bottom|end"
+                        android:paddingTop="5dp"
+                        android:text="@string/cardItemPrice"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/progressBarTxtClr"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
