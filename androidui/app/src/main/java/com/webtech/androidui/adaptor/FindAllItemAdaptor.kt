@@ -12,14 +12,20 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.internal.ContextUtils.getActivity
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.webtech.androidui.R
 import com.webtech.androidui.allitems.AllItemsFragment
 import com.webtech.androidui.details.ProductFragment
 import com.webtech.androidui.model.FindAllItemResponse
+import com.webtech.androidui.services.ebay.EbayService
+import com.webtech.androidui.services.mongodb.MongoDbService
 import com.webtech.androidui.state.UIState
+import org.slf4j.LoggerFactory
 
 class FindAllItemAdaptor: BaseAdapter {
+    private val logger= LoggerFactory.getLogger(FindAllItemAdaptor::class.java)
+    private val mongoDbService = MongoDbService()
 
     private var findAllItemResponse= listOf<FindAllItemResponse>()
     private var context: Context?=null
@@ -53,7 +59,7 @@ class FindAllItemAdaptor: BaseAdapter {
         val zipcode = cardItemView.findViewById<TextView>(R.id.zipcode)
         val condition = cardItemView.findViewById<TextView>(R.id.condition)
         val shipping = cardItemView.findViewById<TextView>(R.id.shipping)
-        val cartIcon = cardItemView.findViewById<ImageView>(R.id.cartIcon)
+        val cartIcon =  cardItemView.findViewById<ImageView>(R.id.cartIcon)
         val price = cardItemView.findViewById<TextView>(R.id.price)
 
         // Set values based on the item
@@ -72,6 +78,12 @@ class FindAllItemAdaptor: BaseAdapter {
         price.text = item.price
 
         cardItemView.tag=item.itemId
+
+        if(item.isWishListed) {
+            cartIcon.setImageResource(R.drawable.cart_remove_icon)
+        } else {
+            cartIcon.setImageResource(R.drawable.cart_icon)
+        }
 
         cardItemView.setOnClickListener(){
             val itemId=cardItemView.tag.toString()
@@ -92,6 +104,29 @@ class FindAllItemAdaptor: BaseAdapter {
             transaction?.replace(R.id.allItemsPage,productFragment)?.setReorderingAllowed(false)
                 ?.addToBackStack(null)
             transaction?.commit()
+        }
+
+        cartIcon.setOnClickListener() {
+            val itemId=cardItemView.tag.toString()
+            val gson=Gson()
+            val payload:String =gson.toJson(item)
+            logger.info("Item $itemId is clicked with payload $payload")
+            Toast.makeText(context, "Item $itemId is added to cart", Toast.LENGTH_SHORT).show()
+            if(item.isWishListed) {
+                item.isWishListed = !item.isWishListed
+                Toast.makeText(context, " Removing Item $itemId from cart", Toast.LENGTH_SHORT).show()
+                mongoDbService.removeFromWishList(cardItemView, itemId)
+            }else{
+                item.isWishListed = !item.isWishListed
+                Toast.makeText(context, " Removing Item $itemId from cart", Toast.LENGTH_SHORT).show()
+                mongoDbService.addToWishList(cardItemView, payload)
+            }
+
+            if(item.isWishListed) {
+                cartIcon.setImageResource(R.drawable.cart_remove_icon)
+            } else {
+                cartIcon.setImageResource(R.drawable.cart_icon)
+            }
         }
 
         return cardItemView

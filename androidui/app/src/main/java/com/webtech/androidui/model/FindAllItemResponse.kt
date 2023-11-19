@@ -12,7 +12,7 @@ data class FindAllItemResponse(
     val condition: String,
     val shippingDetails: ShippingDetails,
     val sellerDetails: SellerDetails,
-    val isWishListed: Boolean
+    var isWishListed: Boolean
 )
 
 
