@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,6 +20,8 @@ import com.webtech.androidui.model.FindAllItemResponse
 import com.webtech.androidui.services.mongodb.MongoDbService
 import com.webtech.androidui.state.UIState
 import org.slf4j.LoggerFactory
+import java.math.RoundingMode
+import kotlin.math.roundToLong
 
 class WishlistFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(WishlistFragment::class.java)
@@ -75,14 +79,25 @@ class WishlistFragment : Fragment() {
 //            val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
 //            gridView.adapter = adapter
             val wishListAdapter = WishListAdapter(response, uiState)
-            recycleView.layoutManager = androidx.recyclerview.widget.GridLayoutManager(
+            recycleView.layoutManager = GridLayoutManager(
                 requireContext(),
                 2,
-                androidx.recyclerview.widget.GridLayoutManager.VERTICAL,
+                GridLayoutManager.VERTICAL,
                 false
             )
             recycleView.adapter = wishListAdapter
+            val itemCount=response.size
+            val totalPrice=response.map { it.price.toFloat() }.sum().toBigDecimal().setScale(2,RoundingMode.FLOOR).toDouble()
 
+            val itemCountTextView: TextView =view.findViewById(R.id.wishlistTotalLabel)
+            if(itemCount==1){
+                itemCountTextView.text="Wishlist Total($itemCount item)"
+            }
+            else{
+                itemCountTextView.text="Wishlist Total($itemCount items)"
+            }
+            val totalPriceTextView: TextView =view.findViewById(R.id.wishlistTotal)
+            totalPriceTextView.text="$${totalPrice}"
         }
     }
 
