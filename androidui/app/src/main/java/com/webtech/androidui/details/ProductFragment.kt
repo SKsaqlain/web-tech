@@ -1,6 +1,8 @@
 package com.webtech.androidui.details
 
+import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -152,6 +154,21 @@ class ProductFragment : Fragment() {
             }
             uiState.setProductDetails(item!!)
         }
+
+        val fgImg=view.findViewById<ImageView>(R.id.productDetailsFacebookBtn)
+        fgImg.setOnClickListener(){
+            logger.info("Facebook button clicked on product details fragment")
+            val itemUrl:String=uiState.productDetails.value?.viewItemURL!!
+            if(itemUrl!=null){
+                val url="https://www.facebook.com/sharer/sharer.php?u="+itemUrl+"&amp;src=sdkpreparse"
+                val urlIntent= Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url)
+                )
+                this.startActivity(urlIntent)
+            }
+        }
+
 
     }
 

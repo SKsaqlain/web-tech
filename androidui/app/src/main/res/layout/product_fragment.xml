@@ -49,22 +49,11 @@
                 android:id="@+id/productDetailsFacebookBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                
+
                 android:layout_toEndOf="@+id/productDetailsTitle"
                 android:background="@color/white"
                 android:src="@drawable/facebbok" />
-            <!--            <ImageView-->
-<!--                android:id="@+id/productDetailsFacebookBtn"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_width="24dp"-->
 
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_marginStart="27dp"-->
-<!--                android:layout_marginEnd="0dp"-->
-<!--                android:layout_toEndOf="@+id/productDetailsTitle"-->
-<!--                android:background="@color/white"-->
-<!--                android:foregroundTint="@color/launcherBackgroundClr"-->
-<!--                android:src="@drawable/facebbok" />-->
             <!-- ViewPager2 -->
 
         </RelativeLayout>
