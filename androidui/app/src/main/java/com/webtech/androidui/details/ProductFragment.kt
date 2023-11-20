@@ -50,8 +50,8 @@ class ProductFragment : Fragment() {
 
     fun trimTitle(title: String): String {
         var trimmedTitle = title
-        if (title.length > 31) {
-            trimmedTitle = title.substring(0, 31) + "..."
+        if (title.length > 21) {
+            trimmedTitle = title.substring(0, 21) + "..."
         }
         return trimmedTitle
     }
