@@ -46,7 +46,7 @@ class SimilarItemsAdaptor(private val similarItems: List<SimilarProductResponse>
         val similarItem = similarItems[position]
         holder.itemTitle.text = similarItem.productName
         holder.shippingCost.text = similarItem.shippingCost
-        holder.daysLeft.text = similarItem.daysLeft
+        holder.daysLeft.text = if(similarItem.daysLeft.toInt()>1) "${similarItem.daysLeft} Days Left" else "${similarItem.daysLeft} Day Left"
         holder.price.text = similarItem.price
         val imageUrl = similarItem.imageURL
         Glide.with(holder.imageView.context)
