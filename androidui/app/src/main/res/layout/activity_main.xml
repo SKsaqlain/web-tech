@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/productSearchTitle"
             android:background="@color/launcherBackgroundClr"
-            app:tabTextColor="@color/white"
+            app:tabTextColor="@color/tabUnSelectedTextClr"
+            app:tabSelectedTextColor="@color/white"
             app:tabGravity="fill"
             app:tabMode="fixed" />
 
