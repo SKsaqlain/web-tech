@@ -73,7 +73,7 @@ class ProductDetailsFragment : Fragment() {
             view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
                 "$"+it.price.toString() + " with " + uiState.productDetails.value?.shipping
 
-            view?.findViewById<TextView>(R.id.productPriceValue)?.text = it.price.toString()
+            view?.findViewById<TextView>(R.id.productPriceValue)?.text = "$"+it.price.toString()
 
             val brandName =
                 uiState.productDetailsResponse.value?.itemSpecifics?.firstOrNull { it.name == "Brand" }?.value

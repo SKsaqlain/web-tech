@@ -70,6 +70,9 @@ class ProductPhotosFragment : Fragment() {
                 return@observe
             }
             for (i in 0..7) {
+                if(it.items[i]==null){
+                    continue
+                }
                 val imageUrl = it.items[i].link
                 if (imageUrl != null) {
                     Glide.with(images[i].context)

@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -68,7 +69,7 @@ class ProductFragment : Fragment() {
         productTabLayout?.visibility=View.INVISIBLE
         val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsPager)
         viewPager?.visibility=View.INVISIBLE
-        val productDetailsWishListBtn=view?.findViewById<ImageView>(R.id.productDetailsWishListBtn)
+        val productDetailsWishListBtn=view?.findViewById<CardView>(R.id.productDetailsWishListCardView)
         productDetailsWishListBtn?.visibility=View.INVISIBLE
     }
 
@@ -82,7 +83,7 @@ class ProductFragment : Fragment() {
         val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsPager)
         viewPager?.visibility = View.VISIBLE
         val productDetailsWishListBtn =
-            view?.findViewById<ImageView>(R.id.productDetailsWishListBtn)
+            view?.findViewById<CardView>(R.id.productDetailsWishListCardView)
         productDetailsWishListBtn?.visibility = View.VISIBLE
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
