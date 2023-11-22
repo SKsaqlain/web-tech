@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -64,13 +65,15 @@ class WishlistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
-
+        val wishlistTotalLayout: LinearLayout = view.findViewById(R.id.wishlistTotalLayout)
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
             if (response == null || response.isEmpty()) {
                 recycleView.adapter = null
                 val noResultsWishlistCardView: CardView =
                     view.findViewById(R.id.noResultsWishlistCardView)
                 noResultsWishlistCardView.visibility = View.VISIBLE
+                wishlistTotalLayout.visibility = View.INVISIBLE
+
                 Toast.makeText(
                     requireContext(),
                     "No items found",
@@ -102,7 +105,8 @@ class WishlistFragment : Fragment() {
             val totalPriceTextView: TextView = view.findViewById(R.id.wishlistTotal)
             totalPriceTextView.text = "$${totalPrice}"
             view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.INVISIBLE
-//            view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.VISIBLE
+            view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility= View.VISIBLE
+            wishlistTotalLayout.visibility = View.VISIBLE
         }
 
     }
@@ -111,7 +115,8 @@ class WishlistFragment : Fragment() {
         super.onResume()
 
         view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.VISIBLE
-//        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
+        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
+
         view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
 
     }
