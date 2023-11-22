@@ -71,7 +71,7 @@ class ProductDetailsFragment : Fragment() {
             view?.findViewById<TextView>(R.id.productTitleInDetails)?.text =
                 uiState.productDetails.value?.title
             view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
-                it.price.toString() + " with " + uiState.productDetails.value?.shipping
+                "$"+it.price.toString() + " with " + uiState.productDetails.value?.shipping
 
             view?.findViewById<TextView>(R.id.productPriceValue)?.text = it.price.toString()
 
