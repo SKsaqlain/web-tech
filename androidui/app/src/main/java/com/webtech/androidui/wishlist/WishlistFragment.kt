@@ -67,7 +67,7 @@ class WishlistFragment : Fragment() {
         val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
         val wishlistTotalLayout: LinearLayout = view.findViewById(R.id.wishlistTotalLayout)
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 recycleView.adapter = null
                 val noResultsWishlistCardView: CardView =
                     view.findViewById(R.id.noResultsWishlistCardView)
@@ -81,6 +81,10 @@ class WishlistFragment : Fragment() {
                 ).show()
                 logger.info("No items found")
                 return@observe
+            }else{
+                view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.INVISIBLE
+                view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility= View.VISIBLE
+                wishlistTotalLayout.visibility = View.VISIBLE
             }
             logger.info("Items found")
 
@@ -114,8 +118,8 @@ class WishlistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.VISIBLE
-        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
+//        view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.VISIBLE
+//        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
 
         view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
 
