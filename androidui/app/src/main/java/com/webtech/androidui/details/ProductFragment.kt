@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -56,6 +57,33 @@ class ProductFragment : Fragment() {
             trimmedTitle = title.substring(0, 21) + "..."
         }
         return trimmedTitle
+    }
+
+    fun enableProgressBar(){
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val progressBar = view?.findViewById<LinearLayout>(R.id.productDetailsProgressBarLayout)
+        progressBar?.visibility = View.VISIBLE
+
+        val productTabLayout=view?.findViewById<TabLayout>(R.id.productTabLayout)
+        productTabLayout?.visibility=View.INVISIBLE
+        val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsPager)
+        viewPager?.visibility=View.INVISIBLE
+        val productDetailsWishListBtn=view?.findViewById<ImageView>(R.id.productDetailsWishListBtn)
+        productDetailsWishListBtn?.visibility=View.INVISIBLE
+    }
+
+    fun disableProgressBar() {
+        val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val progressBar = view?.findViewById<LinearLayout>(R.id.productDetailsProgressBarLayout)
+        progressBar?.visibility = View.INVISIBLE
+
+        val productTabLayout = view?.findViewById<TabLayout>(R.id.productTabLayout)
+        productTabLayout?.visibility = View.VISIBLE
+        val viewPager = view?.findViewById<ViewPager2>(R.id.productDetailsPager)
+        viewPager?.visibility = View.VISIBLE
+        val productDetailsWishListBtn =
+            view?.findViewById<ImageView>(R.id.productDetailsWishListBtn)
+        productDetailsWishListBtn?.visibility = View.VISIBLE
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,6 +140,10 @@ class ProductFragment : Fragment() {
         goBackBtn.setOnClickListener() {
             logger.info("Go back button clicked on all items fragment")
             parentFragmentManager.popBackStack()
+            val uiState=ViewModelProvider(requireActivity()).get(UIState::class.java)
+            uiState.setProductDetailsProgressBar(true)
+            enableProgressBar()
+
         }
 
         val productTitle=view.findViewById<TextView>(R.id.productDetailsTitle)
@@ -123,6 +155,14 @@ class ProductFragment : Fragment() {
 
 
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+        val productDetailsProgressBar=uiState.productDetailsProgressBar
+        productDetailsProgressBar.observe(viewLifecycleOwner) { progressBar ->
+            if (progressBar) {
+                enableProgressBar()
+            } else {
+                disableProgressBar()
+            }
+        }
         val wishListBtn=view.findViewById<ImageView>(R.id.productDetailsWishListBtn)
         if(uiState.productDetails.value?.isWishListed==true){
             wishListBtn.setImageResource(R.drawable.cart_remove_icon)

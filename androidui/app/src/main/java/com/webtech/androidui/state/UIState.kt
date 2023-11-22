@@ -32,9 +32,13 @@ class UIState: ViewModel() {
 
 
     //product details state
+    val productDetailsProgressBar=MutableLiveData<Boolean>(true)
     val productDetails=MutableLiveData<FindAllItemResponse>()
     val productDetailsItemId=MutableLiveData<String>()
     val productDetailsResponse=MutableLiveData<ProductDetailsResponse>()
+    fun setProductDetailsProgressBar(productDetailsProgressBar: Boolean) {
+        this.productDetailsProgressBar.value = productDetailsProgressBar
+    }
     fun setProductDetails(productDetails: FindAllItemResponse) {
         this.productDetails.value = productDetails
     }

@@ -57,6 +57,39 @@
 
         </RelativeLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/productDetailsProgressBarLayout"
+                android:layout_width="173dp"
+                android:layout_height="138dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/productDetailssProgressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp" />
+
+                <TextView
+                    android:id="@+id/productDetailsProgressBarText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Fetching Product Details..."
+                    android:textAlignment="center"
+                    android:textColor="@color/progressBarTxtClr"
+                    android:textSize="16sp"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/productTabLayout"
             android:layout_width="match_parent"
@@ -66,13 +99,16 @@
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabTextColor="@color/tabUnSelectedTextClr"
-            app:tabSelectedTextColor="@color/white" />
+            app:tabSelectedTextColor="@color/white"
+            android:visibility="invisible"
+            />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/productDetailsPager"
             android:layout_width="match_parent"
             android:layout_height="632dp"
-            android:layout_below="@+id/productTabLayout" />
+            android:layout_below="@+id/productTabLayout"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
 
@@ -91,14 +127,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout">
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout"
+        >
 
         <ImageView
             android:id="@+id/productDetailsWishListBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/cart_icon" />
+            android:src="@drawable/cart_icon"
+            android:visibility="invisible"/>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

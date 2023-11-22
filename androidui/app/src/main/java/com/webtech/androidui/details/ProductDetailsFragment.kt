@@ -43,6 +43,7 @@ class ProductDetailsFragment : Fragment() {
         val itemType = object : TypeToken<ProductDetailsResponse>() {}.type
         val productDetailsResponse: ProductDetailsResponse = gson.fromJson(response, itemType)
         uiState.setProductDetailsResponse(productDetailsResponse)
+        uiState.productDetailsProgressBar.postValue(false)
 
     }
 
