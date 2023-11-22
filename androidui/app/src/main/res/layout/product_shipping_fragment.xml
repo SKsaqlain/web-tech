@@ -39,6 +39,7 @@
 
         <LinearLayout
             android:id="@+id/shippingStoreNameLayout"
+            android:weightSum="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -47,45 +48,50 @@
                 android:id="@+id/shippingStoreNameField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Store Name" />
 
-            <HorizontalScrollView
-                android:id="@+id/shippingStoreNameValueScroll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
+<!--            <HorizontalScrollView-->
+<!--                android:id="@+id/shippingStoreNameValueScroll"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:scrollbars="none">-->
             <TextView
                 android:id="@+id/shippingStoreNameValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_weight="0.5"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:text="Store ebay URL" />
-            </HorizontalScrollView>
+<!--            </HorizontalScrollView>-->
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/shippingFeedbackScoreLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/shippingFeedbackScoreField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Feedback Score" />
 
             <TextView
                 android:id="@+id/shippingFeedbackScoreValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="feedback score" />
         </LinearLayout>
 
@@ -93,33 +99,37 @@
             android:id="@+id/shippingPopularityLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/shippingPopularityField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Popularity" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/progress_layout"
-                android:layout_width="50dp"
-                android:layout_height="50dp">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
 
-                <!--progress bar implementation-->
                 <ProgressBar
                     android:id="@+id/shippingPopularityProgressBar"
                     style="@style/CircularDeterminateProgressBar"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="31dp"
+                    android:layout_height="37dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.028"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:progress="60" />
 
-                <!--Text implementation in center of the progress bar-->
                 <TextView
                     android:id="@+id/shippingPopularityValue"
                     android:layout_width="wrap_content"
@@ -129,10 +139,14 @@
                     android:layout_centerVertical="true"
                     android:gravity="center"
                     android:text="---"
-                    android:textSize="10dp"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/shippingPopularityProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/shippingPopularityProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/shippingPopularityProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/shippingPopularityProgressBar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -142,20 +156,23 @@
             android:id="@+id/shippingFeedbackStarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/shippingFeedbackStarField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Feedback Star" />
 
             <ImageView
                 android:id="@+id/shippingFeedbackStarImg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:scaleType="fitStart"
+                android:layout_weight="0.5"
                 android:src="@drawable/starcircle" />
 
         </LinearLayout>
@@ -208,41 +225,47 @@
             android:id="@+id/shippingCostLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/shippingCostField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Shipping Cost" />
 
             <TextView
                 android:id="@+id/shippingCostValue"
                 android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="shipping" />
+                android:text="shipping"  />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/shippingGlobalShippingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/shippingGlobalShippingField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Global Shipping" />
 
             <TextView
                 android:id="@+id/shippingGlobalShippingValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="yes/no?" />
         </LinearLayout>
 
@@ -250,20 +273,23 @@
             android:id="@+id/shippingHandlingTimeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/shippingHandlingTimeField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Handling Time" />
 
             <TextView
                 android:id="@+id/shippingHandlingTimeValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="number" />
         </LinearLayout>
 
@@ -315,20 +341,23 @@
             android:id="@+id/returnPolicyPolicyLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/returnPolicyPolicyField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Policy" />
 
             <TextView
                 android:id="@+id/returnPolicyPolicyValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="value" />
         </LinearLayout>
 
@@ -336,20 +365,23 @@
             android:id="@+id/returnPolicyWithinLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/returnPolicyWithinField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Returns Within" />
 
             <TextView
                 android:id="@+id/returnPolicyWithinValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="value" />
         </LinearLayout>
 
@@ -357,20 +389,23 @@
             android:id="@+id/returnPolicyRefundLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/returnPolicyRefundField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Refund Mode" />
 
             <TextView
                 android:id="@+id/returnPolicyRefundValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="value" />
         </LinearLayout>
 
@@ -378,20 +413,23 @@
             android:id="@+id/returnPolicyShippingByLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/returnPolicyShippingByField"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="Shipped By" />
 
             <TextView
                 android:id="@+id/returnPolicyShippingByValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:textSize="18sp"
                 android:text="value" />
         </LinearLayout>
 
