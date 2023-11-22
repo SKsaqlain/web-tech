@@ -70,6 +70,29 @@
                 tools:visibility="visible" />
 
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/noResultsAllItemsCardView"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/noResultsWishlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No Resulst Found"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <GridView

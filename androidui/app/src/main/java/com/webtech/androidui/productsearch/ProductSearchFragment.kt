@@ -67,6 +67,12 @@ class ProductSearchFragment : Fragment() {
 
     fun updateFindAllItemState(response: String) {
         logger.info("updateFindAllItemState")
+        if(response=="[]" || response==""){
+            val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
+            uiState.setAllItemProgressBar(false)
+            uiState.setFindAllItemResponse(emptyList())
+            return
+        }
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val listType = object : TypeToken<List<FindAllItemResponse>>() {}.type
         val findAllItemResponse: List<FindAllItemResponse> = Gson().fromJson(response, listType)

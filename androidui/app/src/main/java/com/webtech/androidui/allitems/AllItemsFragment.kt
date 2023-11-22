@@ -8,6 +8,7 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
@@ -50,22 +51,26 @@ class AllItemsFragment : Fragment() {
 
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
         val progressBarFragment = view.findViewById<LinearLayout>(R.id.allItemsProgressBarLayout)
+        val noResultsAllItemsCardView = view.findViewById<CardView>(R.id.noResultsAllItemsCardView)
         val gridView: GridView = view.findViewById(R.id.allItemsGridView)
 
         uiState.allItemProgressBar.observe(viewLifecycleOwner) { progressBar ->
             val progressBarFragment = view.findViewById<LinearLayout>(R.id.allItemsProgressBarLayout)
             val gridView: GridView = view.findViewById(R.id.allItemsGridView)
             if (progressBar) {
+                noResultsAllItemsCardView.visibility = View.INVISIBLE
                 progressBarFragment.visibility = View.VISIBLE
                 gridView.visibility = View.INVISIBLE
+
             } else {
                 progressBarFragment.visibility = View.INVISIBLE
+                noResultsAllItemsCardView.visibility = View.VISIBLE
                 gridView.visibility = View.VISIBLE
             }
         }
 
         uiState.findAllItemResponse.observe(viewLifecycleOwner) { response ->
-            if (response == null) {
+            if (response == null || response.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "No items found",
@@ -74,6 +79,7 @@ class AllItemsFragment : Fragment() {
                 return@observe
             }
 
+            noResultsAllItemsCardView.visibility = View.INVISIBLE
             logger.info("Response is: $response")
             gridView.visibility = View.VISIBLE
             val adapter = FindAllItemAdaptor(response, requireContext(), parentFragmentManager)
@@ -110,6 +116,7 @@ class AllItemsFragment : Fragment() {
             parentFragmentManager.popBackStack()
             uiState.setAllItemProgressBar(true)
             uiState.setFindAllItemResponse(emptyList())
+            noResultsAllItemsCardView.visibility = View.INVISIBLE
         }
     }
 }
