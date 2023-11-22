@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +28,7 @@ import kotlin.math.roundToLong
 class WishlistFragment : Fragment() {
     private val logger = LoggerFactory.getLogger(WishlistFragment::class.java)
     private val mongoDbService = MongoDbService()
-    private var view:View?=null
+    private var view: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,7 +38,7 @@ class WishlistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view =inflater.inflate(
+        view = inflater.inflate(
             R.layout.wishlist_fragment,
             container,
             false
@@ -65,7 +66,11 @@ class WishlistFragment : Fragment() {
         val recycleView: RecyclerView = view.findViewById(R.id.wishListRecycleView)
 
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
-            if (response == null) {
+            if (response == null || response.isEmpty()) {
+                recycleView.adapter = null
+                val noResultsWishlistCardView: CardView =
+                    view.findViewById(R.id.noResultsWishlistCardView)
+                noResultsWishlistCardView.visibility = View.VISIBLE
                 Toast.makeText(
                     requireContext(),
                     "No items found",
@@ -84,26 +89,29 @@ class WishlistFragment : Fragment() {
                 false
             )
             recycleView.adapter = wishListAdapter
-            val itemCount=response.size
-            val totalPrice=response.map { it.price.toFloat() }.sum().toBigDecimal().setScale(2,RoundingMode.FLOOR).toDouble()
+            val itemCount = response.size
+            val totalPrice = response.map { it.price.toFloat() }.sum().toBigDecimal()
+                .setScale(2, RoundingMode.FLOOR).toDouble()
 
-            val itemCountTextView: TextView =view.findViewById(R.id.wishlistTotalLabel)
-            if(itemCount==1){
-                itemCountTextView.text="Wishlist Total($itemCount item)"
+            val itemCountTextView: TextView = view.findViewById(R.id.wishlistTotalLabel)
+            if (itemCount == 1) {
+                itemCountTextView.text = "Wishlist Total($itemCount item)"
+            } else {
+                itemCountTextView.text = "Wishlist Total($itemCount items)"
             }
-            else{
-                itemCountTextView.text="Wishlist Total($itemCount items)"
-            }
-            val totalPriceTextView: TextView =view.findViewById(R.id.wishlistTotal)
-            totalPriceTextView.text="$${totalPrice}"
-            view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility=View.VISIBLE
+            val totalPriceTextView: TextView = view.findViewById(R.id.wishlistTotal)
+            totalPriceTextView.text = "$${totalPrice}"
+            view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.INVISIBLE
+//            view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.VISIBLE
         }
 
     }
 
     override fun onResume() {
         super.onResume()
-        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility=View.INVISIBLE
+
+        view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.VISIBLE
+//        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
         view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
 
     }
