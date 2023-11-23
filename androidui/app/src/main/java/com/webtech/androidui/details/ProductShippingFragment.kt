@@ -61,7 +61,7 @@ class ProductShippingFragment : Fragment() {
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         spannableString.setSpan(
-            BackgroundColorSpan(Color.parseColor("#777777")),
+            BackgroundColorSpan(Color.parseColor("#d1cde0")),
             0,
             spannableString.length,
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
