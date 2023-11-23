@@ -106,7 +106,7 @@ class FindAllItemAdaptor: BaseAdapter {
         itemImage.setOnClickListener() {
             val itemId=cardItemView.tag.toString()
             val pos=position
-            Toast.makeText(context, "Item  $pos $itemId is added to cart", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Item  $pos $itemId is added to cart", Toast.LENGTH_SHORT).show()
             val productFragment= ProductFragment()
             val bundle = Bundle()
             bundle.putString("itemId", itemId)

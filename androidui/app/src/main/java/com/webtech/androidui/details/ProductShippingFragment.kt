@@ -1,21 +1,18 @@
 package com.webtech.androidui.details
 
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.style.BackgroundColorSpan
 import android.text.style.URLSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.webtech.androidui.R
 import com.webtech.androidui.model.FindAllItemResponse
@@ -51,7 +48,11 @@ class ProductShippingFragment : Fragment() {
         sellerDetails: SellerDetails?,
         shipping: ShippingDetails?
     ) {
-        val spannableString = SpannableString(sellerDetails?.storeName)
+        val storeName:String? =sellerDetails?.storeName
+        var spannableString = SpannableString("N/A")
+        if (sellerDetails?.storeName != null) {
+            spannableString = SpannableString(sellerDetails?.storeName)
+        }
         val urlSpan = URLSpan(productDetails?.viewItemURL.toString())
         spannableString.setSpan(
             urlSpan,
@@ -59,41 +60,21 @@ class ProductShippingFragment : Fragment() {
             spannableString.length,
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+        spannableString.setSpan(
+            BackgroundColorSpan(Color.parseColor("#777777")),
+            0,
+            spannableString.length,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.text = spannableString
 
         view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.movementMethod =
-            android.text.method.LinkMovementMethod.getInstance()
-    }
-//    fun addScrollPropertyOnStoreName(){
-//
-//        val scrollView = view?.findViewById<HorizontalScrollView>(R.id.shippingStoreNameValueScroll)
-//        val autoScroller= AutoScroller(scrollView!!)
-//        var scrollHandler = Handler(Looper.getMainLooper())
-//        val scrollRunnable = object : Runnable {
-//            override fun run() {
-//                scrollView?.smoothScrollBy(1, 0) // Scroll right by 1 pixel
-//                scrollHandler.postDelayed(this, 10) // Repeat every 10 milliseconds
-//            }
-//        }
-//
-//        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.setOnHoverListener { v, event ->
-//            when (event.action) {
-//                MotionEvent.ACTION_HOVER_ENTER -> {
-//                    // Start auto-scrolling
-//                    autoScroller.startAutoScrolling()
-//                    true
-//                }
-//                MotionEvent.ACTION_HOVER_EXIT -> {
-//                    // Stop auto-scrolling
-//                    autoScroller.stopAutoScrolling()
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//    }
+            LinkMovementMethod.getInstance()
+        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.setSingleLine()
+        view?.findViewById<TextView>(R.id.shippingStoreNameValue)?.isSelected = true
 
-    // TODO: fix horizontal scroll
+    }
+
 
     fun updateShippingFragmentWithValues() {
         val uiState: UIState = ViewModelProvider(requireActivity()).get(UIState::class.java)
@@ -112,17 +93,18 @@ class ProductShippingFragment : Fragment() {
         view?.findViewById<ProgressBar>(R.id.shippingPopularityProgressBar)?.progress =
             sellerDetails?.popularity?.toFloat()?.toInt() ?: 0
         view?.findViewById<TextView>(R.id.shippingPopularityValue)?.text =
-            sellerDetails?.popularity.toString()+"%"
+            sellerDetails?.popularity.toString() + "%"
 
 
-        view?.findViewById<ImageView>(R.id.shippingFeedbackStarImg)?.setColorFilter(Color.parseColor(colorHexValues.get(sellerDetails?.feedbackRatingStar.toString())))
+        view?.findViewById<ImageView>(R.id.shippingFeedbackStarImg)
+            ?.setColorFilter(Color.parseColor(colorHexValues.get(sellerDetails?.feedbackRatingStar.toString())))
 
 
         //shipping info
         view?.findViewById<TextView>(R.id.shippingCostValue)?.text =
             shipping?.shippingCost.toString()
         view?.findViewById<TextView>(R.id.shippingGlobalShippingValue)?.text =
-            if(shipping?.shippingLocation.toString()=="Worldwide")  "Yes" else "No"
+            if (shipping?.shippingLocation.toString() == "Worldwide") "Yes" else "No"
         view?.findViewById<TextView>(R.id.shippingHandlingTimeValue)?.text =
             shipping?.handlingTime.toString()
 
@@ -155,3 +137,4 @@ class ProductShippingFragment : Fragment() {
     }
 
 }
+

@@ -57,7 +57,7 @@
 
                 <TextView
                     android:id="@+id/shippingStoreNameValue"
-                    android:layout_width="0dp"
+                    android:layout_width="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:focusable="true"
@@ -65,7 +65,9 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:text="Store ebay URL"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:ellipsize="marquee"
+                    />
             </LinearLayout>
 
             <LinearLayout
