@@ -70,7 +70,7 @@ class ProductPhotosFragment : Fragment() {
                 return@observe
             }
             for (i in 0..7) {
-                if(it.items[i]==null){
+                if(it.items==null ||it.items[i]==null){
                     continue
                 }
                 val imageUrl = it.items[i].link
