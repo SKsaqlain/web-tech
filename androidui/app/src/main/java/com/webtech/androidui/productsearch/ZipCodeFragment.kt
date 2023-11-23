@@ -58,6 +58,7 @@ class ZipCodeFragment : Fragment() {
                 it
             )
             nearbyZipCodeTextView.setAdapter(adapter)
+            nearbyZipCodeTextView.threshold = 1
         }
     }
 
@@ -71,7 +72,8 @@ class ZipCodeFragment : Fragment() {
         val gson = Gson()
         val nearbyZipCode = gson.fromJson(response, Array<String>::class.java)
         val uiState = ViewModelProvider(requireActivity()).get(UIState::class.java)
-        uiState.setNearByZipCodes(nearbyZipCode)
+        uiState.nearByZipCodes.postValue(nearbyZipCode)
+//        uiState.setNearByZipCodes(nearbyZipCode)
     }
     private fun ZipCodeTextWatcher(view: View): TextWatcher? {
         return object : TextWatcher {
