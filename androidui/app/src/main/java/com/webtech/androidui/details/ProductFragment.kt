@@ -200,8 +200,10 @@ class ProductFragment : Fragment() {
         fgImg.setOnClickListener(){
             logger.info("Facebook button clicked on product details fragment")
             val itemUrl:String=uiState.productDetails.value?.viewItemURL!!
+            val hashtag = "#CSCI571Fall23AndroidApp"
             if(itemUrl!=null){
-                val url="https://www.facebook.com/sharer/sharer.php?u="+itemUrl+"&amp;src=sdkpreparse"
+                val encodedHashtag = Uri.encode(hashtag)
+                val url="https://www.facebook.com/sharer/sharer.php?u="+itemUrl+"&amp;src=sdkpreparse&hashtag=$encodedHashtag"
                 val urlIntent= Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(url)
