@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -178,7 +179,9 @@ class ProductFragment : Fragment() {
                 if(itemId!=null && item!=null){
                     item.isWishListed=false
                     mongoDbService.removeFromWishList(view,itemId)
+                    var title=sliceTitle(item.title)
                     logger.info("Item removed from wishList with itemId: $itemId")
+                    Toast.makeText(context, "$title was removed from wishlist", Toast.LENGTH_SHORT).show()
                 }
                 updateWishListState(uiState,itemId!!,false)
                 wishListBtn.setImageResource(R.drawable.cart_icon)
@@ -188,7 +191,9 @@ class ProductFragment : Fragment() {
                     val gson= Gson()
                     val payload:String =gson.toJson(item)
                     mongoDbService.addToWishList(view,payload)
+                    var title=sliceTitle(item.title)
                     logger.info("Item added to wishList with itemId: $itemId")
+                    Toast.makeText(context, "$title was added to wishlist", Toast.LENGTH_SHORT).show()
                 }
                 updateWishListState(uiState,itemId!!,true)
                 wishListBtn.setImageResource(R.drawable.cart_remove_icon)
@@ -213,6 +218,14 @@ class ProductFragment : Fragment() {
         }
 
 
+    }
+
+    private fun sliceTitle(title: String): String {
+        var slicedTitle = title
+        if (title.length > 8) {
+            slicedTitle = title.substring(0, 8) + "..."
+        }
+        return slicedTitle
     }
 
     private fun updateWishListState(uiState: UIState, itemId: String,wishListState:Boolean) {

@@ -119,17 +119,27 @@ class FindAllItemAdaptor: BaseAdapter {
 
         cartIcon.setOnClickListener() {
             val itemId=cardItemView.tag.toString()
+            val titleTextView = cardItemView.findViewById<TextView>(R.id.productTitle)
+            var title = titleTextView.text.toString()
+
+            if (title.length > 8) {
+                val shortenedText = title.substring(0, 8) + "..."
+                title = shortenedText
+            }
+
             val gson=Gson()
             val payload:String =gson.toJson(item)
             logger.info("Item $itemId is clicked with payload $payload")
-            Toast.makeText(context, "Item $itemId is added to cart", Toast.LENGTH_SHORT).show()
+
+//            Toast.makeText(context, "Item $itemId is added to cart", Toast.LENGTH_SHORT).show()
             if(item.isWishListed) {
                 item.isWishListed = !item.isWishListed
-                Toast.makeText(context, " Removing Item $itemId from cart", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, " Removing Item $itemId from cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "$title was removed from wishlist", Toast.LENGTH_SHORT).show()
                 mongoDbService.removeFromWishList(cardItemView, itemId)
             }else{
                 item.isWishListed = !item.isWishListed
-                Toast.makeText(context, " Removing Item $itemId from cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "$title was added to wishlist", Toast.LENGTH_SHORT).show()
                 mongoDbService.addToWishList(cardItemView, payload)
             }
 
