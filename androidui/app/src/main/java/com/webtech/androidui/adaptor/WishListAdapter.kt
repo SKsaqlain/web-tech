@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.webtech.androidui.R
@@ -87,6 +88,7 @@ class WishListAdapter(
         holder.cartIcon.setImageResource(R.drawable.cart_remove_icon)
 
         holder.cartIcon.setOnClickListener {
+            var title=sliceTitle( wishList.title)
             logger.info("Remove from wish list clicked on wishlist for itemId ${wishList.itemId}")
             val itemResponse = uiState.findAllItemResponse.value
             for (item in itemResponse!!) {
@@ -100,9 +102,21 @@ class WishListAdapter(
             uiState.setWishListResponse(filteredWishlist)
             uiState.wishListResponse.postValue(filteredWishlist)
             mongoDbService.removeFromWishList(holder.cartIcon, wishList.itemId)
+            Toast.makeText(
+                holder.cartIcon.context,
+                "$title was removed from the wish list",
+                Toast.LENGTH_SHORT
+            ).show()
 
 
         }
 
+    }
+    private fun sliceTitle(title: String): String {
+        return if (title.length >8) {
+            title.substring(0, 8) + "..."
+        } else {
+            title
+        }
     }
 }
