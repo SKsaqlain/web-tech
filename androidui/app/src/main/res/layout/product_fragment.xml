@@ -115,8 +115,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/productDetailsWishListCardView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="290dp"
@@ -134,8 +134,8 @@
 
         <ImageView
             android:id="@+id/productDetailsWishListBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:src="@drawable/cart_icon"
             app:tint="@color/white" />
