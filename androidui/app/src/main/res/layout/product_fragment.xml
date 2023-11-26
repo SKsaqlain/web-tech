@@ -48,10 +48,11 @@
             <ImageView
                 android:id="@+id/productDetailsFacebookBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_toEndOf="@+id/productDetailsTitle"
                 android:background="@color/white"
-                android:src="@drawable/facebbok" />
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/facebook2" />
 
             <!-- ViewPager2 -->
 
