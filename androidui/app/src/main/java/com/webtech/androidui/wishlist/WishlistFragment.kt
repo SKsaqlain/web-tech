@@ -74,11 +74,11 @@ class WishlistFragment : Fragment() {
                 noResultsWishlistCardView.visibility = View.VISIBLE
                 wishlistTotalLayout.visibility = View.INVISIBLE
 
-                Toast.makeText(
-                    requireContext(),
-                    "No items found",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    requireContext(),
+//                    "No items found",
+//                    Toast.LENGTH_LONG
+//                ).show()
                 logger.info("No items found")
                 return@observe
             }else{
