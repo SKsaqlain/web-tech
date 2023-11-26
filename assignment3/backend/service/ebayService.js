@@ -24,7 +24,9 @@ const ebay = {
             const keywords = req.query.keywords;
             const category = req.query.category ;
             const condition = JSON.parse(req.query.condition.replace(/(\w+)/g, '"$1"')) || [];
-            const shipping = JSON.parse(req.query.shipping.replace(/(\w+)/g, '"$1"')) || [];
+            const shippingString = req.query.shipping.replace(/([\w-]+)/g, '"$1"');
+            const shipping = JSON.parse(shippingString) || [];
+            // const shipping = JSON.parse(req.query.shipping.replace(/(\w+)/g, '"$1"')) || [];
             const distance = req.query.distance || 0;
             const postalCode = req.query.postalCode || "";
 

@@ -96,14 +96,14 @@ class FindAllItemAdaptor: BaseAdapter {
             cartIcon.setImageResource(R.drawable.cart_icon)
         }
 
-        cardItemView.setOnClickListener(){
-            val itemId=cardItemView.tag.toString()
-            val pos=position
-            Toast.makeText(context, "Item  $pos $itemId is clicked", Toast.LENGTH_SHORT).show()
-        }
+//        cardItemView.setOnClickListener(){
+//            val itemId=cardItemView.tag.toString()
+//            val pos=position
+//            Toast.makeText(context, "Item  $pos $itemId is clicked", Toast.LENGTH_SHORT).show()
+//        }
 
 
-        itemImage.setOnClickListener() {
+        cardItemView.setOnClickListener() {
             val itemId=cardItemView.tag.toString()
             val pos=position
 //            Toast.makeText(context, "Item  $pos $itemId is added to cart", Toast.LENGTH_SHORT).show()

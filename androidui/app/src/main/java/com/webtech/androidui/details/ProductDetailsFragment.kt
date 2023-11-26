@@ -70,9 +70,15 @@ class ProductDetailsFragment : Fragment() {
             logger.info("Product details response is: $it")
             view?.findViewById<TextView>(R.id.productTitleInDetails)?.text =
                 uiState.productDetails.value?.title
-            view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
-                "$"+it.price.toString() + " with " + uiState.productDetails.value?.shipping
+            if(uiState.productDetails.value?.shipping?.contains("free", ignoreCase = true) == false){
+                view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
+                    "$"+it.price.toString() + " with " + uiState.productDetails.value?.shipping + " Shipping"
+            }else {
+                view?.findViewById<TextView>(R.id.priceAndShipping)?.text =
+                    "$" + it.price.toString() + " with " + uiState.productDetails.value?.shipping
+            }
 
+            uiState.productDetails.value?.shipping?.contains("free", ignoreCase = true)
             view?.findViewById<TextView>(R.id.productPriceValue)?.text = "$"+it.price.toString()
 
             val brandName =
