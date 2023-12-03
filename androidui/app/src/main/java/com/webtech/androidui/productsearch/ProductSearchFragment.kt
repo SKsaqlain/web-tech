@@ -28,9 +28,6 @@ class ProductSearchFragment : Fragment() {
     private val productSearchUtil = ProductSearchUtil()
     private val zipCodeService = ZipCodeService()
 
-//    private lateinit var communicator: Communicator
-
-//    val uiState: UIState=ViewModelProvider(requireActivity()).get(UIState::class.java)
 
 
     companion object {

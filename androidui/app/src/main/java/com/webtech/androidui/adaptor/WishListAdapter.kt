@@ -55,7 +55,7 @@ class WishListAdapter(
         return wishListItems.size
     }
 
-    // Function to adjust text to occupy exactly three lines
+
     private fun adjustTextToThreeLines(text: String): String {
         val newline = "\n"
         return when (text.count { it == '\n' }) {
@@ -73,9 +73,9 @@ class WishListAdapter(
         holder.zipCode.text = "Zip:"+wishList.zip
         val conditionParts = wishList.condition.split("-")
         if (conditionParts.isNotEmpty()) {
-            holder.condition.text = conditionParts[0].trim() // Trim to remove any leading or trailing spaces
+            holder.condition.text = conditionParts[0].trim()
         } else {
-            holder.condition.text = wishList.condition // Fallback to the original string if split fails
+            holder.condition.text = wishList.condition
         }
 
         holder.shipping.text = wishList.shipping

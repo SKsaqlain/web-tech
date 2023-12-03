@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/allItemsPage"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/launcherBackgroundClr"
+        android:padding="16dp">
+
+        <!-- Make sure to use your own back arrow drawable -->
+
+        <ImageView
+            android:id="@+id/allItemsBackArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:id="@+id/allItemsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/allItemsBackArrow"
+            android:text="Search Results"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/allItemsProgressBarLayout"
+            android:layout_width="173dp"
+            android:layout_height="138dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/allItemsProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" />
+
+            <TextView
+                android:id="@+id/allItemProgressBarText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Searching Products..."
+                android:textAlignment="center"
+                android:textColor="@color/progressBarTxtClr"
+                android:textSize="16sp"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/noResultsAllItemsCardView"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/noResultsWishlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No Resulst Found"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <GridView
+        android:id="@+id/allItemsGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleBar"
+        android:layout_marginTop="-1dp"
+        android:clipToPadding="false"
+        android:horizontalSpacing="6dp"
+        android:numColumns="2"
+        android:padding="4dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:verticalSpacing="6dp"
+        android:visibility="invisible" >
+
+    </GridView>
+
+</RelativeLayout>

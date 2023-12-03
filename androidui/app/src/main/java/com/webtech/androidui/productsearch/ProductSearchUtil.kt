@@ -17,7 +17,7 @@ class ProductSearchUtil {
     fun extractFormValues(view: View, uiState: UIState): Map<String, Any> {
         val values = mutableMapOf<String, Any>()
 
-        // Extract values from EditText
+
         val keywordEditText: EditText = view.findViewById(R.id.keyword)
         val keywordValue = keywordEditText.text.toString()
         values["keyword"] = keywordValue
@@ -63,16 +63,6 @@ class ProductSearchUtil {
                 values["postalCode"]=view.findViewById<EditText?>(R.id.enteredZipCode).text.toString()
             }
         }
-//
-//        //todo: add logic for distance calculation
-//
-//        values["distance"]=10
-//
-//        //todo: add logic for postal code
-//
-//        values["postalCode"]=uiState.currentZipCode
-
-
         return values
     }
 

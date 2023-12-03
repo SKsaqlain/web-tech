@@ -15,4 +15,3 @@ object ProductSearchConstants {
     )
 }
 
-//https://sms-wt-assgn3.uw.r.appspot.com/ebay/findAllItems?trackingId=0c2c3dd2-5e6b-4564-a2f3-abbe525b60fa&keywords=apple&category=All+Categories&distance=10&postalCode=90037

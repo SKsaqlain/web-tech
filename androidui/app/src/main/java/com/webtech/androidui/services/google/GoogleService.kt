@@ -7,6 +7,7 @@ import com.android.volley.toolbox.Volley
 import com.webtech.androidui.productsearch.ProductSearchFragment
 import com.webtech.androidui.services.URL
 import org.slf4j.LoggerFactory
+import java.net.URLEncoder
 import java.util.UUID
 
 class GoogleService {
@@ -14,9 +15,10 @@ class GoogleService {
 
     fun getGoogleImages(view: View, title: String, updateGoogleImageResponseState: (response: String) -> Unit) {
         val trackingId = UUID.randomUUID().toString()
+        val titleEncoded=URLEncoder.encode(title, "UTF-8")
         logger.info("Making backend Google Images API call with $title")
 
-        val url = "${URL.BackendUrl.url}/googleImg?keyword=$title&trackingId=$trackingId"
+        val url = "${URL.BackendUrl.url}/googleImg?keyword=$titleEncoded&trackingId=$trackingId"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,

@@ -59,12 +59,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Current Location"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    >
 
                     <RadioButton
                         android:id="@+id/zipCodeBtn"
@@ -79,18 +82,17 @@
                         android:ems="10"
                         android:hint="zipcode"
                         android:inputType="number" />
-                    <TextView
-                        android:id="@+id/enteredZipCodeErrorMessage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/keywordErrorMessage"
-                        android:textColor="#FF0000"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/enteredZipCode" />
-
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/enteredZipCodeErrorMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/keywordErrorMessage"
+                    android:textColor="#FF0000"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enteredZipCode" />
             </LinearLayout>
         </LinearLayout>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">androidui</string>
+    <string name="app_name">eBay Search</string>
     <string name="hello_first_fragment">hello_first_fragment</string>
     <!--    form string constants-->
     <string name="productSearch">Product Search</string>

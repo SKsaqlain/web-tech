@@ -71,11 +71,6 @@ class AllItemsFragment : Fragment() {
 
         uiState.findAllItemResponse.observe(viewLifecycleOwner) { response ->
             if (response == null || response.isEmpty()) {
-//                Toast.makeText(
-//                    requireContext(),
-//                    "No items found",
-//                    Toast.LENGTH_LONG
-//                ).show()
                 return@observe
             }
 
@@ -89,11 +84,6 @@ class AllItemsFragment : Fragment() {
         mongoDbService.getAllWishListItems(view, ::updateWishListState)
         uiState.wishListResponse.observe(viewLifecycleOwner) { response ->
             if (response == null || response.isEmpty()) {
-//                Toast.makeText(
-//                    requireContext(),
-//                    "No wish list items found",
-//                    Toast.LENGTH_LONG
-//                ).show()
                 return@observe
             }
 

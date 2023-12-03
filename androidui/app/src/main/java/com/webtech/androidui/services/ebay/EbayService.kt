@@ -11,8 +11,7 @@ import java.util.UUID
 
 class EbayService {
     private val logger = LoggerFactory.getLogger(ProductSearchFragment::class.java)
-//    private val serverUrl = "https://sms-wt-assgn3.uw.r.appspot.com"
-    private val serverUrl = "http://10.0.2.2:8080"
+
     fun healthCheck(view: View) {
 
         logger.info("Backend Health check")

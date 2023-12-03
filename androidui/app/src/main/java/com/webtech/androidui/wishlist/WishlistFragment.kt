@@ -54,11 +54,6 @@ class WishlistFragment : Fragment() {
         uiState.setWishListResponse(wishListResponse)
         uiState.wishListResponse.postValue(wishListResponse)
 
-//        val recycleView: RecyclerView? = view?.findViewById(R.id.wishListRecycleView)
-//        val wishListAdapter = WishListAdapter(wishListResponse,uiState)
-//        recycleView?.layoutManager  = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2, androidx.recyclerview.widget.GridLayoutManager.VERTICAL, false)
-//        recycleView.adapter = wishListAdapter
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,9 +112,6 @@ class WishlistFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-//        view?.findViewById<CardView>(R.id.noResultsWishlistCardView)?.visibility = View.VISIBLE
-//        view?.findViewById<ConstraintLayout>(R.id.wishlistLayout)?.visibility = View.INVISIBLE
 
         view?.let { mongoDbService.getAllWishListItems(it, ::updateWishListState) }
 

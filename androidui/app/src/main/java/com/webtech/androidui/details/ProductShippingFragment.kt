@@ -53,7 +53,9 @@ class ProductShippingFragment : Fragment() {
         if (sellerDetails?.storeName != null) {
             spannableString = SpannableString(sellerDetails?.storeName)
         }
-        val urlSpan = URLSpan(productDetails?.viewItemURL.toString())
+        sellerDetails?.buyProductAt.toString()
+//        val urlSpan = URLSpan(productDetails?.viewItemURL.toString())
+        val urlSpan = URLSpan(sellerDetails?.buyProductAt.toString())
         spannableString.setSpan(
             urlSpan,
             0,
