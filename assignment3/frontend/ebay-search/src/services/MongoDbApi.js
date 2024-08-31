@@ -2,12 +2,15 @@ import axios from "axios";
 import { async } from "q";
 import { v4 as uuidv4 } from "uuid";
 
-const INSERT_URL = "http://localhost:8080/mongodb/insertDoc";
-const DEL_URL = "http://localhost:8080/mongodb/deleteDoc";
-const GET_URL = "http://localhost:8080/mongodb/findDoc";
-const GET_ALL_URL = "http://localhost:8080/mongodb/getAll";
-const FIND_ALL_BY_ITEMIDS_URL =
-  "http://localhost:8080/mongodb/findAllByItemIds";
+import { displayProgressBar, hideProgressBar } from "./ProgressBarHandler";
+import URL from "./URL";
+
+// const URL="http://localhost:8080";
+
+const INSERT_URL = URL+"/mongodb/insertDoc";
+const DEL_URL = URL+"/mongodb/deleteDoc";
+const GET_ALL_URL = URL+"/mongodb/getAll";
+const FIND_ALL_BY_ITEMIDS_URL = URL+"/mongodb/findAllByItemIds";
 
 export const AddItemToWishlist = async (item) => {
   try {
@@ -42,7 +45,8 @@ export const RemoveItemFromWishlist = async (item) => {
     const response = await axios.get(DEL_URL, {
       params: params,
     });
-    console.log("received response from backend " + response.toString());
+    console.log("Removed item apid response response from backend ");
+    console.dir(response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -57,27 +61,22 @@ export const GetAllWishlistItems = async () => {
     const params = {
       trackingId: trackingId,
     };
-    const response = await axios
-      .get(GET_ALL_URL, {
-        params: params,
-      });
-      if(response.status=='200' && response.data.length>0)
-      {
-        console.log("received results from backend " +
-        response.data.length +
-        " for trackingId " +
-        trackingId);
-        return response.data;
-      }else{
-        console.log("No results received from backend " +
-        response.data +
-        " for trackingId " +
-        trackingId);
-        return [];
-      }
+    displayProgressBar();
+    const response = await axios.get(GET_ALL_URL, {
+      params: params,
+    });
+    hideProgressBar();
+    if (response.status == "200" && response.data.length > 0) {
+      console.log("received results from backend " + response.data.length + " for trackingId " + trackingId);
+      console.dir(response.data);
+      return response.data;
+    } else {
+      console.log("No results received from backend " + response.data + " for trackingId " + trackingId);
+      return [];
+    }
   } catch (error) {
     console.log(error);
-    return "";
+    return [];
   }
 };
 
@@ -93,12 +92,7 @@ export const GetWishlistItems = async (onReceivingResponse) => {
         params: params,
       })
       .then((rsp) => {
-        console.log(
-          "received results from backend " +
-            rsp.data.length +
-            " for trackingId " +
-            trackingId
-        );
+        console.log("received results from backend " + rsp.data.length + " for trackingId " + trackingId);
         onReceivingResponse(rsp.data);
       });
   } catch (error) {
@@ -109,9 +103,7 @@ export const GetWishlistItems = async (onReceivingResponse) => {
 
 export const FindAllWishlistItemsById = async (itemIds, trackingId) => {
   try {
-    console.log(
-      "fetching All results given itemIds for trackingId " + trackingId
-    );
+    console.log("fetching All results given itemIds for trackingId " + trackingId);
     const params = {
       trackingId: trackingId,
       itemIds: itemIds,
@@ -120,10 +112,7 @@ export const FindAllWishlistItemsById = async (itemIds, trackingId) => {
       params: params,
     });
     console.log(
-      "received results from backend for find All by itemIds" +
-      response.data.length +
-        " for trackingId " +
-        trackingId
+      "received results from backend for find All by itemIds" + response.data.length + " for trackingId " + trackingId
     );
     console.log("rsp.data is " + response.data);
     return response.data;

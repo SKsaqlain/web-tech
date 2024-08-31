@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/productSearchFragment2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/productSearchPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Title Bar -->
+            <TextView
+                android:id="@+id/productSearchTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/launcherBackgroundClr"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/productSearch"
+                android:textAlignment="viewStart"
+                android:textColor="#FAF7F7"
+                android:textSize="20sp" />
+
+            <!-- Tabs -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/productTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productSearchTitle"
+                android:background="@color/launcherBackgroundClr"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/tabUnSelectedTextClr" />
+
+            <!-- ViewPager2 -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/productTabLayout" />
+        </RelativeLayout>
+</RelativeLayout>
+
+
+

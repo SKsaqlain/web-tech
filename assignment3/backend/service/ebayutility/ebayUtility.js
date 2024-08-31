@@ -8,7 +8,6 @@ const ENUM = {
 };
 const CATEGORY_CODE = {
     //todo: add categoryId for all categories
-
     'Art': "550",
     'Baby': "2984",
     'Books': "267",
@@ -63,6 +62,7 @@ function createXMLRequestPayload(
 
         if (condition && condition.length >= 1) {
             logger.info("Adding Condition tag", {trackingId});
+
             const conditionTag = createFilterTag(
                 root,
                 "Condition",
@@ -124,7 +124,9 @@ function parseFindAllItemResponse(response, trackingId) {
         itemData.itemId = items[i].itemId[0];
         itemData.title = items[i].title[0] || null;
         itemData.image = items[i].galleryURL[0] || null;
+        itemData.viewItemURL=items[i].viewItemURL[0]|| null;
         itemData.price = items[i].sellingStatus[0].currentPrice[0].__value__ || null;
+        itemData.condition=items[i].condition[0].conditionDisplayName[0]||null;
         itemData.shipping = items[i].shippingInfo[0].shippingServiceCost[0].__value__ || 'N/A';
         if (itemData.shipping == '0.0') {
             itemData.shipping = 'Free Shipping';
@@ -218,7 +220,7 @@ function parseFindItemResponse(data, trackingId) {
         'productImages': null,
         'price': null,
         'location': null,
-        'returnPolicy': null,
+        'returnPolicy': {},
         itemSpecifics: [],
     };
     if (data.Item.PictureURL && data.Item.PictureURL.length > 0) {
@@ -231,11 +233,13 @@ function parseFindItemResponse(data, trackingId) {
         itemData.location = data.Item.Location;
     }
     if (data.Item.ReturnPolicy) {
-        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted;
+        itemData.returnPolicy.policy= data.Item.ReturnPolicy.ReturnsAccepted;
+        itemData.returnPolicy.refundMode = data.Item.ReturnPolicy.Refund;
+        itemData.returnPolicy.returnsWithin = data.Item.ReturnPolicy.ReturnsWithin;
+        itemData.returnPolicy.shippingCostPaidBy = data.Item.ReturnPolicy.ShippingCostPaidBy;
     }
-    if (data.Item.ReturnPolicy && data.Item.ReturnPolicy.ReturnsAccepted && data.Item.ReturnPolicy.ReturnsWithin) {
-        itemData.returnPolicy = data.Item.ReturnPolicy.ReturnsAccepted + " within " + data.Item.ReturnPolicy.ReturnsWithin;
-    }
+    logger.info(`Parsed return policy ${itemData.returnPolicy}`, {trackingId})
+
     if(data.Item.viewItemURLForNaturalSearch){
         itemData.viewItemURL = data.Item.viewItemURLForNaturalSearch;
     }

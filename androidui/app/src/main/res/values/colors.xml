@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+<!--    <color name="launcherBackgroundClr">#6750a4</color>-->
+    <color name="launcherBackgroundClr">#512da8</color>
+    <color name="titleBarColor">#303f9f</color>
+<!--    progressBar-->
+    <color name="progressBarClr">#8572a8</color>
+    <color name="progressBarTxtClr">#6200ea</color>
+
+    <color  name="tabUnSelectedTextClr">#ce87ff</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="searchBtnClr">#7C220E</color>
+    <color name="clearBtnClr">#7C220E</color>
+    <color name="productSearchBtnTxtClr">#F0E0E0</color>
+
+    <color name="productSearchBtnClr">@color/searchBtnClr</color>
+
+
+<!--    product-->
+    <color name="selectedTabColor">@color/white</color>
+    <color name="unselectedTabColor">#e8b5b5</color>
+    <color name="floatingWishListColor">#d45617</color>
+
+<!--    circular bar color-->
+    <color name="circularBarRed">#FF0000</color>
+
+<!--    card tile-->
+    <color  name="cardTitleClr">#777777</color>
+
+<!--    similar items dropdown -->
+    <color name="similarItemsDropdownClr">#fafafa</color>
+    <color name="similarItemsDropdownTxtClr">#000000</color>
+
+</resources>

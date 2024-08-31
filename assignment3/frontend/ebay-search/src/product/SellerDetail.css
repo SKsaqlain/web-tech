@@ -1,0 +1,74 @@
+.item-seller-details-container {
+  /* padding:1rem; */
+  color: white;
+  background-color: black;
+  margin: 0 auto;
+  /* width: 80%; */
+  margin-top: 1rem;
+}
+.sellerName{
+    background-color: rgb(46, 48, 52); 
+    height: 4rem;
+    align-items: center;;
+}
+.sellerFieldName {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.sellerDetailsRow {
+  height: 3rem;
+  display: grid;
+  /* grid-template-columns: 4fr 7fr; */
+  align-items: center;
+  padding-left: 0%;
+}
+
+.sellerDetailsRow:nth-child(odd) {
+  background-color: rgb(46, 48, 52); 
+}
+.sellerDetailsRow:nth-child(even) {
+    background-color: rgb(34, 36, 41);
+  
+}
+
+.sellerName {
+  font-size: larger;
+  font-weight: bold;
+}
+
+
+.buy-product-at-store-btn{
+    background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+      color: rgb(116, 150, 152);
+
+  }
+  .buy-product-at-store-btn:hover {
+    color: rgb(116, 150, 152); /* Keep the color the same on hover */
+    text-decoration: underline; /* Add underline on hover */
+  }
+
+  /* Deskstop view */
+@media (min-width:1025px){
+  .sellerDetailsRow {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+  }
+}
+
+@media only screen and (max-width: 600px ) and (min-width : 320px)  {
+  .sellerDetailsRow  {
+    padding-top: 1rem;
+    padding-bottom: 6.5rem;
+  }
+  .sellerDetailsRow  .col {
+    padding-bottom: 1.2rem;
+  }
+
+}

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+
+import {displayProgressBar, hideProgressBar} from "./ProgressBarHandler";
+import URL from "./URL";
 // todo: fetch results and console log it for now.
 
-const URL = "http://localhost:8080";
+// const URL = "http://localhost:8080";
 
 const categoryOptions = {
   1: "All Categories",
@@ -61,15 +64,18 @@ export const fetchAllResults = async (
       postalCode: zipcode,
     };
     console.log(params + " " + trackingId);
+    displayProgressBar();
     const response = await axios.get(URL + "/ebay/findAllItems", {
       params: params,
     });
-    console.log("received results from backend " + response.length);
+    hideProgressBar();
+    console.log("received results from backend ");
+    console.dir(response);
     if (response.status == "200" && response.data.length > 0) {
       return response.data;
     } else {
       console.log(
-        `findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword}`
+        `findAllItems returned ${response.status} for trackingId ${trackingId} and keyword ${keyword} returnging null`
       );
       return null;
     }
@@ -81,16 +87,18 @@ export const fetchAllResults = async (
 
 export const fetchItemDetails = async (itemId) => {
   try {
+    
     const trackingId = uuidv4();
     console.log(`sending request to get item details ${itemId}`);
     const params = {
       itemId: itemId,
       trackingId: trackingId,
     };
+    displayProgressBar();
     const response = await axios.get(URL + "/ebay/findItem", {
       params: params,
     });
-
+    hideProgressBar();
     console.log("received results from backend ");
     if (response.status == "200") {
       console.dir(response.data);
@@ -98,6 +106,37 @@ export const fetchItemDetails = async (itemId) => {
     } else {
       console.log(
         `findItemDetails returned ${response.status} for itemId ${itemId}`
+      );
+      console.dir(response);
+      return null;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+
+export const fetchSimilarItems = async (itemId) => {
+  try {
+    const trackingId = uuidv4();
+    console.log(`sending request to get similar Items details ${itemId}`);
+    const params = {
+      itemId: itemId,
+      trackingId: trackingId,
+    };
+    displayProgressBar();
+    const response = await axios.get(URL + "/ebay/getSimilarItems", {
+      params: params,
+    });
+    hideProgressBar();
+    console.log("received results from backend ");
+    if (response.status == "200") {
+      console.dir(response.data);
+      return response.data;
+    } else {
+      console.log(
+        `fetchSimilarItems returned ${response.status} for itemId ${itemId}`
       );
       console.dir(response);
       return null;

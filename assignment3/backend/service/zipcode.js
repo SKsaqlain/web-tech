@@ -26,6 +26,7 @@ const zipcode = {
             })
             .catch((error) => {
                 console.log(error);
+                res.send(null);
             });
     },
 };
